@@ -1,13 +1,16 @@
+from flask import jsonify
+
 from api import app
 from api.login.basic_auth import requires_auth
+from api.users import UserCtrl
 
 
-@app.route('/users/<int:id>', methods=['GET'])
+# ask the controller to retrieve the user identified by id
+# return the resource that represents a user if found
+# otherwise, return 404 error code
+@app.route('/users/<int:user_id>', methods=['GET'])
 @requires_auth
 def get_user(id):
-    # ask the controller to retrieve the user identified by id
-    # return the resource that represents a user if found
-    # otherwise, return 404 error code
     return "Not implemented yet"
 
 
