@@ -1,3 +1,4 @@
+from api.colles.CollaCtrlMySQL import CollaCtrlMySQL
 from api.users.UserCtrlMySQL import UserCtrlMySQL
 
 
@@ -12,3 +13,6 @@ class CtrlFactory:
 
     def getUserCtrl(self, datasourceConnection):
         return UserCtrlMySQL(datasourceConnection)
+
+    def getCollaCtrl(self, datasourceConnection):
+        return CollaCtrlMySQL(datasourceConnection)
