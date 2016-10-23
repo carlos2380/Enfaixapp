@@ -1,8 +1,0 @@
-CREATE TABLE colles (
-  id INTEGER AUTO_INCREMENT,
-  name VARCHAR(20) NOT NULL,
-  uni BOOLEAN NOT NULL,
-  color NVARCHAR(7),
-  img_path VARCHAR(255),
-  PRIMARY KEY (id)
-);
