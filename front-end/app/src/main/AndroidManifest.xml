@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".RegistrarCollaConv"
-            android:label="registrar colla" >
+            android:label="registrar" >
         </activity>
         <activity
             android:name=".Mur"
@@ -29,6 +29,10 @@
         <activity
             android:name=".logIN"
             android:label="login" >
+        </activity>
+        <activity
+            android:name=".Correct"
+            android:label="correct" >
         </activity>
     </application>
 

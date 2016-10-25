@@ -9,6 +9,7 @@ public class Colla {
     private String nom;
     private String description;
     private int imagen;
+    private boolean checked;
 
     public Colla() {
         super();
@@ -19,6 +20,7 @@ public class Colla {
         this.nom = title;
         this.description = description;
         this.imagen = imagen;
+        this.checked = false;
     }
 
 
@@ -44,6 +46,14 @@ public class Colla {
 
     public void setImagen(int imagen) {
         this.imagen = imagen;
+    }
+
+    public void setChecked() {
+        this.checked = true;
+    }
+
+    public boolean getChecked() {
+        return checked;
     }
 
 }

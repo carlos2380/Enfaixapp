@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -76,6 +77,11 @@ public class AdaptadorColla extends ArrayAdapter {
         Colla c = (Colla) getItem(position);
         nomColla.setText(c.getNom());
         imatgeColla.setImageResource(c.getImage());
+        CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
+        if(c.getChecked() == true)
+            cb.setChecked(true);
+        else
+            cb.setChecked(false);
 
         return convertView;
     }

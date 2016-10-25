@@ -1,6 +1,7 @@
 package com.pes.enfaixapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
     Button button2;
     Button button3;
     Button button4;
+    Button button5;
 
     TextView nom;
     TextView cognom;
@@ -45,6 +47,12 @@ public class RegistrarCollaConv extends AppCompatActivity {
     EditText inputPasswd;
     EditText inputPasswd2;
 
+    final ArrayList<Colla> collesConv = new ArrayList<Colla>();
+    final ArrayList<Colla> collesUni = new ArrayList<Colla>();
+    final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
+
+    boolean but, but2, but3, but4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button)findViewById(R.id.reg);
 
         nom = (TextView) findViewById(R.id.textNom);
         cognom =(TextView) findViewById(R.id.textCognom);
@@ -74,12 +83,10 @@ public class RegistrarCollaConv extends AppCompatActivity {
         lay4 = findViewById(R.id.cuatro);
 
 
-        final ArrayList<Colla> collesConv = new ArrayList<Colla>();
-        final ArrayList<Colla> collesUni = new ArrayList<Colla>();
-        final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
+
 
         Colla AZU = new Colla("Arreplegats de la Zona Universitaria", "AZU",R.drawable.logo_azu);
-        /*Colla CDV = new Colla("Castellers de Vilafranca", "Els jefes", R.drawable.logo_cdv);
+        Colla CDV = new Colla("Castellers de Vilafranca", "Els jefes", R.drawable.logo_cdv);
         Colla CVXV = new Colla("Colla Vella dels Xiquets de Valls", "Puta Vella!", R.drawable.logo_cvxv);
         Colla CJXT = new Colla("Colla Jove dels Xiquets de Tarragona", "Puta Jove!", R.drawable.logo_cjxt);
         Colla CDS = new Colla("Castellers de Sants", "CDS", R.drawable.logo_sants);
@@ -103,31 +110,35 @@ public class RegistrarCollaConv extends AppCompatActivity {
         collesTotes.add(GUAB);
         collesTotes.add(PTCM);
         collesTotes.add(CDV);
-        collesConv.add(CJXV);
         collesTotes.add(CVXV);
-        collesTotes.add(CDS);*/
-        collesConv.add(AZU);
-        collesTotes.add(AZU);
+        collesTotes.add(CDS);
 
+        but = but2 = but3 = but4 = false;
 
 
         button.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                lay1.setVisibility(View.VISIBLE);
-                lay2.setVisibility(View.GONE);
-                lay3.setVisibility(View.GONE);
-                lay4.setVisibility(View.GONE);
-                if (inputName.callOnClick()) nom.setTextColor(65536);
-                else if (inputSurname.callOnClick()) cognom.setTextColor(65536);
-                else if (inputCorreu.callOnClick()) correu.setTextColor(65536);
-                else if (inputPasswd.callOnClick()) contrasenya.setTextColor(65536);
-                else if (inputPasswd2.callOnClick()) contrasenya2.setTextColor(65536);
+                @Override
+                public void onClick(View view){
+                    if (but == false) {
+                        lay1.setVisibility(View.VISIBLE);
+                        lay2.setVisibility(View.GONE);
+                        lay3.setVisibility(View.GONE);
+                        lay4.setVisibility(View.GONE);
+                        if (inputName.callOnClick()) nom.setTextColor(65536);
+                        else if (inputSurname.callOnClick()) cognom.setTextColor(65536);
+                        else if (inputCorreu.callOnClick()) correu.setTextColor(65536);
+                        else if (inputPasswd.callOnClick()) contrasenya.setTextColor(65536);
+                        else if (inputPasswd2.callOnClick()) contrasenya2.setTextColor(65536);
+                        but = true;
+                    }
+                    else {
+                        lay1.setVisibility(View.GONE);
+                        but = false;
+                    }
+                }
 
-
-
-            }
+            
         });
 
 
@@ -135,78 +146,112 @@ public class RegistrarCollaConv extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                lay1.setVisibility(View.GONE);
-                lay2.setVisibility(View.VISIBLE);
-                lay3.setVisibility(View.GONE);
-                lay4.setVisibility(View.GONE);
-                if(!(inputPasswd.getText().toString().equals(inputPasswd2.getText().toString()))) {
-                    Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
+                if (but2 == false) {
+                    lay1.setVisibility(View.GONE);
+                    lay2.setVisibility(View.VISIBLE);
+                    lay3.setVisibility(View.GONE);
+                    lay4.setVisibility(View.GONE);
+                    if (!(inputPasswd.getText().toString().equals(inputPasswd2.getText().toString()))) {
+                        Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
+                    }
+
+                    /*Llistat amb les colles que apareixeran*/
+
+                    AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
+                    ListView lv = (ListView) findViewById(R.id.lv);
+                    lv.setAdapter(adaptadorCollesConv);
+
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            final int pos = position;
+                            //posar el checkbox de la colla corresponent amb el tick
+                            collesConv.get(position).setChecked();
+
+                        }
+                    });
+                    but2 = true;
+                }
+                else {
+                    lay2.setVisibility(View.GONE);
+                    but2 = false;
                 }
 
-                /*Llistat amb les colles que apareixeran*/
-
-                AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(),collesConv);
-                ListView lv = (ListView) findViewById(R.id.lv);
-                lv.setAdapter(adaptadorCollesConv);
-
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        final int pos = position;
-                        //posar el checkbox de la colla corresponent amb el tick
-
-                    }
-                });
 
             }
         });
+
         button3.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                lay1.setVisibility(View.GONE);
-                lay2.setVisibility(View.GONE);
-                lay3.setVisibility(View.VISIBLE);
-                lay4.setVisibility(View.GONE);
+                if (but3 == false) {
+                    lay1.setVisibility(View.GONE);
+                    lay2.setVisibility(View.GONE);
+                    lay3.setVisibility(View.VISIBLE);
+                    lay4.setVisibility(View.GONE);
 
-                AdaptadorColla adaptadorCollesUni = new AdaptadorColla(getApplicationContext(),collesUni);
-                ListView lvu = (ListView) findViewById(R.id.lvUni);
+                    AdaptadorColla adaptadorCollesUni = new AdaptadorColla(getApplicationContext(), collesUni);
+                    ListView lvu = (ListView) findViewById(R.id.lvUni);
 
-                lvu.setAdapter(adaptadorCollesUni);
+                    lvu.setAdapter(adaptadorCollesUni);
 
-                lvu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        final int pos = position;
-                        //posar el checkbox de la colla corresponent amb el tick
+                    lvu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            final int pos = position;
+                            //posar el checkbox de la colla corresponent amb el tick
+                            collesUni.get(position).setChecked();
 
-                    }
-                });
+                        }
+                    });
+                    but3 = true;
+                }
+                else {
+                    lay3.setVisibility(View.GONE);
+                    but3 = false;
+                }
+
             }
         });
         button4.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                lay1.setVisibility(View.GONE);
-                lay2.setVisibility(View.GONE);
-                lay3.setVisibility(View.GONE);
-                lay4.setVisibility(View.VISIBLE);
-                AdaptadorColla adaptadorCollesTotes = new AdaptadorColla(getApplicationContext(),collesTotes);
-                ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
+                if (but4 == false) {
+                    lay1.setVisibility(View.GONE);
+                    lay2.setVisibility(View.GONE);
+                    lay3.setVisibility(View.GONE);
+                    lay4.setVisibility(View.VISIBLE);
+                    AdaptadorColla adaptadorCollesTotes = new AdaptadorColla(getApplicationContext(), collesTotes);
+                    ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
 
-                lvTotes.setAdapter(adaptadorCollesTotes);
+                    lvTotes.setAdapter(adaptadorCollesTotes);
 
-                lvTotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        final int pos = position;
-                        //posar el checkbox de la colla corresponent amb el tick
-
-                    }
-                });
+                    lvTotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            final int pos = position;
+                            //posar el checkbox de la colla corresponent amb el tick
+                            collesTotes.get(position).setChecked();
+                        }
+                    });
+                    but4 = true;
+                }
+                else {
+                    lay4.setVisibility(View.GONE);
+                    but4 = false;
+                }
 
             }
+        });
+
+
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent myintent=new Intent(RegistrarCollaConv.this, Correct.class).putExtra("info", a);
+                startActivity(new Intent(RegistrarCollaConv.this, Correct.class));            }
         });
 
     }
