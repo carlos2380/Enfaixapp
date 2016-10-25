@@ -7,7 +7,7 @@ from api.db.DB import DB
 
 class DBTest(unittest.TestCase):
     def testInit(self):
-        json_data = json.loads(open("../db.JSON").read())
+        json_data = json.loads(open("../db.json").read())
         db = DB(json_data)
 
         self.assertEquals("enfaixappDB_test", db.database)
@@ -15,7 +15,7 @@ class DBTest(unittest.TestCase):
         self.assertEquals("", db.password)
 
     def testGetConnection(self):
-        json_data = json.loads(open("../db.JSON").read())
+        json_data = json.loads(open("../db.json").read())
         cnx = DB(json_data).getDatabaseConnection()
 
         self.assertIsNotNone(cnx)

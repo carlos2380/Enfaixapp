@@ -3,6 +3,7 @@ CREATE TABLE users (
   name     VARCHAR(20)        NOT NULL,
   surnames VARCHAR(100)       NOT NULL,
   email    VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(256) 	  NOT NULL,
   PRIMARY KEY (id)
 );
 

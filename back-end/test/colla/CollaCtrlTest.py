@@ -8,7 +8,7 @@ from api.db.DB import DB
 
 class UserCtrlTest(unittest.TestCase):
     def setUp(self):
-        self.dbconf = json.loads(open("../db.JSON").read())
+        self.dbconf = json.loads(open("../db.json").read())
         self.cnx = DB(self.dbconf).getDatabaseConnection()
 
     def tearDown(self):

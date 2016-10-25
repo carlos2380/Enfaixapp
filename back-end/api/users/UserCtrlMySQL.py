@@ -17,3 +17,15 @@ class UserCtrlMySQL(UserCtrl):
         user = User(result[0][1], result[0][2], result[0][3])
 
         return user
+
+    def insert(self, user):
+        sql = 'INSERT INTO users (name, surnames, email) ' \
+              'VALUES ("%s", "%s", "%s")' % (user.name, user.surname, user.email)
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+        #self.cnx.commit()
+
+        last_id = cursor.lastrowid
+        user.id = last_id
+
+        return user

@@ -12,3 +12,7 @@ class UserCtrl:
     @abc.abstractmethod
     def get(self, id_user):
         pass
+
+    @abc.abstractmethod
+    def insert(self, user):
+        pass
