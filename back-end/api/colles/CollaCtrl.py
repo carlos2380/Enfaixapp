@@ -12,3 +12,11 @@ class CollaCtrl:
     @abc.abstractmethod
     def get(self, id_colla):
         pass
+
+    @abc.abstractmethod
+    def getUniversitaries(self):
+        pass
+
+    @abc.abstractmethod
+    def getConvencionals(self):
+        pass
