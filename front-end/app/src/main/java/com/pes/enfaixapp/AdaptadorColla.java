@@ -77,11 +77,11 @@ public class AdaptadorColla extends ArrayAdapter {
         Colla c = (Colla) getItem(position);
         nomColla.setText(c.getNom());
         imatgeColla.setImageResource(c.getImage());
-        CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
-        if(c.getChecked() == true)
+        //CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
+        /*if(c.getChecked() == true)
             cb.setChecked(true);
         else
-            cb.setChecked(false);
+            cb.setChecked(false);*/
 
         return convertView;
     }

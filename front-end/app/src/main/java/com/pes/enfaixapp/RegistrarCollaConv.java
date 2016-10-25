@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class RegistrarCollaConv extends AppCompatActivity {
     EditText inputCorreu;
     EditText inputPasswd;
     EditText inputPasswd2;
+
+    CheckBox cb;
 
     final ArrayList<Colla> collesConv = new ArrayList<Colla>();
     final ArrayList<Colla> collesUni = new ArrayList<Colla>();
@@ -81,6 +84,8 @@ public class RegistrarCollaConv extends AppCompatActivity {
         lay2 =  findViewById(R.id.dos);
         lay3 = findViewById(R.id.tres);
         lay4 = findViewById(R.id.cuatro);
+
+        cb = (CheckBox) findViewById(R.id.checkBox);
 
 
 
@@ -166,7 +171,8 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
-                            collesConv.get(position).setChecked();
+                            //collesConv.get(position).setChecked();
+
 
                         }
                     });
