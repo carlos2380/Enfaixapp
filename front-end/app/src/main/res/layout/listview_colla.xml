@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/listImage"
-        android:layout_width="?android:attr/listPreferredItemHeight"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignParentLeft="false"
         />
 
     <TextView
@@ -16,8 +17,12 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/listImage"
         android:layout_alignParentTop="false"
+        android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:maxLines="1"
-        android:id="@+id/listText"/>
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:id="@+id/listText"
+        android:layout_marginLeft= "10dp" />
 
 </RelativeLayout>

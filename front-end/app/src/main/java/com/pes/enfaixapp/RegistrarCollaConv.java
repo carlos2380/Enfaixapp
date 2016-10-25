@@ -79,7 +79,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
 
         Colla AZU = new Colla("Arreplegats de la Zona Universitaria", "AZU",R.drawable.logo_azu);
-        Colla CDV = new Colla("Castellers de Vilafranca", "Els jefes", R.drawable.logo_cdv);
+        /*Colla CDV = new Colla("Castellers de Vilafranca", "Els jefes", R.drawable.logo_cdv);
         Colla CVXV = new Colla("Colla Vella dels Xiquets de Valls", "Puta Vella!", R.drawable.logo_cvxv);
         Colla CJXT = new Colla("Colla Jove dels Xiquets de Tarragona", "Puta Jove!", R.drawable.logo_cjxt);
         Colla CDS = new Colla("Castellers de Sants", "CDS", R.drawable.logo_sants);
@@ -105,7 +105,9 @@ public class RegistrarCollaConv extends AppCompatActivity {
         collesTotes.add(CDV);
         collesConv.add(CJXV);
         collesTotes.add(CVXV);
-        collesTotes.add(CDS);
+        collesTotes.add(CDS);*/
+        collesConv.add(AZU);
+        collesTotes.add(AZU);
 
 
 
