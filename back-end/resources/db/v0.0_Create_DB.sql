@@ -1,4 +1,4 @@
-CREATE DATABASE enfaixappDB CHARSET 'UTF-8';
+CREATE DATABASE enfaixappDB CHARACTER SET 'UTF8';
 
 CREATE USER 'enfaixapp_server'@'localhost' IDENTIFIED BY '';
 

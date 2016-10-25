@@ -30,6 +30,5 @@ def get_user(id):
 @app.route('/users', methods=['POST'])
 @requires_auth
 def create_user():
-    request.
     return "Not implemented yet"
 
