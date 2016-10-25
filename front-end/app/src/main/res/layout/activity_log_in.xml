@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:id="@+id/activity_log_in"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -8,13 +9,13 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="272dp"
-        android:layout_marginTop="100dp"
-        android:layout_height="100dp"
         android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:id="@+id/imageView"
-        android:layout_weight="0.24" />
+    android:layout_width="200dp"
+    android:layout_marginTop="50dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:id="@+id/imageView"
+    android:layout_weight="0.24"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -26,8 +27,8 @@
         android:drawablePadding="10dip"
         android:focusable="true"
         android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#222222"
-        android:layout_marginTop="70dp"/>
+        android:textColorHint="#d3d3d3"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -37,25 +38,29 @@
         android:id="@+id/editText2"
         android:drawableLeft="@drawable/password_icon"
         android:drawablePadding="10dip"
-        android:textColorHint="#222222"
+        android:textColorHint="#d3d3d3"
         android:hint="Password" />
 
     <Button
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Registra't"
+        android:text="Log In"
         android:textSize="18dp"
         android:layout_marginTop="40dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/buttonText"
-        android:layout_gravity="center"
-        android:id="@+id/button"/>
+        android:layout_gravity="left"
+        android:id="@+id/log_button"/>
 
-    <TextView
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="17dp"
-        android:textAlignment="textEnd"/>
+        android:layout_height="40dp"
+        android:text="Registra't"
+        android:textSize="18dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/buttonText"
+        android:layout_gravity="right"
+        android:layout_marginTop="20dp"
+        android:id="@+id/reg_button"/>
 
 </LinearLayout>

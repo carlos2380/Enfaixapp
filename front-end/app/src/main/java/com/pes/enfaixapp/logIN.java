@@ -1,17 +1,17 @@
 package com.pes.enfaixapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class logIN extends ActionBarActivity {
+public class logIN extends Activity {
 
-    private Button b1; //log in, cancel
+    private Button b1,b2; //log in, cancel
     private EditText ed1,ed2; //user, pass
     private int intents = 3;
 
@@ -19,17 +19,18 @@ public class logIN extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-
-        b1=(Button)findViewById(R.id.button);
+        b1=(Button)findViewById(R.id.log_button);
+        b2 =(Button)findViewById(R.id.reg_button);
         ed1=(EditText)findViewById(R.id.editText);
         ed2=(EditText)findViewById(R.id.editText2);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1.getText().toString().equals("marc") &&
-                        ed2.getText().toString().equals("marti")) {
+                if((ed1.getText().toString().equals("marc") &&
+                        ed2.getText().toString().equals("marti")) || (ed1.getText().toString().equals("alex") &&
+                        ed2.getText().toString().equals("correa")) ) {
                         Toast.makeText(getApplicationContext(), "CORRECTE. ACCEDINT...", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(logIN.this, RegistrarCollaConv.class));
+                        startActivity(new Intent(logIN.this, Mur.class));
 
                 }
                 else{
@@ -43,6 +44,13 @@ public class logIN extends ActionBarActivity {
 
                     intents--;
                 }
+            }
+        });
+
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(logIN.this, RegistrarCollaConv.class));
             }
         });
     }

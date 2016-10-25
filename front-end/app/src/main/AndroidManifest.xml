@@ -18,9 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity   android:name=".RegistrarCollaConv"
-            android:label="Registrar colla"/>
+        <activity
+            android:name=".RegistrarCollaConv"
+            android:label="registrar colla" >
+        </activity>
+        <activity
+            android:name=".Mur"
+            android:label="mur colla" >
+        </activity>
+        <activity
+            android:name=".logIN"
+            android:label="login" >
+        </activity>
     </application>
+
 
 </manifest>
