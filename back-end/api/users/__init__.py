@@ -14,14 +14,15 @@ from api.users import UserCtrl
 # otherwise, return 404 error code
 @app.route('/users/<int:user_id>', methods=['GET'])
 @requires_auth
-def get_user(id):
-    dbconf = json.loads(open("../db.json").read())
+def get_user(user_id):
+    dbconf = json.loads(open("api/db/db.json").read())
+
     user_ctrl = CtrlFactory().getUserCtrl(DB(dbconf).getDatabaseConnection())
-    user = user_ctrl.get(id)
+    user = user_ctrl.get(user_id)
     if user is None:
         abort(404)
     else:
-        return jsonify(user)
+        return jsonify(user.__dict__), 200
 
 
 # create new instance of user

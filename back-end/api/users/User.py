@@ -1,7 +1,10 @@
-class User:
-    def __init__(self, nom, surname, email):
+from flask import json
+
+
+class User(json.JSONEncoder):
+    def __init__(self, name, surname, email):
         self.email = email
-        self.name = nom
+        self.name = name
         self.surname = surname
 
     def getCompleteName(self):

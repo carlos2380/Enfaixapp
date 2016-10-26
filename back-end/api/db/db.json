@@ -1,5 +1,5 @@
 {
   "database": "enfaixappDB",
-  "user": "root",
+  "user": "enfaixapp_server",
   "password": ""
 }

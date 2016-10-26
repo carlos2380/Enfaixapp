@@ -14,7 +14,7 @@ class UserCtrlMySQL(UserCtrl):
         cursor.execute(sql)
 
         result = cursor.fetchall()
-        user = User(result[0][1], result[0][2], result[0][3])
+        user = User(name=result[0][1], surname=result[0][2], email=result[0][3])
 
         return user
 
