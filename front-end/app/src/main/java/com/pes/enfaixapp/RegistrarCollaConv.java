@@ -3,6 +3,7 @@ package com.pes.enfaixapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -56,6 +57,9 @@ public class RegistrarCollaConv extends AppCompatActivity {
 
     boolean but, but2, but3, but4;
 
+    Usuari user;
+    String psswd, psswdCheck = "buit";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         inputCorreu = (EditText) findViewById(R.id.correuInput);
         inputPasswd = (EditText) findViewById(R.id.contrasenyaInput);
         inputPasswd2 = (EditText) findViewById(R.id.contrasenyaInput2);
+
 
         lay1 =  findViewById(R.id.lnom);
         lay2 =  findViewById(R.id.dos);
@@ -130,12 +135,42 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         lay2.setVisibility(View.GONE);
                         lay3.setVisibility(View.GONE);
                         lay4.setVisibility(View.GONE);
-                        if (inputName.callOnClick()) nom.setTextColor(65536);
-                        else if (inputSurname.callOnClick()) cognom.setTextColor(65536);
-                        else if (inputCorreu.callOnClick()) correu.setTextColor(65536);
-                        else if (inputPasswd.callOnClick()) contrasenya.setTextColor(65536);
-                        else if (inputPasswd2.callOnClick()) contrasenya2.setTextColor(65536);
+
+                        if (inputName.callOnClick()){
+                            nom.setTextColor(65536);
+                            user.setNom(inputName.getText().toString());
+                        }
+                        else if (inputSurname.callOnClick()){
+                            cognom.setTextColor(65536);
+                            user.setCognoms(inputSurname.getText().toString());
+
+                        }
+                        else if (inputCorreu.callOnClick()) {
+                            correu.setTextColor(65536);
+                            user.setCorreu(inputCorreu.getText().toString());
+
+                        }
+                        else if (inputPasswd.callOnClick()) {
+                            contrasenya.setTextColor(65536);
+                            psswd = inputPasswd.getText().toString();
+                        }
+                        else if (inputPasswd2.callOnClick()){
+                            contrasenya2.setTextColor(65536);
+                            psswdCheck = inputPasswd2.getText().toString();
+
+                        }
+
+                      /*  Log.d("PASSWORD", psswd);
+                        Log.d("PASSWORD2", psswdCheck);
+                        if (psswdCheck.equals(psswd)) {
+                            user.setPsswd(psswd);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
+
+                        }*/
+
                         but = true;
+
                     }
                     else {
                         lay1.setVisibility(View.GONE);
@@ -156,14 +191,12 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lay2.setVisibility(View.VISIBLE);
                     lay3.setVisibility(View.GONE);
                     lay4.setVisibility(View.GONE);
-                    if (!(inputPasswd.getText().toString().equals(inputPasswd2.getText().toString()))) {
-                        Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
-                    }
+
 
                     /*Llistat amb les colles que apareixeran*/
 
                     AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
-                    ListView lv = (ListView) findViewById(R.id.lv);
+                    final ListView lv = (ListView) findViewById(R.id.lv);
                     lv.setAdapter(adaptadorCollesConv);
 
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -171,8 +204,10 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
-                            //collesConv.get(position).setChecked();
-
+                            Colla CollaConvEscollida = new Colla();
+                            CollaConvEscollida = (Colla)lv.getSelectedItem();
+                            if (user.getCollaConv() == null)    //només setejem si no en té cap de posada ja
+                                user.setCollaConv(CollaConvEscollida);
 
                         }
                     });
@@ -198,17 +233,20 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lay4.setVisibility(View.GONE);
 
                     AdaptadorColla adaptadorCollesUni = new AdaptadorColla(getApplicationContext(), collesUni);
-                    ListView lvu = (ListView) findViewById(R.id.lvUni);
+                    final ListView lvu = (ListView) findViewById(R.id.lvUni);
 
                     lvu.setAdapter(adaptadorCollesUni);
 
                     lvu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
-                            collesUni.get(position).setChecked();
-
+                            Colla CollaUniEscollida = new Colla();
+                            CollaUniEscollida = (Colla)lvu.getSelectedItem();
+                            if (user.getCollaUni() == null) //només setejem si no en té cap ja
+                                user.setCollaUni(CollaUniEscollida);
                         }
                     });
                     but3 = true;
@@ -230,7 +268,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lay3.setVisibility(View.GONE);
                     lay4.setVisibility(View.VISIBLE);
                     AdaptadorColla adaptadorCollesTotes = new AdaptadorColla(getApplicationContext(), collesTotes);
-                    ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
+                    final ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
 
                     lvTotes.setAdapter(adaptadorCollesTotes);
 
@@ -239,7 +277,9 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
-                            collesTotes.get(position).setChecked();
+                            ArrayList<Colla> CollesSeguides = new ArrayList<Colla>();
+                            CollesSeguides.add((Colla) lvTotes.getSelectedItem());
+
                         }
                     });
                     but4 = true;
@@ -258,7 +298,11 @@ public class RegistrarCollaConv extends AppCompatActivity {
             public void onClick(View v) {
                 // Intent myintent=new Intent(RegistrarCollaConv.this, Correct.class).putExtra("info", a);
                 //crida al server per guardar les dades (nom, colles, etc)
-                startActivity(new Intent(RegistrarCollaConv.this, Correct.class));            }
+
+                startActivity(new Intent(RegistrarCollaConv.this, Correct.class));
+
+
+            }
         });
 
     }

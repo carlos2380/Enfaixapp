@@ -30,7 +30,7 @@
         android:textColor="@color/colorAccent"
         android:textAlignment="center"/>
 
-    <!--ImageView
+    <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:padding="80dp"
@@ -38,7 +38,7 @@
         android:src="@drawable/logo"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="34dp" /-->
+        android:layout_marginBottom="34dp" ></ImageView>
 
     <ProgressBar
         android:id="@+id/progressBar1"

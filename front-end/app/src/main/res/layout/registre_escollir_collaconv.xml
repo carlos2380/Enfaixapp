@@ -57,6 +57,7 @@
             android:id="@+id/nomInput"
             android:layout_marginLeft="30dp"
             android:padding="5dp"
+
             />
 
         <TextView
@@ -154,8 +155,8 @@
         android:id="@+id/button2"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
-        android:drawablePadding="5dp"
-    android:drawableLeft="@drawable/number_two"
+        android:drawablePadding="0dp"
+        android:drawableLeft="@drawable/number_two"
 
 
         />
@@ -189,7 +190,7 @@
         android:id="@+id/button3"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
-        android:drawablePadding="5dp"
+        android:drawablePadding="0dp"
         android:drawableLeft="@drawable/number_three"
 
 
@@ -223,7 +224,7 @@
         android:id="@+id/button4"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
-        android:drawablePadding="5dp"
+        android:drawablePadding="0dp"
         android:drawableLeft="@drawable/number_four"
 
         />
