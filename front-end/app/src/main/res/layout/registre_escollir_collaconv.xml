@@ -155,7 +155,7 @@
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
         android:drawablePadding="5dp"
-        android:drawableLeft="@drawable/number_two"
+    android:drawableLeft="@drawable/number_two"
 
 
         />
@@ -170,7 +170,7 @@
         >
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:id="@+id/lv"
             >
         </ListView>
@@ -205,7 +205,7 @@
         >
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:id="@+id/lvUni"
             >
         </ListView>
@@ -238,7 +238,7 @@
         >
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:id="@+id/lvTotes"
             >
         </ListView>
@@ -246,7 +246,7 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reg"
         android:text="Registrar-me"
