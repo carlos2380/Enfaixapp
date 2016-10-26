@@ -85,7 +85,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         lay3 = findViewById(R.id.tres);
         lay4 = findViewById(R.id.cuatro);
 
-        cb = (CheckBox) findViewById(R.id.checkBox);
+        cb = (CheckBox) findViewById(R.id.checkbox);
 
 
 
@@ -257,6 +257,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Intent myintent=new Intent(RegistrarCollaConv.this, Correct.class).putExtra("info", a);
+                //crida al server per guardar les dades (nom, colles, etc)
                 startActivity(new Intent(RegistrarCollaConv.this, Correct.class));            }
         });
 

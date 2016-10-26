@@ -20,6 +20,7 @@ public class Correct extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //comprovar al server si s'ha creat correctament
         setContentView(R.layout.correct);
         /*String[] s= getIntent().getStringArrayExtra("info");
         String user = s[0];
