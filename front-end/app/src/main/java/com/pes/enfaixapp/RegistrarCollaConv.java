@@ -153,6 +153,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         else if (inputPasswd.callOnClick()) {
                             contrasenya.setTextColor(65536);
                             psswd = inputPasswd.getText().toString();
+                            user.setPsswd(inputPasswd.getText().toString());
                         }
                         else if (inputPasswd2.callOnClick()){
                             contrasenya2.setTextColor(65536);
@@ -164,7 +165,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
                         Log.d("PASSWORD2", psswdCheck);
                         if (psswdCheck.equals(psswd)) {
                             user.setPsswd(psswd);
-                        } else {
+                        /*} else {
                             Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
 
                         }*/
