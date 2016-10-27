@@ -170,9 +170,10 @@
         android:layout_marginLeft="15dp"
         >
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:id="@+id/lv"
+            android:choiceMode="multipleChoice"
             >
         </ListView>
 
@@ -205,9 +206,10 @@
         android:layout_marginLeft="15dp"
         >
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:id="@+id/lvUni"
+            android:choiceMode="multipleChoice"
             >
         </ListView>
 
@@ -238,11 +240,13 @@
         android:layout_marginLeft="15dp"
         >
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:id="@+id/lvTotes"
-            >
+            android:choiceMode="multipleChoice">
         </ListView>
+
+
 
     </LinearLayout>
 

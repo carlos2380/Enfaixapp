@@ -55,7 +55,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
     final ArrayList<Colla> collesUni = new ArrayList<Colla>();
     final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
 
-    boolean but, but2, but3, but4;
+    boolean but, but2, but3, but4, onlyConv;
 
     Usuari user;
     String psswd, psswdCheck = "buit";
@@ -91,7 +91,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         lay4 = findViewById(R.id.cuatro);
 
         cb = (CheckBox) findViewById(R.id.checkbox);
-
+        onlyConv = false;
 
 
 
@@ -199,7 +199,6 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
                     final ListView lv = (ListView) findViewById(R.id.lv);
                     lv.setAdapter(adaptadorCollesConv);
-
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -209,6 +208,8 @@ public class RegistrarCollaConv extends AppCompatActivity {
                             CollaConvEscollida = (Colla)lv.getSelectedItem();
                             if (user.getCollaConv() == null)    //només setejem si no en té cap de posada ja
                                 user.setCollaConv(CollaConvEscollida);
+
+
 
                         }
                     });
@@ -248,6 +249,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
                             CollaUniEscollida = (Colla)lvu.getSelectedItem();
                             if (user.getCollaUni() == null) //només setejem si no en té cap ja
                                 user.setCollaUni(CollaUniEscollida);
+
                         }
                     });
                     but3 = true;

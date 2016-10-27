@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -78,11 +81,8 @@ public class AdaptadorColla extends ArrayAdapter {
         nomColla.setText(c.getNom());
         imatgeColla.setImageResource(c.getImage());
         //CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
-        /*if(c.getChecked() == true)
-            cb.setChecked(true);
-        else
-            cb.setChecked(false);*/
 
         return convertView;
     }
+
 }
