@@ -11,3 +11,5 @@ INSERT INTO colles (name, uni, color, img_path)
 VALUES ('Vilafranca', false, '#00A597', null);
 INSERT INTO colles (name, uni, color, img_path)
 VALUES ('Fibers', true, '#00FFFF', null);
+INSERT INTO colles (name, uni, color, img_path)
+VALUES ('Borinots', true, '#00FFFF', null);

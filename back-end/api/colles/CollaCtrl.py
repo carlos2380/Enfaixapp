@@ -10,7 +10,7 @@ class CollaCtrl:
         self.db = DB.getDatabase(dbconfig.user, dbconfig.password, dbconfig.database_name)
 
     @abc.abstractmethod
-    def get(self, id_colla):
+    def getAll(self):
         pass
 
     @abc.abstractmethod

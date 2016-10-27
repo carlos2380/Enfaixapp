@@ -14,21 +14,68 @@ class UserCtrlTest(unittest.TestCase):
     def tearDown(self):
         self.cnx.rollback()
 
-    def test_get(self):
-        sql = 'INSERT INTO users (name, uni, color, img_path) ' \
-              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 'TRUE', 'FFFFFF','~/TestProjectes')
+    def test_get_universitaries(self):
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 1, 'FFFFFF', '~/TestProjectes')
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
-        last_id = cursor.lastrowid
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name2', 1, 'FFFFFF', '~/TestProjectes')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
 
-        colla = CtrlFactory().getCollaCtrl(self.cnx).get(last_id)
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name3', 0, 'FFFFFF', '~/TestProjectes')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
 
-        self.assertIsNotNone(colla)
-        self.assertEquals('Test_Name', colla.name)
-        self.assertEquals('TRUE', colla.uni)
-        self.assertEquals('FFFFFF', colla.color)
-        self.assertEquals('~/TestProjectes', colla.img_path)
+        colles = CtrlFactory().getCollaCtrl(self.cnx).getUniversitaries()
+
+        self.assertIsNotNone(colles)
+        self.assertEquals(2, len(colles))
+
+    def test_get_convencionals(self):
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 1, 'FFFFFF', '~/TestProjectes')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name2', 1, 'FFFFFF', '~/TestProjectes')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name3', 0, 'FFFFFF', '~/TestProjectes')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        colles = CtrlFactory().getCollaCtrl(self.cnx).getConvencionals()
+
+        self.assertIsNotNone(colles)
+        self.assertEquals(1, len(colles))
+
+        def test_get_All(self):
+            sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+                  'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 1, 'FFFFFF', '~/TestProjectes')
+            cursor = self.cnx.cursor()
+            cursor.execute(sql)
+
+            sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+                  'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name2', 1, 'FFFFFF', '~/TestProjectes')
+            cursor = self.cnx.cursor()
+            cursor.execute(sql)
+
+            sql = 'INSERT INTO colles (name, uni, color, img_path) ' \
+                  'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name3', 0, 'FFFFFF', '~/TestProjectes')
+            cursor = self.cnx.cursor()
+            cursor.execute(sql)
+
+            colles = CtrlFactory().getCollaCtrl(self.cnx).getAll()
+
+            self.assertIsNotNone(colles)
+            self.assertEquals(3, len(colles))
 
 
 def main():

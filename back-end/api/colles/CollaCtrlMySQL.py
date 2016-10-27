@@ -1,47 +1,46 @@
-from api.db import DB
+from api.colles.CollaCtrl import CollaCtrl
 from api.colles.Colla import Colla
-from api.users.UserCtrl import UserCtrl
 
 
-class CollaCtrlMySQL(UserCtrl):
-
+class CollaCtrlMySQL(CollaCtrl):
     def __init__(self, databaseConnection):
         self.cnx = databaseConnection
 
-    def get(self, id_colla):
-        sql = 'SELECT * FROM users WHERE id=%s' % id_colla
+    def getAll(self):
+        sql = 'SELECT * FROM colles'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
         result = cursor.fetchall()
-        colla = Colla(result[0][1], result[0][2], result[0][3],result[0][4])
+        colles = []
+        for tuple in result:
+            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
+            colles.append(colla)
 
-        return colla
+        return colles
 
     def getUniversitaries(self):
-        sql = 'SELECT * FROM users WHERE uni=%s' % 'TRUE'
+        sql = 'SELECT * FROM colles WHERE uni=%s' % 'TRUE'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
         result = cursor.fetchall()
         universitaries = []
-        for i in result.size():
-            colla = Colla(result[i][1], result[i][2], result[i][3],result[i][4])
+        for tuple in result:
+            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
             universitaries.append(colla)
 
         return universitaries
 
-
     def getConvencionals(self):
-        sql = 'SELECT * FROM users WHERE uni=%s' % 'FALSE'
+        sql = 'SELECT * FROM colles WHERE uni=%s' % 'FALSE'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
         result = cursor.fetchall()
         convencionals = []
-        for i in result.size():
-            colla = Colla(result[i][1], result[i][2], result[i][3],result[i][4])
+        for tuple in result:
+            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
             convencionals.append(colla)
 
         return convencionals
-
