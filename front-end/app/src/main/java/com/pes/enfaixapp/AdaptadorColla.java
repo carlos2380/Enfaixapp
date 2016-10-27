@@ -4,6 +4,10 @@ package com.pes.enfaixapp;
  * Created by Marc on 25/10/2016.
  */
 
+/**
+ * Created by Marc on 25/10/2016.
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,6 +34,7 @@ public class AdaptadorColla extends ArrayAdapter {
 
     protected ArrayList<Colla> colles;
     private Context context;
+    private Integer selected_position = -1;
 
     public AdaptadorColla(Context context, ArrayList<Colla> items) {
         super(context,0,items);
@@ -63,8 +68,7 @@ public class AdaptadorColla extends ArrayAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             // Create a new view into the list.
@@ -76,11 +80,36 @@ public class AdaptadorColla extends ArrayAdapter {
         // Set data into the view.
         ImageView imatgeColla = (ImageView) convertView.findViewById(R.id.listImage);
         TextView nomColla = (TextView) convertView.findViewById(R.id.listText);
+        final CheckBox chkbox=(CheckBox)convertView.findViewById(R.id.checkbox);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chkbox.setChecked(true);
+
+            }
+        });
 
         Colla c = (Colla) getItem(position);
         nomColla.setText(c.getNom());
         imatgeColla.setImageResource(c.getImage());
         //CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
+
+        chkbox.setChecked(position==selected_position);
+
+        chkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    selected_position =  position;
+                }
+                else{
+                    selected_position = -1;
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
