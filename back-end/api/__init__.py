@@ -9,7 +9,7 @@ def hello():
 
 
 @app.errorhandler(404)
-def not_found():
+def not_found(e):
     return make_response(jsonify({'error': 'Resource not found'}), 404)
 
 

@@ -14,7 +14,7 @@ from api.users import UserCtrl
 # return the resource that represents a user if found
 # otherwise, return 404 error code
 @app.route('/users/<int:user_id>', methods=['GET'])
-@requires_auth
+#s@requires_auth
 def get_user(user_id):
     dbconf = json.loads(open("api/db/db.json").read())
 
