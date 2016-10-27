@@ -2,7 +2,9 @@ package com.pes.enfaixapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +14,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private Context context;
+        private boolean connected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
@@ -24,9 +35,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Button next = (Button)findViewById(R.id.nextButton);
-        /*connectingServer()
-          if (true) startActivity(new Intent(MainActivity.this, logIN.class);
-         */
+
+        connected = false;
+        new GetMethod().execute("http://www.fib.upc.edu/fib.html");
+        String a="";
+
+        if(connected) a="connected";
+        else a="false";
+        Log.v("Tag",a);
+
+        if (connected) startActivity(new Intent(MainActivity.this, logIN.class));
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,5 +110,74 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class GetMethod extends AsyncTask<String , Void ,String> {
+        String server_response;
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.setRequestMethod("GET");
+                int responseCode = urlConnection.getResponseCode();
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    connected = true;
+                    server_response = readStream(urlConnection.getInputStream());
+                    Log.v("CatalogClient", server_response);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.e("Response", "" + server_response);
+
+
+        }
+    }
+
+
+
+    // Converting InputStream to String
+
+    private String readStream(InputStream in) {
+        BufferedReader reader = null;
+        StringBuffer response = new StringBuffer();
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return response.toString();
     }
 }
