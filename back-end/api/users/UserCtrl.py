@@ -16,3 +16,7 @@ class UserCtrl:
     @abc.abstractmethod
     def insert(self, user):
         pass
+
+    @abc.abstractmethod
+    def exists_by_mail(self, email):
+        pass

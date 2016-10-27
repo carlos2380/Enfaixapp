@@ -16,8 +16,8 @@ class UserCtrlTest(unittest.TestCase):
         self.cnx.rollback()
 
     def test_get(self):
-        sql = 'INSERT INTO users (name, surnames, email) ' \
-              'VALUES ("%s", "%s", "%s")' % ('Test_Name', 'Test Surname', 'test@mail.com')
+        sql = 'INSERT INTO users (name, surnames, email, password) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 'Test Surname', 'test@mail.com', 'test password')
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
@@ -32,6 +32,7 @@ class UserCtrlTest(unittest.TestCase):
 
     def test_create(self):
         created_user = User("Test_Name", "Test Surname", "test@mail.com")
+        created_user.set_password('test password')
         ctrl_user = CtrlFactory().getUserCtrl(self.cnx)
 
         created_user = ctrl_user.insert(created_user)
@@ -41,6 +42,24 @@ class UserCtrlTest(unittest.TestCase):
         self.assertEquals("Test_Name", db_user.name)
         self.assertEquals("Test Surname", db_user.surname)
         self.assertEquals("test@mail.com", db_user.email)
+
+    def test_exists_by_email_return_true(self):
+        sql = 'INSERT INTO users (name, surnames, email, password) ' \
+              'VALUES ("%s", "%s", "%s","%s")' % ('Test_Name', 'Test Surname', 'test@mail.com', 'test password')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        exists = CtrlFactory().getUserCtrl(self.cnx).exists_by_mail('test@mail.com')
+        self.assertTrue(exists)
+
+    def test_exists_by_email_return_false(self):
+        sql = 'INSERT INTO users (name, surnames, email, password) ' \
+              'VALUES ("%s", "%s", "%s", "%s")' % ('Test_Name', 'Test Surname', 'test@mail.com', 'test password')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        exists = CtrlFactory().getUserCtrl(self.cnx).exists_by_mail('test2@mail.com')
+        self.assertFalse(exists)
 
 
 def main():

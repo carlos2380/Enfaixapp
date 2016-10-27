@@ -13,8 +13,8 @@ class CollaCtrlMySQL(CollaCtrl):
 
         result = cursor.fetchall()
         colles = []
-        for tuple in result:
-            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
+        for (id_colla, name_colla, is_uni, color, path) in result:
+            colla = Colla(id=id_colla, nom=name_colla, uni=is_uni, color=color, img=path)
             colles.append(colla)
 
         return colles
@@ -26,8 +26,8 @@ class CollaCtrlMySQL(CollaCtrl):
 
         result = cursor.fetchall()
         universitaries = []
-        for tuple in result:
-            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
+        for (id_colla, name_colla, is_uni, color, path) in result:
+            colla = Colla(id=id_colla, nom=name_colla, uni=is_uni, color=color, img=path)
             universitaries.append(colla)
 
         return universitaries
@@ -39,8 +39,8 @@ class CollaCtrlMySQL(CollaCtrl):
 
         result = cursor.fetchall()
         convencionals = []
-        for tuple in result:
-            colla = Colla(id=tuple[0], nom=tuple[1], uni=tuple[2], color=tuple[3], img=tuple[4])
+        for (id_colla, name_colla, is_uni, color, path) in result:
+            colla = Colla(id=id_colla, nom=name_colla, uni=is_uni, color=color, img=path)
             convencionals.append(colla)
 
         return convencionals

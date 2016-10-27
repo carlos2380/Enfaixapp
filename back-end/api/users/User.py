@@ -6,6 +6,10 @@ class User(json.JSONEncoder):
         self.email = email
         self.name = name
         self.surname = surname
+        self.password = ' '
 
-    def getCompleteName(self):
+    def get_complete_name(self):
         return self.name, " ", self.surname
+
+    def set_password(self, password):
+        self.password = password

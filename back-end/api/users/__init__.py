@@ -1,6 +1,7 @@
 from flask import abort
 from flask import json
 from flask import jsonify
+from flask import request
 
 from api import app
 from api.db.CtrlFactory import CtrlFactory
@@ -23,13 +24,3 @@ def get_user(user_id):
         abort(404)
     else:
         return jsonify(user.__dict__), 200
-
-
-# create new instance of user
-# ask the controller to create this instance in db
-# return the resource created and 201 creation code
-@app.route('/users', methods=['POST'])
-@requires_auth
-def create_user():
-    return "Not implemented yet"
-
