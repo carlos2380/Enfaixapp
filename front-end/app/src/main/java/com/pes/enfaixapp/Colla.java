@@ -24,6 +24,14 @@ public class Colla {
     }
 
 
+    public Colla(String title, boolean checked, int imagen) {
+        super();
+        this.nom = title;
+        this.checked = checked;
+        this.imagen = imagen;
+    }
+
+
     public String getNom() {
         return nom;
     }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 /**
@@ -24,7 +26,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistrarCollaConv extends AppCompatActivity {
+public class RegistrarCollaConv extends Activity {
 
     Button button;
     Button button2;
@@ -60,10 +62,28 @@ public class RegistrarCollaConv extends AppCompatActivity {
     Usuari user;
     String psswd, psswdCheck = "buit";
 
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Shows the soft keyboard
+     */
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.registre_escollir_collaconv);
+        hideSoftKeyboard();
 
         button = (Button) findViewById(R.id.button);
         button2 = (Button) findViewById(R.id.button2);
@@ -90,7 +110,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
         lay3 = findViewById(R.id.tres);
         lay4 = findViewById(R.id.cuatro);
 
-        cb = (CheckBox) findViewById(R.id.checkbox);
+        cb = (CheckBox) findViewById(R.id.checkBox);
         onlyConv = false;
 
 
@@ -103,17 +123,20 @@ public class RegistrarCollaConv extends AppCompatActivity {
         Colla CJXV = new Colla("Colla Joves dels Xiquets de Valls", "I jove, i jove, i jove jove jove!!", R.drawable.logo_cjxv);
         Colla GUAB = new Colla("Ganàpies de la UAB", "Puta Ganàpies!", R.drawable.logo_ganapies);
         Colla PTCM = new Colla("Passerells del Tecnoampus de Mataró", "Passerells", R.drawable.logo_passarells);
+        Colla CAP = new Colla("No pertanyo a cap colla", true, R.drawable.newbie);
 
-
+        collesUni.add(CAP);
         collesUni.add(AZU);
         collesUni.add(GUAB);
         collesUni.add(PTCM);
 
+        collesConv.add(CAP);
         collesConv.add(CDV);
         collesConv.add(CVXV);
         collesConv.add(CJXT);
         collesConv.add(CDS);
         collesConv.add(CJXV);
+
 
         collesTotes.add(CJXT);
         collesTotes.add(AZU);
@@ -123,18 +146,24 @@ public class RegistrarCollaConv extends AppCompatActivity {
         collesTotes.add(CVXV);
         collesTotes.add(CDS);
 
-        but = but2 = but3 = but4 = false;
+        but = true;
+        but2 = but3 = but4 = false;
+        lay1.setVisibility(View.VISIBLE);
+        lay2.setVisibility(View.GONE);
+        lay3.setVisibility(View.GONE);
+        lay4.setVisibility(View.GONE);
+
+        AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
+
 
 
         button.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view){
+                    hideSoftKeyboard();
                     if (but == false) {
                         lay1.setVisibility(View.VISIBLE);
-                        lay2.setVisibility(View.GONE);
-                        lay3.setVisibility(View.GONE);
-                        lay4.setVisibility(View.GONE);
 
                         if (inputName.callOnClick()){
                             nom.setTextColor(65536);
@@ -160,15 +189,6 @@ public class RegistrarCollaConv extends AppCompatActivity {
                             psswdCheck = inputPasswd2.getText().toString();
 
                         }
-
-                      /*  Log.d("PASSWORD", psswd);
-                        Log.d("PASSWORD2", psswdCheck);
-                        if (psswdCheck.equals(psswd)) {
-                            user.setPsswd(psswd);
-                        /*} else {
-                            Toast.makeText(getApplicationContext(), "LA CONTRASENYA NO COINCIDEIX", Toast.LENGTH_SHORT).show();
-
-                        }*/
 
                         but = true;
 
@@ -210,7 +230,6 @@ public class RegistrarCollaConv extends AppCompatActivity {
                                 user.setCollaConv(CollaConvEscollida);
 
 
-
                         }
                     });
                     but2 = true;
@@ -219,7 +238,6 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lay2.setVisibility(View.GONE);
                     but2 = false;
                 }
-
 
             }
         });
@@ -242,7 +260,6 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lvu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
                             Colla CollaUniEscollida = new Colla();
@@ -270,7 +287,7 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lay2.setVisibility(View.GONE);
                     lay3.setVisibility(View.GONE);
                     lay4.setVisibility(View.VISIBLE);
-                    AdaptadorColla adaptadorCollesTotes = new AdaptadorColla(getApplicationContext(), collesTotes);
+                    AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
                     final ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
 
                     lvTotes.setAdapter(adaptadorCollesTotes);
@@ -278,6 +295,9 @@ public class RegistrarCollaConv extends AppCompatActivity {
                     lvTotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (cb.isClickable()) {
+                                cb.setChecked(false);
+                            }
                             final int pos = position;
                             //posar el checkbox de la colla corresponent amb el tick
                             ArrayList<Colla> CollesSeguides = new ArrayList<Colla>();

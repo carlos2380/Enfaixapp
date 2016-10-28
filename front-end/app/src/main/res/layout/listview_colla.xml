@@ -14,22 +14,25 @@
         />
 
     <CheckedTextView
-        android:layout_width="200dp"
-        android:layout_height="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/listImage"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:textSize="12dp"
+        android:textSize="16dp"
+        android:layout_gravity="center"
         android:textColor="#000"
         android:id="@+id/listText"
         android:layout_marginLeft= "15dp"
-        android:layout_marginTop="15dp" />
+        android:layout_weight="1.00" />
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:buttonTint="@color/colorPrimary"
         android:layout_toRightOf="@id/listText"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"

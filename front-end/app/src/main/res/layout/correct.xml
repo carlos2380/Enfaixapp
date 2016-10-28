@@ -11,14 +11,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
         android:text="Enhorabona! L'enregistrament a l'aplicació s'ha efectuat correctament. "/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/usr"
-        android:layout_marginTop="50dp"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:layout_marginTop="70dp"
         android:text="Nom d'usuari:  Marc"
         />
 
@@ -26,7 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/psw"
-        android:layout_marginTop="50dp"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:layout_marginTop="10dp"
         android:text="Contrasenya: Marti "
         />
 </LinearLayout>
