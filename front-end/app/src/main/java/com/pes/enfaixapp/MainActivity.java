@@ -25,7 +25,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private Context context;
-        private boolean connected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
@@ -36,15 +36,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         Button next = (Button)findViewById(R.id.nextButton);
 
-        connected = false;
-        new GetMethod().execute("http://www.fib.upc.edu/fib.html");
-        String a="";
-
-        if(connected) a="connected";
-        else a="false";
-        Log.v("Tag",a);
-
-        if (connected) startActivity(new Intent(MainActivity.this, logIN.class));
+        new GetMethod().execute("http://10.4.41.165:5000");
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +104,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void connectionOK () {
+        startActivity(new Intent(MainActivity.this, logIN.class));
+    }
+
     public class GetMethod extends AsyncTask<String , Void ,String> {
         String server_response;
 
@@ -130,9 +126,9 @@ public class MainActivity extends AppCompatActivity
                 int responseCode = urlConnection.getResponseCode();
 
                 if(responseCode == HttpURLConnection.HTTP_OK){
-                    connected = true;
                     server_response = readStream(urlConnection.getInputStream());
                     Log.v("CatalogClient", server_response);
+                    connectionOK();
                 }
 
             } catch (MalformedURLException e) {
@@ -147,10 +143,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             Log.e("Response", "" + server_response);
-
-
         }
     }
 
