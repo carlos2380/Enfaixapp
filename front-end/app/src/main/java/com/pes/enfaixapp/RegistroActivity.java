@@ -3,7 +3,6 @@ package com.pes.enfaixapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -13,20 +12,21 @@ import android.widget.Button;
  * Created by Àlex on 17/10/2016.
  */
 
-import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+import com.pes.enfaixapp.Adapters.AdaptadorColla;
+import com.pes.enfaixapp.Adapters.AdaptadorCollesSeguides;
+import com.pes.enfaixapp.Models.Colla;
+import com.pes.enfaixapp.Models.Usuari;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class RegistrarCollaConv extends Activity {
+public class RegistroActivity extends Activity {
 
     Button button;
     Button button2;
@@ -82,7 +82,7 @@ public class RegistrarCollaConv extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.registre_escollir_collaconv);
+        setContentView(R.layout.activity_registro);
         hideSoftKeyboard();
 
         button = (Button) findViewById(R.id.button);
@@ -319,10 +319,10 @@ public class RegistrarCollaConv extends Activity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent myintent=new Intent(RegistrarCollaConv.this, Correct.class).putExtra("info", a);
+                // Intent myintent=new Intent(RegistroActivity.this, Correct.class).putExtra("info", a);
                 //crida al server per guardar les dades (nom, colles, etc)
 
-                startActivity(new Intent(RegistrarCollaConv.this, Correct.class));
+                startActivity(new Intent(RegistroActivity.this, Correct.class));
 
 
             }

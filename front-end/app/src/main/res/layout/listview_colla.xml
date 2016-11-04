@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.pes.enfaixapp.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pes.enfaixapp.Adapters.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:weightSum="1">
@@ -38,4 +38,4 @@
         android:layout_alignParentEnd="true"
         />
 
-</com.pes.enfaixapp.CheckableLinearLayout>
+</com.pes.enfaixapp.Adapters.CheckableLinearLayout>

@@ -1,4 +1,4 @@
-package com.pes.enfaixapp;
+package com.pes.enfaixapp.Models;
 
 /**
  * Created by Àlex on 24/10/2016.

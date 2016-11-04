@@ -1,24 +1,25 @@
-package com.pes.enfaixapp;
+package com.pes.enfaixapp.Adapters;
 
 /**
  * Created by Marc on 25/10/2016.
  */
 
-import android.app.Activity;
+/**
+ * Created by Marc on 25/10/2016.
+ */
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.pes.enfaixapp.Models.Colla;
+import com.pes.enfaixapp.R;
 
 import java.util.ArrayList;
 
@@ -26,13 +27,13 @@ import java.util.ArrayList;
  * Created by Àlex on 24/10/2016.
  */
 
-public class AdaptadorCollesSeguides extends ArrayAdapter {
+public class AdaptadorColla extends ArrayAdapter {
 
     protected ArrayList<Colla> colles;
     private Context context;
     private Integer selected_position = -1;
 
-    public AdaptadorCollesSeguides(Context context, ArrayList<Colla> items) {
+    public AdaptadorColla(Context context, ArrayList<Colla> items) {
         super(context,0,items);
         this.colles = items;
         this.context = context;
@@ -89,7 +90,32 @@ public class AdaptadorCollesSeguides extends ArrayAdapter {
         nomColla.setText(c.getNom());
         imatgeColla.setImageResource(c.getImage());
 
+
+        chkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    selected_position =  position;
+                }
+                else {
+                    //selected_position = -1;
+                }
+                notifyDataSetChanged();
+            }
+        });
+
+        chkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (chkbox.isChecked()) chkbox.setChecked(false);
+            }
+        });
+
         chkbox.setChecked(position==selected_position);
+
+
 
         return convertView;
     }

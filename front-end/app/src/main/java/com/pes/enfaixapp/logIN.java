@@ -50,7 +50,7 @@ public class logIN extends Activity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(logIN.this, RegistrarCollaConv.class));
+                startActivity(new Intent(logIN.this, RegistroActivity.class));
             }
         });
     }

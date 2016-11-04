@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrarCollaConv"
+            android:name=".RegistroActivity"
             android:label="registrar" >
         </activity>
         <activity
