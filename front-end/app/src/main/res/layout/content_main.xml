@@ -10,25 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.pes.enfaixapp.MainActivity"
+    tools:context="com.pes.enfaixapp.LoadingActivity"
     tools:showIn="@layout/app_bar_main">
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/buttonText"
-        android:text="next"/>
-
-    <TextView
-        android:id="@+id/titol"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="60dp"
-        android:textColor="@color/colorAccent"
-        android:textAlignment="center"/>
 
     <ImageView
         android:id="@+id/imageView1"

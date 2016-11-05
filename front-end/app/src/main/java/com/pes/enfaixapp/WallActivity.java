@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class Mur extends AppCompatActivity
+public class WallActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         private Context context;
     @Override

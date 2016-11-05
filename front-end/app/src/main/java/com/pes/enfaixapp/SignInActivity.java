@@ -26,13 +26,13 @@ import com.pes.enfaixapp.Models.Usuari;
 
 import java.util.ArrayList;
 
-public class RegistroActivity extends Activity {
+public class SignInActivity extends Activity {
 
-    Button button;
-    Button button2;
-    Button button3;
-    Button button4;
-    Button button5;
+    Button aboutYouButton;
+    Button chooseCollaConvButton;
+    Button chooseCollaUniButton;
+    Button chooseColles;
+    Button signInButton;
 
     TextView nom;
     TextView cognom;
@@ -82,30 +82,30 @@ public class RegistroActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.activity_registro);
+        setContentView(R.layout.activity_sign_in);
         hideSoftKeyboard();
 
-        button = (Button) findViewById(R.id.button);
-        button2 = (Button) findViewById(R.id.button2);
-        button3 = (Button) findViewById(R.id.button3);
-        button4 = (Button) findViewById(R.id.button4);
-        button5 = (Button)findViewById(R.id.reg);
+        aboutYouButton = (Button) findViewById(R.id.aboutYouButton);
+        chooseCollaConvButton = (Button) findViewById(R.id.button2);
+        chooseCollaUniButton = (Button) findViewById(R.id.button3);
+        chooseColles = (Button) findViewById(R.id.button4);
+        signInButton = (Button)findViewById(R.id.reg);
 
-        nom = (TextView) findViewById(R.id.textNom);
-        cognom =(TextView) findViewById(R.id.textCognom);
+        nom = (TextView) findViewById(R.id.nameLabel);
+        cognom =(TextView) findViewById(R.id.surnameLabel);
         correu = (TextView) findViewById(R.id.textCorreu);
         contrasenya = (TextView) findViewById(R.id.textContrasenya);
         contrasenya2 = (TextView) findViewById(R.id.textContrasenya2);
 
 
-        inputName = (EditText) findViewById(R.id.nomInput);
-        inputSurname = (EditText) findViewById(R.id.cognomInput);
+        inputName = (EditText) findViewById(R.id.nameInput);
+        inputSurname = (EditText) findViewById(R.id.surnameInput);
         inputCorreu = (EditText) findViewById(R.id.correuInput);
         inputPasswd = (EditText) findViewById(R.id.contrasenyaInput);
         inputPasswd2 = (EditText) findViewById(R.id.contrasenyaInput2);
 
 
-        lay1 =  findViewById(R.id.lnom);
+        lay1 =  findViewById(R.id.userInfoLayout);
         lay2 =  findViewById(R.id.dos);
         lay3 = findViewById(R.id.tres);
         lay4 = findViewById(R.id.cuatro);
@@ -123,7 +123,7 @@ public class RegistroActivity extends Activity {
         Colla CJXV = new Colla("Colla Joves dels Xiquets de Valls", "I jove, i jove, i jove jove jove!!", R.drawable.logo_cjxv);
         Colla GUAB = new Colla("Ganàpies de la UAB", "Puta Ganàpies!", R.drawable.logo_ganapies);
         Colla PTCM = new Colla("Passerells del Tecnoampus de Mataró", "Passerells", R.drawable.logo_passarells);
-        Colla CAP = new Colla("No pertanyo a cap colla", true, R.drawable.newbie);
+        Colla CAP = new Colla("No pertanyo a cap colla", true, R.drawable.ic_account_circle_login_24dp);
 
         collesUni.add(CAP);
         collesUni.add(AZU);
@@ -157,13 +157,16 @@ public class RegistroActivity extends Activity {
 
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        aboutYouButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view){
                     hideSoftKeyboard();
                     if (but == false) {
                         lay1.setVisibility(View.VISIBLE);
+                        lay2.setVisibility(View.GONE);
+                        lay3.setVisibility(View.GONE);
+                        lay4.setVisibility(View.GONE);
 
                         if (inputName.callOnClick()){
                             nom.setTextColor(65536);
@@ -203,7 +206,7 @@ public class RegistroActivity extends Activity {
         });
 
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        chooseCollaConvButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -217,7 +220,7 @@ public class RegistroActivity extends Activity {
                     /*Llistat amb les colles que apareixeran*/
 
                     AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
-                    final ListView lv = (ListView) findViewById(R.id.lv);
+                    final ListView lv = (ListView) findViewById(R.id.conventionalList);
                     lv.setAdapter(adaptadorCollesConv);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -242,7 +245,7 @@ public class RegistroActivity extends Activity {
             }
         });
 
-        button3.setOnClickListener(new View.OnClickListener() {
+        chooseCollaUniButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -278,7 +281,7 @@ public class RegistroActivity extends Activity {
 
             }
         });
-        button4.setOnClickListener(new View.OnClickListener() {
+        chooseColles.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -316,13 +319,13 @@ public class RegistroActivity extends Activity {
         });
 
 
-        button5.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent myintent=new Intent(RegistroActivity.this, Correct.class).putExtra("info", a);
+                // Intent myintent=new Intent(SignInActivity.this, Correct.class).putExtra("info", a);
                 //crida al server per guardar les dades (nom, colles, etc)
 
-                startActivity(new Intent(RegistroActivity.this, Correct.class));
+                startActivity(new Intent(SignInActivity.this, Correct.class));
 
 
             }
