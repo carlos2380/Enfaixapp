@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_looks_one_24dp"
+            android:drawableStart="@drawable/ic_looks_1_24dp"
             android:textSize="18sp"
-            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
             android:drawablePadding="5dp"/>
 
         <LinearLayout
@@ -127,8 +127,7 @@
                 android:id="@+id/contrasenyaInput2"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:padding="5dp"
-                android:inputType="textPassword"
-                />
+                android:inputType="textPassword"/>
 
 
         </LinearLayout>
@@ -142,13 +141,12 @@
             android:backgroundTint ="@android:color/transparent"
             android:id="@+id/button2"
             android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
             android:drawablePadding="5dp"
-            android:drawableStart="@drawable/ic_looks_two_24dp"
-            />
+            android:drawableStart="@drawable/ic_looks_2_24dp" />
 
         <LinearLayout
-            android:id="@+id/dos"
+            android:id="@+id/collesConvencionalsLayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:orientation="vertical"
@@ -157,8 +155,7 @@
                 android:id="@+id/conventionalList"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:choiceMode="multipleChoice"
-                >
+                android:choiceMode="multipleChoice">
             </ListView>
         </LinearLayout>
 
@@ -170,23 +167,21 @@
             android:textSize="18sp"
             android:id="@+id/button3"
             android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_looks_3_24dp" />
 
         <LinearLayout
-            android:layout_margin="20dp"
-            android:id="@+id/tres"
+            android:id="@+id/collesUniversitariesLayout"
+            android:layout_marginStart="15dp"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
             <ListView
+                android:id="@+id/universitariesList"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lvUni"
-                android:choiceMode="multipleChoice"
-                >
+                android:layout_height="match_parent"
+                android:choiceMode="multipleChoice">
             </ListView>
 
         </LinearLayout>
@@ -199,36 +194,24 @@
             android:textSize="19sp"
             android:id="@+id/button4"
             android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
             android:drawablePadding="5dp"
-            android:drawableStart="@drawable/ic_looks_4_24dp"
-
-            />
+            android:drawableStart="@drawable/ic_looks_4_24dp" />
 
         <LinearLayout
-            android:layout_margin="20dp"
-            android:id="@+id/cuatro"
+            android:id="@+id/allCollesLayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:orientation="vertical"
-            android:layout_marginStart="15dp"
-            >
+            android:layout_marginStart="15dp">
             <ListView
+                android:id="@+id/allList"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lvTotes"
+                android:layout_height="match_parent"
                 android:choiceMode="multipleChoice">
             </ListView>
-
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
 
     <Button
         android:layout_width="match_parent"

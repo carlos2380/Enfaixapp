@@ -2,6 +2,8 @@ package com.pes.enfaixapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -40,10 +42,10 @@ public class SignInActivity extends Activity {
     TextView contrasenya;
     TextView contrasenya2;
 
-    View lay1;
-    View lay2;
-    View lay3;
-    View lay4;
+    View userInfoLayout;
+    View collesConvencionalsLayout;
+    View collesUniversitariesLayout;
+    View allCollesLayout;
 
     EditText inputName;
     EditText inputSurname;
@@ -56,8 +58,6 @@ public class SignInActivity extends Activity {
     final ArrayList<Colla> collesConv = new ArrayList<Colla>();
     final ArrayList<Colla> collesUni = new ArrayList<Colla>();
     final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
-
-    boolean but, but2, but3, but4, onlyConv;
 
     Usuari user;
     String psswd, psswdCheck = "buit";
@@ -105,14 +105,12 @@ public class SignInActivity extends Activity {
         inputPasswd2 = (EditText) findViewById(R.id.contrasenyaInput2);
 
 
-        lay1 =  findViewById(R.id.userInfoLayout);
-        lay2 =  findViewById(R.id.dos);
-        lay3 = findViewById(R.id.tres);
-        lay4 = findViewById(R.id.cuatro);
+        userInfoLayout =  findViewById(R.id.userInfoLayout);
+        collesConvencionalsLayout =  findViewById(R.id.collesConvencionalsLayout);
+        collesUniversitariesLayout = findViewById(R.id.collesUniversitariesLayout);
+        allCollesLayout = findViewById(R.id.allCollesLayout);
 
         cb = (CheckBox) findViewById(R.id.checkBox);
-        onlyConv = false;
-
 
 
         Colla AZU = new Colla("Arreplegats de la Zona Universitaria", "AZU",R.drawable.logo_azu);
@@ -146,12 +144,10 @@ public class SignInActivity extends Activity {
         collesTotes.add(CVXV);
         collesTotes.add(CDS);
 
-        but = true;
-        but2 = but3 = but4 = false;
-        lay1.setVisibility(View.VISIBLE);
-        lay2.setVisibility(View.GONE);
-        lay3.setVisibility(View.GONE);
-        lay4.setVisibility(View.GONE);
+        userInfoLayout.setVisibility(View.VISIBLE);
+        collesConvencionalsLayout.setVisibility(View.GONE);
+        collesUniversitariesLayout.setVisibility(View.GONE);
+        allCollesLayout.setVisibility(View.GONE);
 
         AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
 
@@ -162,11 +158,11 @@ public class SignInActivity extends Activity {
                 @Override
                 public void onClick(View view){
                     hideSoftKeyboard();
-                    if (but == false) {
-                        lay1.setVisibility(View.VISIBLE);
-                        lay2.setVisibility(View.GONE);
-                        lay3.setVisibility(View.GONE);
-                        lay4.setVisibility(View.GONE);
+                    if (userInfoLayout.getVisibility() != View.VISIBLE) {
+                        userInfoLayout.setVisibility(View.VISIBLE);
+                        collesConvencionalsLayout.setVisibility(View.GONE);
+                        collesUniversitariesLayout.setVisibility(View.GONE);
+                        allCollesLayout.setVisibility(View.GONE);
 
                         if (inputName.callOnClick()){
                             nom.setTextColor(65536);
@@ -192,13 +188,9 @@ public class SignInActivity extends Activity {
                             psswdCheck = inputPasswd2.getText().toString();
 
                         }
-
-                        but = true;
-
                     }
                     else {
-                        lay1.setVisibility(View.GONE);
-                        but = false;
+                        userInfoLayout.setVisibility(View.GONE);
                     }
                 }
 
@@ -210,11 +202,11 @@ public class SignInActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                if (but2 == false) {
-                    lay1.setVisibility(View.GONE);
-                    lay2.setVisibility(View.VISIBLE);
-                    lay3.setVisibility(View.GONE);
-                    lay4.setVisibility(View.GONE);
+                if (collesConvencionalsLayout.getVisibility() != View.VISIBLE) {
+                    userInfoLayout.setVisibility(View.GONE);
+                    collesConvencionalsLayout.setVisibility(View.VISIBLE);
+                    collesUniversitariesLayout.setVisibility(View.GONE);
+                    allCollesLayout.setVisibility(View.GONE);
 
 
                     /*Llistat amb les colles que apareixeran*/
@@ -231,15 +223,11 @@ public class SignInActivity extends Activity {
                             CollaConvEscollida = (Colla)lv.getSelectedItem();
                             if (user.getCollaConv() == null)    //només setejem si no en té cap de posada ja
                                 user.setCollaConv(CollaConvEscollida);
-
-
                         }
                     });
-                    but2 = true;
                 }
                 else {
-                    lay2.setVisibility(View.GONE);
-                    but2 = false;
+                    collesConvencionalsLayout.setVisibility(View.GONE);
                 }
 
             }
@@ -249,14 +237,14 @@ public class SignInActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                if (but3 == false) {
-                    lay1.setVisibility(View.GONE);
-                    lay2.setVisibility(View.GONE);
-                    lay3.setVisibility(View.VISIBLE);
-                    lay4.setVisibility(View.GONE);
+                if (collesUniversitariesLayout.getVisibility() != View.VISIBLE) {
+                    userInfoLayout.setVisibility(View.GONE);
+                    collesConvencionalsLayout.setVisibility(View.GONE);
+                    collesUniversitariesLayout.setVisibility(View.VISIBLE);
+                    allCollesLayout.setVisibility(View.GONE);
 
                     AdaptadorColla adaptadorCollesUni = new AdaptadorColla(getApplicationContext(), collesUni);
-                    final ListView lvu = (ListView) findViewById(R.id.lvUni);
+                    final ListView lvu = (ListView) findViewById(R.id.universitariesList);
 
                     lvu.setAdapter(adaptadorCollesUni);
 
@@ -269,14 +257,11 @@ public class SignInActivity extends Activity {
                             CollaUniEscollida = (Colla)lvu.getSelectedItem();
                             if (user.getCollaUni() == null) //només setejem si no en té cap ja
                                 user.setCollaUni(CollaUniEscollida);
-
                         }
                     });
-                    but3 = true;
                 }
                 else {
-                    lay3.setVisibility(View.GONE);
-                    but3 = false;
+                    collesUniversitariesLayout.setVisibility(View.GONE);
                 }
 
             }
@@ -285,13 +270,13 @@ public class SignInActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                if (but4 == false) {
-                    lay1.setVisibility(View.GONE);
-                    lay2.setVisibility(View.GONE);
-                    lay3.setVisibility(View.GONE);
-                    lay4.setVisibility(View.VISIBLE);
+                if (allCollesLayout.getVisibility() != View.VISIBLE) {
+                    userInfoLayout.setVisibility(View.GONE);
+                    collesConvencionalsLayout.setVisibility(View.GONE);
+                    collesUniversitariesLayout.setVisibility(View.GONE);
+                    allCollesLayout.setVisibility(View.VISIBLE);
                     AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
-                    final ListView lvTotes = (ListView) findViewById(R.id.lvTotes);
+                    final ListView lvTotes = (ListView) findViewById(R.id.allList);
 
                     lvTotes.setAdapter(adaptadorCollesTotes);
 
@@ -308,13 +293,10 @@ public class SignInActivity extends Activity {
 
                         }
                     });
-                    but4 = true;
                 }
                 else {
-                    lay4.setVisibility(View.GONE);
-                    but4 = false;
+                    allCollesLayout.setVisibility(View.GONE);
                 }
-
             }
         });
 
