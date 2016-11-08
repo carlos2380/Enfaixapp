@@ -31,3 +31,10 @@ CREATE TABLE follows (
   CONSTRAINT fk_follows_users FOREIGN KEY (id_user) REFERENCES users (id),
   CONSTRAINT fk_follows_colles FOREIGN KEY (id_colla) REFERENCES colles (id)
 );
+
+CREATE TABLE tokens (
+	id_user INTEGER,
+    token VARCHAR(256) UNIQUE,
+	PRIMARY KEY (id_user),
+	CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users (id)
+);
