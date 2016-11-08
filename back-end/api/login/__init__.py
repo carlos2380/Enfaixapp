@@ -8,22 +8,31 @@ from api import app
 # return the resource that represents a user if found
 # otherwise, return 404 error code
 @app.route('/login', methods=['POST'])
-def sign_in():
-    cookies = request.cookies
-    mail = cookies['mail']
-    # if AuthCtrl().exists(mail):
-    #     abort()
-    # else:
-    # body = request.data
-    # token = AuthCtrl().insert(body.name, body.surnames)
-    token = '123456789'
-    response = make_response()
-    response.set_cookie("token", value=token)
-    return response
+def log_in():
+    body = json.dumps(request.data)
+    email = body['email']
+    password = body['password']
+    token = None
+    if (existUser(email)):
+        if (checkPassword(email,password)):
+            token = createToken(email)
 
-# @app.route('/login/<token>', methods=['POST'])
-# def create_user():
-#     # create new instance of user
-#     # ask the controller to create this instance in db
-#     # return the resource created and 201 creation code
-#     return "Not implemented yet"
+    return jsonify({'session-token':token})
+
+
+@app.route('/signin', methods=['POST'])
+def sign_in():
+    body = json.dumps(request.data)
+    email = body['email']
+    password = body['password']
+    nom = body['name']
+    cognoms = body['surnames']
+    collesPertany = body['belongs']
+    collesSeguides = body['follows']
+    token = None
+    if (not existUser(email)):
+        createUser(nom,cognoms,email,password,collesPertany,collesSeguides)
+        token = createToken(email)
+
+    return jsonify({'session-token':token})
+
