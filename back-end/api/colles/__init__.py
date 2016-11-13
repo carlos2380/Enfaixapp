@@ -1,9 +1,9 @@
 from flask import json
+from flask import make_response
 from flask import request
 
 from api import app
 from api.db.DB import DB
-from api.login.basic_auth import requires_auth
 
 
 # ask the controller to retrieve the user identified by id
@@ -12,21 +12,21 @@ from api.login.basic_auth import requires_auth
 @app.route('/colles', methods=['GET'])
 #@requires_auth
 def get_colles():
-    dbconf = json.loads(open("api/db/db.json").read())
-
+    db_configuration = json.loads(open("api/db/db.json").read())
     tipus_colla = request.args.get('type')
-    from api.db.CtrlFactory import CtrlFactory
-    ctrl_user = CtrlFactory().getCollaCtrl(DB(dbconf).getDatabaseConnection())
+    from db.CtrlFactory import get_colla_ctrl
+    ctrl_user = get_colla_ctrl(DB(db_configuration).get_database_connection())
+
     if tipus_colla == 'uni':
-        colles = ctrl_user.getUniversitaries()
+        colles = ctrl_user.get_universitaries()
     elif tipus_colla == 'conv':
-        colles = ctrl_user.getConvencionals()
+        colles = ctrl_user.get_convencionals()
     else:
-        colles = ctrl_user.getAll()
+        colles = ctrl_user.get_all()
 
     json_string = json.dumps([colla.__dict__ for colla in colles])
 
-    return json_string, 200
+    return make_response(json_string, 200)
 
 
 @app.route('/colles', methods=['POST'])

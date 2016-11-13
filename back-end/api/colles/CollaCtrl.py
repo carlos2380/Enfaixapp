@@ -1,22 +1,21 @@
 import abc
 
-from api.db import DB
-
 
 class CollaCtrl:
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, dbconfig):
-        self.db = DB.getDatabase(dbconfig.user, dbconfig.password, dbconfig.database_name)
-
     @abc.abstractmethod
-    def getAll(self):
+    def insert(self, colla):
         pass
 
     @abc.abstractmethod
-    def getUniversitaries(self):
+    def get_all(self):
         pass
 
     @abc.abstractmethod
-    def getConvencionals(self):
+    def get_universitaries(self):
+        pass
+
+    @abc.abstractmethod
+    def get_convencionals(self):
         pass

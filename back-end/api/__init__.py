@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    return "Hello World!\n"
 
 
 @app.errorhandler(404)
@@ -20,3 +20,5 @@ def not_authorized(e):
 
 import api.users
 import api.login
+import api.colles
+import api.wall

@@ -1,18 +1,20 @@
 from api.colles.CollaCtrlMySQL import CollaCtrlMySQL
 from api.users.UserCtrlMySQL import UserCtrlMySQL
+from belongs.BelongCtrlMySQL import BelongCtrlMySQL
+from follows.FollowCtrlMySQL import FollowCtrlMySQL
 
 
-class CtrlFactory:
-    def __init__(self):
-        pass
+def get_user_ctrl(data_source_connection):
+    return UserCtrlMySQL(data_source_connection)
 
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(CtrlFactory, cls).__new__(cls)
-        return cls.instance
 
-    def getUserCtrl(self, datasourceConnection):
-        return UserCtrlMySQL(datasourceConnection)
+def get_colla_ctrl(data_source_connection):
+    return CollaCtrlMySQL(data_source_connection)
 
-    def getCollaCtrl(self, datasourceConnection):
-        return CollaCtrlMySQL(datasourceConnection)
+
+def get_belonging_ctrl(data_source_connection):
+    return BelongCtrlMySQL(data_source_connection)
+
+
+def get_following_ctrl(data_source_connection):
+    return FollowCtrlMySQL(data_source_connection)

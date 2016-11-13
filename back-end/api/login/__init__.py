@@ -1,46 +1,49 @@
+import json
+
 from flask import abort, jsonify
 from flask import request, make_response
-from flask import json
+
 from api import app
-
-
-# ask the controller to retrieve the user identified by id
-# return the resource that represents a user if found
-# otherwise, return 404 error code
-from api.db.CtrlFactory import CtrlFactory
 from api.db.DB import DB
-from api.login.auth_ctrl import exist_user, create_user, check_password, create_token
+from api.login.auth_ctrl import create_user, check_password, create_token
+from db.CtrlFactory import get_user_ctrl
 
 
 @app.route('/login', methods=['POST'])
 def log_in():
-    body = json.dumps(request.data)
+    body = json.loads(request.data)
     email = body['email']
     password = body['password']
-    token = None
-    if (exist_user(email)):
-        dbconf = json.loads(open("api/db/db.json").read())
-        user_ctrl = CtrlFactory().getUserCtrl(DB(dbconf).getDatabaseConnection())
-        user = user_ctrl.get_by_email(email)
-        if (check_password(email,password)):
-            token = create_token(email, user.id)
+    db_configuration = json.loads(open("api/db/db.json").read())
+    user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
+    user = user_ctrl.get_by_email(email)
+    if user is not None:
+        if check_password(email, password):
+            token = create_token(email=email, user_id=user.id)
+            user.session_token = token
+            return make_response(jsonify(user.__dict__), 200)
 
-    return jsonify({'session-token':token})
+    return abort(403)
 
 
 @app.route('/signin', methods=['POST'])
 def sign_in():
-    body = json.dumps(request.data)
+    body = json.loads(request.data)
     email = body['email']
     password = body['password']
-    nom = body['name']
-    cognoms = body['surnames']
-    collesPertany = body['belongs']
-    collesSeguides = body['follows']
-    token = None
-    if (not exist_user(email)):
-        user = create_user(nom,cognoms,email,password,collesPertany,collesSeguides)
-        token = create_token(email, user.id)
-
-    return jsonify({'session-token':token})
-
+    name = body['name']
+    surname = body['surname']
+    colles_that_belongs_to = body['belongs']
+    colles_followed = body['follows']
+    db_configuration = json.loads(open("api/db/db.json").read())
+    user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
+    new_user = user_ctrl.get_by_email(email)
+    if new_user is None:
+        new_user = create_user(name=name, surname=surname, email=email, password=password,
+                               belonging_list=colles_that_belongs_to, following_list=colles_followed)
+        token = create_token(email, new_user.id)
+        new_user.session_token = token
+        new_user.follows = colles_followed
+        new_user.belongs = colles_that_belongs_to
+        return make_response(jsonify(new_user.__dict__), 201)
+    abort(403)

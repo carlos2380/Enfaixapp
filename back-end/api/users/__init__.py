@@ -1,12 +1,10 @@
 from flask import abort
 from flask import json
 from flask import jsonify
-from flask import request
+from flask import make_response
 
 from api import app
-from api.db.CtrlFactory import CtrlFactory
 from api.db.DB import DB
-from api.login.basic_auth import requires_auth
 from api.users import UserCtrl
 
 
@@ -14,13 +12,13 @@ from api.users import UserCtrl
 # return the resource that represents a user if found
 # otherwise, return 404 error code
 @app.route('/users/<int:user_id>', methods=['GET'])
-#s@requires_auth
+# s@requires_auth
 def get_user(user_id):
-    dbconf = json.loads(open("api/db/db.json").read())
-
-    user_ctrl = CtrlFactory().getUserCtrl(DB(dbconf).getDatabaseConnection())
+    db_configuration = json.loads(open("api/db/db.json").read())
+    from db.CtrlFactory import get_user_ctrl
+    user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
     user = user_ctrl.get(user_id)
     if user is None:
         abort(404)
     else:
-        return jsonify(user.__dict__), 200
+        return make_response(jsonify(user.__dict__), 200)

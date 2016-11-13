@@ -14,9 +14,21 @@ class UserCtrl:
         pass
 
     @abc.abstractmethod
+    def get_by_email(self, email):
+        pass
+
+    @abc.abstractmethod
     def insert(self, user):
         pass
 
     @abc.abstractmethod
-    def exists_by_mail(self, email):
+    def exists_by_email(self, email):
+        pass
+
+    @abc.abstractmethod
+    def check_password(self, expected_email, expected_password):
+        pass
+
+    @abc.abstractmethod
+    def add_token(self, user_id, token):
         pass
