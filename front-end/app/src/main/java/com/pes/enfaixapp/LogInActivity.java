@@ -53,7 +53,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                 httphandler.setAsyncResult(context);
                 httphandler.execute("POST", "http://10.4.41.165/login", jsonLogin.toString());
                 //SOLO LOCALHOST ---------------------------------------
-                //startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
+                startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
                 ///////////////////////////////////////////////////
             }
         });
