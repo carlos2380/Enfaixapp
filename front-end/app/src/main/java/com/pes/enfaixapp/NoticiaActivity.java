@@ -58,21 +58,22 @@ public class NoticiaActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_noticia, container, false);
 
-       // Toolbar toolbar = (Toolbar) ((ActionBarActivity)getActivity().
 
-       // ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-       // mFragmentTabNoticiaAdapter = new FragmentTabNoticiaAdapter(((ActionBarActivity)getActivity()).getSupportFragmentManager());
+        mFragmentTabNoticiaAdapter = new FragmentTabNoticiaAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-       // mViewPager = (ViewPager) container.findViewById(R.id.container);
-       // mViewPager.setAdapter(mFragmentTabNoticiaAdapter);
+        mViewPager = (ViewPager) container.findViewById(R.id.container);
+        mViewPager.setAdapter(mFragmentTabNoticiaAdapter);
 
-        //TabLayout tabLayout = (TabLayout) container.findViewById(R.id.tabs);
-       // tabLayout.setupWithViewPager(mViewPager);
+        TabLayout tabLayout = (TabLayout) container.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);*/
+        return inflater.inflate(R.layout.activity_noticia, container, false);
     }
 
 
