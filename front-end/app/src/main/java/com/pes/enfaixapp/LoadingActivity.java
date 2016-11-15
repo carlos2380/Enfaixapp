@@ -25,7 +25,7 @@ public class LoadingActivity extends AppCompatActivity {
             if (sessionToken == null) {
                 startActivity(new Intent(LoadingActivity.this, LogInActivity.class));
             } else {
-                startActivity(new Intent(LoadingActivity.this, WallActivity.class));
+                startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
             }
         }
         else {

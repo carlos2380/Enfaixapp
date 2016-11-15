@@ -13,8 +13,4 @@
     tools:context="com.pes.enfaixapp.DrawerActivity"
     tools:showIn="@layout/app_bar_drawer">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wfr3"/>
 </RelativeLayout>

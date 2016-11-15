@@ -307,7 +307,7 @@ public class SignInActivity extends Activity {
                 // Intent myintent=new Intent(SignInActivity.this, Correct.class).putExtra("info", a);
                 //crida al server per guardar les dades (nom, colles, etc)
 
-                startActivity(new Intent(SignInActivity.this, Correct.class));
+                startActivity(new Intent(SignInActivity.this, DrawerActivity.class));
 
 
             }

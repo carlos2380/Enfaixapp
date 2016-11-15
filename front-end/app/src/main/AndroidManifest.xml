@@ -24,20 +24,20 @@
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:label="registrar"></activity>
+            android:label="registrar" />
         <activity
             android:name=".WallActivity"
-            android:label="mur colla"></activity>
+            android:label="mur colla" />
         <activity
             android:name=".LogInActivity"
-            android:label="login"></activity>
+            android:label="login" />
         <activity
             android:name=".Correct"
-            android:label="correct"></activity>
+            android:label="correct" />
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

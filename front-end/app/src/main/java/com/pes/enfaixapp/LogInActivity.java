@@ -52,6 +52,9 @@ public class LogInActivity extends Activity implements AsyncResult {
                 HTTPHandler httphandler = new HTTPHandler();
                 httphandler.setAsyncResult(context);
                 httphandler.execute("POST", "http://10.4.41.165/login", jsonLogin.toString());
+                //SOLO LOCALHOST ---------------------------------------
+                startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
+                ///////////////////////////////////////////////////
             }
         });
 
@@ -73,7 +76,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("session-token", response.getString("session-token"));
                 editor.apply();
-                startActivity(new Intent(LogInActivity.this, WallActivity.class));
+                startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
             }
             else {
                 Toast toast = Toast.makeText(context, "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_LONG);

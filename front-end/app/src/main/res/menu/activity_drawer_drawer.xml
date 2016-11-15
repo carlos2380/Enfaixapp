@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_news"
+            android:title="Notícies" />
+        <item
+            android:id="@+id/nav_classification"
+            android:icon="@drawable/ic_trofeo"
+            android:title="Classificació" />
+        <item
+            android:id="@+id/nav_results"
+            android:icon="@drawable/ic_results"
+            android:title="Resultats" />
+    </group>
+
+    <group android:title="Altres"
+        android:checkableBehavior="single">
+        <menu>
+            <item
+                android:id="@+id/nav_configuration"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Configuració" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help_black_24dp"
+                android:title="Ajuda" />
+        </menu>
+    </group>
+
+</menu>
