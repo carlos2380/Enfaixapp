@@ -1,6 +1,6 @@
 import abc
 
-from db.DB import DB
+from api.db.DB import DB
 
 
 class FollowCtrl:

@@ -1,4 +1,4 @@
-from belongs.BelongCtrl import BelongCtrl
+from api.belongs.BelongCtrl import BelongCtrl
 
 
 class BelongCtrlMySQL(BelongCtrl):

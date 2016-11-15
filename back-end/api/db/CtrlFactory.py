@@ -1,7 +1,7 @@
 from api.colles.CollaCtrlMySQL import CollaCtrlMySQL
 from api.users.UserCtrlMySQL import UserCtrlMySQL
-from belongs.BelongCtrlMySQL import BelongCtrlMySQL
-from follows.FollowCtrlMySQL import FollowCtrlMySQL
+from api.belongs.BelongCtrlMySQL import BelongCtrlMySQL
+from api.follows.FollowCtrlMySQL import FollowCtrlMySQL
 
 
 def get_user_ctrl(data_source_connection):

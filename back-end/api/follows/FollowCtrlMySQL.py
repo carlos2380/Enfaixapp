@@ -1,4 +1,4 @@
-from follows.FollowCtrl import FollowCtrl
+from api.follows.FollowCtrl import FollowCtrl
 
 
 class FollowCtrlMySQL(FollowCtrl):

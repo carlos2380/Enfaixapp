@@ -6,7 +6,7 @@ from flask import request, make_response
 from api import app
 from api.db.DB import DB
 from api.login.auth_ctrl import create_user, check_password, create_token
-from db.CtrlFactory import get_user_ctrl
+from api.db.CtrlFactory import get_user_ctrl
 
 
 @app.route('/login', methods=['POST'])
