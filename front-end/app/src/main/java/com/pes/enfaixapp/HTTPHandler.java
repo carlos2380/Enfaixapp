@@ -27,6 +27,7 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
         if (isAValidHTTPMethod(httpMethod)) {
             try {
                 URL url = new URL(params[1]);
+                int port = url.getPort();
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod(httpMethod);
                 if (params[2] != null) {
@@ -37,13 +38,16 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
                 connection.connect();
 
                 int responseCode = connection.getResponseCode();
-                if ((responseCode == HttpURLConnection.HTTP_OK) || responseCode == HttpURLConnection.HTTP_CREATED) {
-                    return new JSONObject(connection.getResponseMessage());
-                }
+                JSONObject result = new JSONObject();
+                result.accumulate("connection", connection.getResponseMessage());
+                result.accumulate("response", responseCode);
+                return result;
+
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 

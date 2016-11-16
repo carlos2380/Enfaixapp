@@ -30,6 +30,7 @@ import com.pes.enfaixapp.Models.Usuari;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 public class SignInActivity extends Activity implements AsyncResult {
@@ -319,6 +320,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     totesColles.addAll(collesUni);
                     user.setTotesColles(totesColles);
 
+
                     jsonUser.accumulate("email", user.getCorreu() );
                     jsonUser.accumulate("password", user.getPsswd() );
                     jsonUser.accumulate("name", user.getNom() );
@@ -335,7 +337,7 @@ public class SignInActivity extends Activity implements AsyncResult {
 
                 HTTPHandler httphandler = new HTTPHandler();
                 httphandler.setAsyncResult(context);
-                httphandler.execute("POST", "http://10.4.41.165/signin", jsonUser.toString());
+                httphandler.execute("POST", "http://10.4.41.165:5000/signin", jsonUser.toString());
 
 
             }
@@ -344,9 +346,20 @@ public class SignInActivity extends Activity implements AsyncResult {
     }
 
     @Override
-    public void processFinish(Object output) {
-        if (output != null)
-            startActivity(new Intent(SignInActivity.this, DrawerActivity.class));
+    public void processFinish(JSONObject output) {
+        if (output != null) {
+            try {
+                int response = output.getInt("response");
+                if (response == HttpURLConnection.HTTP_OK || response == HttpURLConnection.HTTP_CREATED)
+                    startActivity(new Intent(SignInActivity.this, DrawerActivity.class));
+                else {      //cas error 500
+                    Toast toast = Toast.makeText(context, "ERROR 500: INTERNAL SERVER ERROR", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         else {
             Toast toast = Toast.makeText(context, "No funciona", Toast.LENGTH_LONG);
             toast.show();

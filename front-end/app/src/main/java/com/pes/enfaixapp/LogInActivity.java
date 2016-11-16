@@ -66,8 +66,8 @@ public class LogInActivity extends Activity implements AsyncResult {
         });
     }
 
-    @Override
-    public void processFinish(Object output) {
+
+    public void processFinish(JSONObject output) {
         JSONObject response = (JSONObject)output;
         try {
             boolean status = response.getBoolean("status");
