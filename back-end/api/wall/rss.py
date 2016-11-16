@@ -4,7 +4,7 @@ import codecs
 import datetime
 
 
-def rssInfo(url, month=datetime.datetime.today().month, year=datetime.datetime.today().year, number_of_entries=5)
+def rssInfo(url, month=datetime.datetime.today().month, year=datetime.datetime.today().year, number_of_entries=5):
     d = feedparser.parse(url)
     json1 = {}
     id = 0
