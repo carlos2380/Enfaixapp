@@ -28,22 +28,25 @@ def log_in():
 
 @app.route('/signin', methods=['POST'])
 def sign_in():
-    body = json.loads(request.data)
-    email = body['email']
-    password = body['password']
-    name = body['name']
-    surname = body['surname']
-    colles_that_belongs_to = body['belongs']
-    colles_followed = body['follows']
-    db_configuration = json.loads(open("api/db/db.json").read())
-    user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
-    new_user = user_ctrl.get_by_email(email)
-    if new_user is None:
-        new_user = create_user(name=name, surname=surname, email=email, password=password,
-                               belonging_list=colles_that_belongs_to, following_list=colles_followed)
-        token = create_token(email, new_user.id)
-        new_user.session_token = token
-        new_user.follows = colles_followed
-        new_user.belongs = colles_that_belongs_to
-        return make_response(jsonify(new_user.__dict__), 201)
-    abort(403)
+    try:
+        body = json.loads(request.data)
+        email = body['email']
+        password = body['password']
+        name = body['name']
+        surname = body['surname']
+        colles_that_belongs_to = body['belongs']
+        colles_followed = body['follows']
+        db_configuration = json.loads(open("api/db/db.json").read())
+        user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
+        new_user = user_ctrl.get_by_email(email)
+        if new_user is None:
+            new_user = create_user(name=name, surname=surname, email=email, password=password,
+                                   belonging_list=colles_that_belongs_to, following_list=colles_followed)
+            token = create_token(email, new_user.id)
+            new_user.session_token = token
+            new_user.follows = colles_followed
+            new_user.belongs = colles_that_belongs_to
+            return make_response(jsonify(new_user.__dict__), 201)
+        abort(409)
+    except KeyError:
+        abort(500)
