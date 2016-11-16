@@ -2,6 +2,7 @@ package com.pes.enfaixapp.Models;
 
 import com.pes.enfaixapp.Models.Colla;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -17,8 +18,10 @@ public class Usuari {
     private String correu;
     private Colla CollaConv;
     private Colla CollaUni;
+    private ArrayList<Colla> totesColles; //totes les colles a les que pertany l'usuari, ja siguin universitaries o convencionals
     private ArrayList<Colla> CollesSeguides;
 
+    public Usuari() {}
 
     public Usuari(String nom, String id, String cognoms, String psswd, String correu, Colla collaConv, Colla collaUni, ArrayList<Colla> collesSeguides) {
         this.nom = nom;
@@ -94,5 +97,13 @@ public class Usuari {
 
     public void setCollesSeguides(ArrayList<Colla> collesSeguides) {
         CollesSeguides = collesSeguides;
+    }
+
+    public ArrayList<Colla> getTotesColles() {
+        return totesColles;
+    }
+
+    public void setTotesColles(ArrayList<Colla> totesColles) {
+        this.totesColles = totesColles;
     }
 }

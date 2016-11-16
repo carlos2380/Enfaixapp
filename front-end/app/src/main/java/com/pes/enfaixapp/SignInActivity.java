@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.pes.enfaixapp.Adapters.AdaptadorColla;
@@ -26,9 +27,12 @@ import com.pes.enfaixapp.Adapters.AdaptadorCollesSeguides;
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Usuari;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class SignInActivity extends Activity {
+public class SignInActivity extends Activity implements AsyncResult {
 
     Button aboutYouButton;
     Button chooseCollaConvButton;
@@ -61,6 +65,7 @@ public class SignInActivity extends Activity {
 
     Usuari user;
     String psswd, psswdCheck = "buit";
+    private SignInActivity context;
 
     public void hideSoftKeyboard() {
         if(getCurrentFocus()!=null) {
@@ -84,6 +89,8 @@ public class SignInActivity extends Activity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_sign_in);
         hideSoftKeyboard();
+
+        context = this;
 
         aboutYouButton = (Button) findViewById(R.id.aboutYouButton);
         chooseCollaConvButton = (Button) findViewById(R.id.button2);
@@ -151,6 +158,7 @@ public class SignInActivity extends Activity {
 
         AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
 
+        user = new Usuari();
 
 
         aboutYouButton.setOnClickListener(new View.OnClickListener() {
@@ -166,22 +174,18 @@ public class SignInActivity extends Activity {
 
                         if (inputName.callOnClick()){
                             nom.setTextColor(65536);
-                            user.setNom(inputName.getText().toString());
                         }
                         else if (inputSurname.callOnClick()){
                             cognom.setTextColor(65536);
-                            user.setCognoms(inputSurname.getText().toString());
 
                         }
                         else if (inputCorreu.callOnClick()) {
                             correu.setTextColor(65536);
-                            user.setCorreu(inputCorreu.getText().toString());
 
                         }
                         else if (inputPasswd.callOnClick()) {
                             contrasenya.setTextColor(65536);
                             psswd = inputPasswd.getText().toString();
-                            user.setPsswd(inputPasswd.getText().toString());
                         }
                         else if (inputPasswd2.callOnClick()){
                             contrasenya2.setTextColor(65536);
@@ -304,14 +308,48 @@ public class SignInActivity extends Activity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent myintent=new Intent(SignInActivity.this, Correct.class).putExtra("info", a);
-                //crida al server per guardar les dades (nom, colles, etc)
+                JSONObject jsonUser = new JSONObject();
+                try {
+                    user.setNom(inputName.getText().toString());
+                    user.setCognoms(inputSurname.getText().toString());
+                    user.setCorreu(inputCorreu.getText().toString());
+                    user.setPsswd(inputPasswd.getText().toString());
+                    ArrayList<Colla> totesColles = new ArrayList<Colla>();
+                    totesColles.addAll(collesConv);
+                    totesColles.addAll(collesUni);
+                    user.setTotesColles(totesColles);
 
-                startActivity(new Intent(SignInActivity.this, DrawerActivity.class));
+                    jsonUser.accumulate("email", user.getCorreu() );
+                    jsonUser.accumulate("password", user.getPsswd() );
+                    jsonUser.accumulate("name", user.getNom() );
+                    jsonUser.accumulate("surname", user.getCognoms() );
+                    jsonUser.accumulate("belongs", user.getCollaConv() );
+                    jsonUser.accumulate("follows", user.getCollesSeguides() );
+                    //////////////////////////////////////////////////////////
+                    //jsonUser.accumulate("totesColles",user.getTotesColles() ); //DEFINIR EL ATRIBUT QUE ES FA SERVIR A BACKEND PER TOTES
+                    //////////////////////////////////////////////////////////
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                HTTPHandler httphandler = new HTTPHandler();
+                httphandler.setAsyncResult(context);
+                httphandler.execute("POST", "http://10.4.41.165/signin", jsonUser.toString());
 
 
             }
         });
 
+    }
+
+    @Override
+    public void processFinish(Object output) {
+        if (output != null)
+            startActivity(new Intent(SignInActivity.this, DrawerActivity.class));
+        else {
+            Toast toast = Toast.makeText(context, "No funciona", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 }
