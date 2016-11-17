@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE colles (
   id       INTEGER AUTO_INCREMENT,
-  name     VARCHAR(20) NOT NULL,
+  name     VARCHAR(100) NOT NULL,
   uni      BOOLEAN     NOT NULL,
   color    NVARCHAR(7),
   img_path VARCHAR(255),
