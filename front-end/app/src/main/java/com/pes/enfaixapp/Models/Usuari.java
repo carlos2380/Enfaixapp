@@ -1,37 +1,35 @@
 package com.pes.enfaixapp.Models;
 
-import com.pes.enfaixapp.Models.Colla;
-
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Àlex on 26/10/2016.
  */
 
-public class Usuari {
+public class Usuari implements Serializable {
 
     private String nom;
-    private String id;
+    private int id;
     private String cognoms;
     private String psswd;
     private String correu;
-    private Colla CollaConv;
-    private Colla CollaUni;
-    private ArrayList<Colla> totesColles; //totes les colles a les que pertany l'usuari, ja siguin universitaries o convencionals
-    private ArrayList<Colla> CollesSeguides;
+    private List<Colla> collesALesQuePertany;
+    private List<Colla> collesSeguides;
 
-    public Usuari() {}
+    public Usuari() {
+        collesSeguides = new ArrayList<>();
+        collesALesQuePertany = new ArrayList<>();
+    }
 
-    public Usuari(String nom, String id, String cognoms, String psswd, String correu, Colla collaConv, Colla collaUni, ArrayList<Colla> collesSeguides) {
+    public Usuari(String nom, int id, String cognoms, String psswd, String correu, ArrayList<Colla> collesSeguides) {
         this.nom = nom;
         this.id = id;
         this.cognoms = cognoms;
         this.psswd = psswd;
         this.correu = correu;
-        CollaConv = collaConv;
-        CollaUni = collaUni;
-        CollesSeguides = collesSeguides;
+        this.collesSeguides = collesSeguides;
     }
 
 
@@ -43,11 +41,11 @@ public class Usuari {
         this.nom = nom;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,35 +73,23 @@ public class Usuari {
         this.correu = correu;
     }
 
-    public Colla getCollaConv() {
-        return CollaConv;
-    }
-
-    public void setCollaConv(Colla collaConv) {
-        CollaConv = collaConv;
-    }
-
-    public Colla getCollaUni() {
-        return CollaUni;
-    }
-
-    public void setCollaUni(Colla collaUni) {
-        CollaUni = collaUni;
-    }
-
-    public ArrayList<Colla> getCollesSeguides() {
-        return CollesSeguides;
+    public List<Colla> getCollesSeguides() {
+        return collesSeguides;
     }
 
     public void setCollesSeguides(ArrayList<Colla> collesSeguides) {
-        CollesSeguides = collesSeguides;
+        this.collesSeguides = collesSeguides;
     }
 
-    public ArrayList<Colla> getTotesColles() {
-        return totesColles;
+    public List<Colla> getCollesALesQuePertany() {
+        return collesALesQuePertany;
     }
 
-    public void setTotesColles(ArrayList<Colla> totesColles) {
-        this.totesColles = totesColles;
+    public void setCollesALesQuePertany(ArrayList<Colla> collesALesQuePertany) {
+        this.collesALesQuePertany = collesALesQuePertany;
+    }
+
+    public void addCollaQuePertany(Colla collaConvEscollida) {
+        collesALesQuePertany.add(collaConvEscollida);
     }
 }
