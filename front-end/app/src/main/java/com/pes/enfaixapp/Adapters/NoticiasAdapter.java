@@ -28,7 +28,7 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.Notici
         public NoticiasViewHolder(View v) {
 
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.imagen);
+            //imagen = (ImageView) v.findViewById(R.id.imagen);
             nombre = (TextView) v.findViewById(R.id.titulo);
             visitas = (TextView) v.findViewById(R.id.contentido);
         }
@@ -52,8 +52,8 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.Notici
 
     @Override
     public void onBindViewHolder(NoticiasViewHolder viewHolder, int i) {
-        viewHolder.imagen.setImageResource(items.get(i).getPhotoId());
+        //viewHolder.imagen.setImageResource(items.get(i).getPhotoId());
         viewHolder.nombre.setText(items.get(i).getTitulo());
-        viewHolder.visitas.setText(items.get(i).getContenido());
+        viewHolder.visitas.setText(items.get(i).getDescription());
     }
 }

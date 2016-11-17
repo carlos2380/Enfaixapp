@@ -77,7 +77,6 @@ public class NoticiaActivity extends Fragment {
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

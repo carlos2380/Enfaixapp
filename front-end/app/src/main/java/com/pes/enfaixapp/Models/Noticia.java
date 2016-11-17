@@ -3,6 +3,7 @@ package com.pes.enfaixapp.Models;
 /**
  * Created by carlos on 15/11/2016.
  */
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,14 +12,16 @@ import java.util.List;
 
 public class Noticia {
     String titulo;
-    String contenido;
+    String description;
     String url;
+    Date date;
     int photoId;
 
-
+    public Noticia() {
+    }
     public Noticia(String name, String age, int photoId) {
         this.titulo = name;
-        this.contenido = age;
+        this.description = age;
         this.photoId = photoId;
     }
 
@@ -36,12 +39,12 @@ public class Noticia {
         this.titulo = titulo;
     }
 
-    public String getContenido() {
-        return contenido;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getPhotoId() {
@@ -58,5 +61,13 @@ public class Noticia {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

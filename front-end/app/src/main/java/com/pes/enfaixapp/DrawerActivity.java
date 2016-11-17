@@ -15,7 +15,7 @@ public class DrawerActivity extends AppCompatActivity
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
-
+    NoticiaActivity fragmentNoticia = new NoticiaActivity();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class DrawerActivity extends AppCompatActivity
 
         NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
         fragmentTransaction.commit();
 
         //----------------------------
@@ -85,9 +85,9 @@ public class DrawerActivity extends AppCompatActivity
             //------------------------------------
             //INSERTAR FRAGMENTO
 
-            NoticiaActivity fragment = new NoticiaActivity();
+
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
             fragmentTransaction.commit();
 
             //----------------------------

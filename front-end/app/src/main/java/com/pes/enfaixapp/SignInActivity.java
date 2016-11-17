@@ -328,7 +328,7 @@ public class SignInActivity extends Activity implements AsyncResult {
             try {
                 int response = output.getInt("response");
                 if (response == HttpURLConnection.HTTP_OK || response == HttpURLConnection.HTTP_CREATED) {
-                    Intent intent = new Intent(SignInActivity.this, EmptyActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, DrawerActivity.class);
                     Usuari u = JSONConverter.toUser(output);
                     intent.putExtra("User", u);
                     startActivity(intent);
