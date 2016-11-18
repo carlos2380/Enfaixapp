@@ -1,6 +1,8 @@
 package com.pes.enfaixapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import com.pes.enfaixapp.R;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +76,7 @@ public class ListadoNoticiasFragment extends Fragment {
         return rootView;
     }
 
-    public static void insertarNoticias(final List<Noticia> noticas) {
+    public void insertarNoticias(final List<Noticia> noticas) {
         // Obtener el Recycler
         recycler = (RecyclerView) rootView.findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
@@ -89,9 +92,9 @@ public class ListadoNoticiasFragment extends Fragment {
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(rootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        String s = noticas.get(position).getTitulo();
-                        Toast toast = Toast.makeText(rootView.getContext(), s, Toast.LENGTH_SHORT);
-                        toast.show();
+                        Uri uri = Uri.parse(noticas.get(position).getUrl());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
                 })
         );
@@ -118,7 +121,7 @@ public class ListadoNoticiasFragment extends Fragment {
         return noticias;
     }
 
-    private static class MyAsync implements AsyncResult {
+    private class MyAsync implements AsyncResult {
         Context context;
         public MyAsync(Context context) {
             this.context = context;
@@ -132,7 +135,11 @@ public class ListadoNoticiasFragment extends Fragment {
 
         @Override
         public void processFinish(JSONObject output) {
-            insertarNoticias(JSONConverter.toNoticies(output));
+            try {
+                insertarNoticias(JSONConverter.toNoticies(output));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

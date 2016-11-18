@@ -1,5 +1,7 @@
 package com.pes.enfaixapp.Adapters;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,9 +76,9 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(rootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        String s = noticiasAdapter.get(position).getTitulo();
-                        Toast toast = Toast.makeText(rootView.getContext(), s, Toast.LENGTH_SHORT);
-                        toast.show();
+                        Uri uri = Uri.parse(noticiasAdapter.get(position).getUrl());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
                 })
         );

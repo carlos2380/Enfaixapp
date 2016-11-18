@@ -6,6 +6,8 @@ import com.pes.enfaixapp.Models.Usuari;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +31,7 @@ public class JSONConverter {
         return usuari;
     }
 
-    public static List<Noticia> toNoticies(JSONObject jsonObject)  {
+    public static List<Noticia> toNoticies(JSONObject jsonObject) throws UnsupportedEncodingException {
         List<Noticia> noticias = new ArrayList<Noticia>();
         try {
             Iterator iter = jsonObject.keys();
@@ -40,10 +42,10 @@ public class JSONConverter {
                 if(jsonObject.getString(key).toString() != "connection") {
                     JSONObject objNoticia = jsonObject.getJSONObject(key);
                     Noticia noticia= new Noticia();
-                    noticia.setTitulo(objNoticia.getString("title"));
-                    noticia.setUrl(objNoticia.getString("link"));
+                    noticia.setTitulo(URLDecoder.decode(objNoticia.getString("title"), "UTF-8"));
+                    noticia.setUrl(URLDecoder.decode(objNoticia.getString("link"), "UTF-8"));
                     //noticia.setDate(Date.valueOf(objNoticia.getString("date")));
-                    noticia.setDescription(objNoticia.getString("description"));
+                    noticia.setDescription(URLDecoder.decode(objNoticia.getString("description"), "UTF-8"));
                     noticias.add(noticia);
                 }else {
                     continuar = false;
