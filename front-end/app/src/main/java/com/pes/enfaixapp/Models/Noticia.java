@@ -15,14 +15,12 @@ public class Noticia {
     String description;
     String url;
     Date date;
-    int photoId;
 
     public Noticia() {
     }
     public Noticia(String name, String age, int photoId) {
         this.titulo = name;
         this.description = age;
-        this.photoId = photoId;
     }
 
     public List<Noticia> noticias;
@@ -47,13 +45,6 @@ public class Noticia {
         this.description = description;
     }
 
-    public int getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(int photoId) {
-        this.photoId = photoId;
-    }
 
     public String getUrl() {
         return url;

@@ -1,5 +1,7 @@
 package com.pes.enfaixapp;
 
+import android.text.Html;
+
 import com.pes.enfaixapp.Models.Noticia;
 import com.pes.enfaixapp.Models.Usuari;
 
@@ -45,7 +47,7 @@ public class JSONConverter {
                     noticia.setTitulo(URLDecoder.decode(objNoticia.getString("title"), "UTF-8"));
                     noticia.setUrl(URLDecoder.decode(objNoticia.getString("link"), "UTF-8"));
                     //noticia.setDate(Date.valueOf(objNoticia.getString("date")));
-                    noticia.setDescription(URLDecoder.decode(objNoticia.getString("description"), "UTF-8"));
+                    noticia.setDescription(String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("description"), "UTF-8"))));
                     noticias.add(noticia);
                 }else {
                     continuar = false;
