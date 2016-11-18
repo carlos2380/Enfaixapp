@@ -274,7 +274,31 @@ public class SignInActivity extends Activity implements AsyncResult {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (inputPasswd.getText().toString().equals(inputPasswd2.getText().toString())) {
+                Boolean checked = true;
+                if (inputName.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "Nom buit!", Toast.LENGTH_LONG).show();
+                    checked = false;
+                }
+
+                if (inputSurname.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "Cognom buit!", Toast.LENGTH_LONG).show();
+                    checked = false;
+                }
+
+                if (inputCorreu.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "Correu buit!", Toast.LENGTH_LONG).show();
+                    checked = false;
+                }
+
+                if (inputPasswd.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "Password buit!", Toast.LENGTH_LONG).show();
+                    checked = false;
+                }
+
+                if (inputPasswd2.getText().toString().isEmpty() && checked == true) {
+                    Toast.makeText(context, "Repeat Password buit!", Toast.LENGTH_LONG).show();
+                }
+                    if (inputPasswd.getText().toString().equals(inputPasswd2.getText().toString())) {
                     JSONObject jsonUser = new JSONObject();
                     try {
                         user.setNom(inputName.getText().toString());
