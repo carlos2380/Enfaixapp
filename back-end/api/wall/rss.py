@@ -15,7 +15,7 @@ def rss_info(url, month=datetime.datetime.today().month, year=datetime.datetime.
                 entry['title'] = post.title.encode('utf-8')
                 entry['link'] = post.link
                 entry['date'] = post.published
-                entry['description'] = post.description
+                entry['description'] = post.description.encode('utf-8')
                 json1[id] = entry
                 count += 1
             id += 1
