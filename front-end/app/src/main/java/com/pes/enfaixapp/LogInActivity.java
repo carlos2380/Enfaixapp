@@ -43,7 +43,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                     jsonLogin.accumulate("email", emailField.getText());
                     MessageDigest messageDigest;
                     messageDigest = MessageDigest.getInstance("MD5");
-                    messageDigest.update(emailField.getText().toString().getBytes());
+                    messageDigest.update(passwordField.getText().toString().getBytes());
                     byte[] sum = messageDigest.digest();
                     BigInteger bigInteger = new BigInteger(1,sum);
                     String hash = bigInteger.toString(64);

@@ -23,7 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 /**
@@ -281,7 +284,14 @@ public class SignInActivity extends Activity implements AsyncResult {
                             user.setNom(inputName.getText().toString());
                             user.setCognoms(inputSurname.getText().toString());
                             user.setCorreu(inputCorreu.getText().toString());
-                            user.setPsswd(inputPasswd.getText().toString());
+
+                            MessageDigest messageDigest;
+                            messageDigest = MessageDigest.getInstance("MD5");
+                            messageDigest.update(inputPasswd.getText().toString().getBytes());
+                            byte[] sum = messageDigest.digest();
+                            BigInteger bigInteger = new BigInteger(1,sum);
+                            String hash = bigInteger.toString(64);
+                            user.setPsswd(hash);
 
 
                             Colla CollaConvEscollida = (Colla) listViewCollesConvencionals.getSelectedItem();
@@ -306,6 +316,8 @@ public class SignInActivity extends Activity implements AsyncResult {
                             //jsonUser.accumulate("totesColles",user.getCollesALesQuePertany() ); //DEFINIR EL ATRIBUT QUE ES FA SERVIR A BACKEND PER TOTES
                             //////////////////////////////////////////////////////////
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
 
