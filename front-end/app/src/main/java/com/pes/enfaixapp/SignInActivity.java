@@ -274,76 +274,78 @@ public class SignInActivity extends Activity implements AsyncResult {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean checked = true;
-                if (inputName.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Nom buit!", Toast.LENGTH_LONG).show();
-                    checked = false;
-                }
-
-                if (inputSurname.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Cognom buit!", Toast.LENGTH_LONG).show();
-                    checked = false;
-                }
-
-                if (inputCorreu.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Correu buit!", Toast.LENGTH_LONG).show();
-                    checked = false;
-                }
-
-                if (inputPasswd.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Password buit!", Toast.LENGTH_LONG).show();
-                    checked = false;
-                }
-
-                if (inputPasswd2.getText().toString().isEmpty() && checked == true) {
-                    Toast.makeText(context, "Repeat Password buit!", Toast.LENGTH_LONG).show();
-                }
+                if ( !fieldsAreEmpty()) {
                     if (inputPasswd.getText().toString().equals(inputPasswd2.getText().toString())) {
-                    JSONObject jsonUser = new JSONObject();
-                    try {
-                        user.setNom(inputName.getText().toString());
-                        user.setCognoms(inputSurname.getText().toString());
-                        user.setCorreu(inputCorreu.getText().toString());
-                        user.setPsswd(inputPasswd.getText().toString());
+                        JSONObject jsonUser = new JSONObject();
+                        try {
+                            user.setNom(inputName.getText().toString());
+                            user.setCognoms(inputSurname.getText().toString());
+                            user.setCorreu(inputCorreu.getText().toString());
+                            user.setPsswd(inputPasswd.getText().toString());
 
 
-                        Colla CollaConvEscollida = (Colla) listViewCollesConvencionals.getSelectedItem();
-                        if (CollaConvEscollida != null) {
-                            user.addCollaQuePertany(CollaConvEscollida);
+                            Colla CollaConvEscollida = (Colla) listViewCollesConvencionals.getSelectedItem();
+                            if (CollaConvEscollida != null) {
+                                user.addCollaQuePertany(CollaConvEscollida);
+                            }
+
+                            Colla CollaUniEscollida = (Colla) listViewCollesUniversitaries.getSelectedItem();
+                            if (CollaUniEscollida != null) {
+                                user.addCollaQuePertany(CollaUniEscollida);
+                            }
+
+                            user.setCollesSeguides(CollesSeguides);
+
+                            jsonUser.accumulate("email", user.getCorreu());
+                            jsonUser.accumulate("password", user.getPsswd());
+                            jsonUser.accumulate("name", user.getNom());
+                            jsonUser.accumulate("surname", user.getCognoms());
+                            jsonUser.accumulate("belongs", new JSONArray(user.getCollesALesQuePertany()));
+                            jsonUser.accumulate("follows", new JSONArray(user.getCollesSeguides()));
+                            //////////////////////////////////////////////////////////
+                            //jsonUser.accumulate("totesColles",user.getCollesALesQuePertany() ); //DEFINIR EL ATRIBUT QUE ES FA SERVIR A BACKEND PER TOTES
+                            //////////////////////////////////////////////////////////
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                        Colla CollaUniEscollida = (Colla) listViewCollesUniversitaries.getSelectedItem();
-                        if (CollaUniEscollida != null) {
-                            user.addCollaQuePertany(CollaUniEscollida);
-                        }
 
-                        user.setCollesSeguides(CollesSeguides);
-
-                        jsonUser.accumulate("email", user.getCorreu());
-                        jsonUser.accumulate("password", user.getPsswd());
-                        jsonUser.accumulate("name", user.getNom());
-                        jsonUser.accumulate("surname", user.getCognoms());
-                        jsonUser.accumulate("belongs", new JSONArray(user.getCollesALesQuePertany()));
-                        jsonUser.accumulate("follows", new JSONArray(user.getCollesSeguides()));
-                        //////////////////////////////////////////////////////////
-                        //jsonUser.accumulate("totesColles",user.getCollesALesQuePertany() ); //DEFINIR EL ATRIBUT QUE ES FA SERVIR A BACKEND PER TOTES
-                        //////////////////////////////////////////////////////////
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        HTTPHandler httphandler = new HTTPHandler();
+                        httphandler.setAsyncResult(context);
+                        httphandler.execute("POST", "http://10.4.41.165:5000/signin", jsonUser.toString());
+                    } else {
+                        Toast toast = Toast.makeText(context, "Les contrasenyes no coincideixen", Toast.LENGTH_LONG);
+                        toast.show();
                     }
-
-
-                    HTTPHandler httphandler = new HTTPHandler();
-                    httphandler.setAsyncResult(context);
-                    httphandler.execute("POST", "http://10.4.41.165:5000/signin", jsonUser.toString());
-                } else {
-                    Toast toast = Toast.makeText(context, "Les contrasenyes no coincideixer", Toast.LENGTH_LONG);
-                    toast.show();
                 }
 
             }
         });
 
+    }
+
+    private Boolean fieldsAreEmpty() {
+        if (inputName.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El camp del nom és buit", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (inputSurname.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El camp del cognom és buit", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (inputCorreu.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El camp del correu és buit", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (inputPasswd.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El camp de contrasenya és buit", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (inputPasswd2.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El camp de repeticó és buit", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -49,7 +49,12 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
                 connection.connect();
 
                 int responseCode = connection.getResponseCode();
-                String response = parseResponse(connection.getInputStream());
+                String response;
+                if (responseCode >= HttpURLConnection.HTTP_OK && responseCode < HttpURLConnection.HTTP_MULT_CHOICE) {
+                    response = parseResponse(connection.getInputStream());
+                } else {
+                    response = parseResponse(connection.getErrorStream());
+                }
                 JSONObject result = new JSONObject(response);
                 result.accumulate("connection", connection.getResponseMessage());
                 result.accumulate("response", responseCode);

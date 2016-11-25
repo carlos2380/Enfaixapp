@@ -17,10 +17,10 @@
         android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/usernameText"
+        android:id="@+id/emailText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:inputType="textPersonName"
         android:drawableStart="@drawable/ic_account_circle_login_24dp"
         android:drawablePadding="10dp"

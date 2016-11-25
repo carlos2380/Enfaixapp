@@ -9,17 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.pes.enfaixapp.Models.Usuari;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LogInActivity extends Activity implements AsyncResult {
 
     private Button loginButton, signInButton; //log in, cancel
-    private EditText usernameField, passwordField; //user, pass
+    private EditText emailField, passwordField; //user, pass
     private LogInActivity context;
 
     @Override
@@ -29,7 +32,7 @@ public class LogInActivity extends Activity implements AsyncResult {
         context = this;
         loginButton =(Button)findViewById(R.id.logInButton);
         signInButton =(Button)findViewById(R.id.signInButton);
-        usernameField =(EditText)findViewById(R.id.usernameText);
+        emailField =(EditText)findViewById(R.id.emailText);
         passwordField =(EditText)findViewById(R.id.passwordText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +40,10 @@ public class LogInActivity extends Activity implements AsyncResult {
             public void onClick(View v) {
                 JSONObject jsonLogin = new JSONObject();
                 try {
-                    jsonLogin.accumulate("username", usernameField.getText());
+                    jsonLogin.accumulate("email", emailField.getText());
                     MessageDigest messageDigest;
                     messageDigest = MessageDigest.getInstance("MD5");
-                    messageDigest.update(usernameField.getText().toString().getBytes());
+                    messageDigest.update(emailField.getText().toString().getBytes());
                     byte[] sum = messageDigest.digest();
                     BigInteger bigInteger = new BigInteger(1,sum);
                     String hash = bigInteger.toString(64);
@@ -51,10 +54,7 @@ public class LogInActivity extends Activity implements AsyncResult {
 
                 HTTPHandler httphandler = new HTTPHandler();
                 httphandler.setAsyncResult(context);
-                httphandler.execute("POST", "http://10.4.41.165/login", jsonLogin.toString());
-                //SOLO LOCALHOST ---------------------------------------
-                //startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
-                ///////////////////////////////////////////////////
+                httphandler.execute("POST", "http://10.4.41.165:5000/login", jsonLogin.toString());
             }
         });
 
@@ -66,25 +66,31 @@ public class LogInActivity extends Activity implements AsyncResult {
         });
     }
 
-
+    @Override
     public void processFinish(JSONObject output) {
-        JSONObject response = (JSONObject)output;
-        try {
-            boolean status = response.getBoolean("status");
-            if (status) {
-                SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("session-token", response.getString("session-token"));
-                editor.apply();
-                startActivity(new Intent(LogInActivity.this, DrawerActivity.class));
+        if (output != null) {
+            try {
+                int response = output.getInt("response");
+                if (response == HttpURLConnection.HTTP_OK) {
+                    Intent intent = new Intent(LogInActivity.this, DrawerActivity.class);
+                    Usuari u = JSONConverter.toUser(output);
+                    intent.putExtra("User", u);
+                    startActivity(intent);
+                }
+                else if (response == HttpURLConnection.HTTP_FORBIDDEN) { // cas autentificació incorrecte
+                    Toast toast = Toast.makeText(context, "El correu o la contrasenya no són correctes", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    Toast toast = Toast.makeText(context, "ERROR 500: INTERNAL SERVER ERROR", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            else {
-                Toast toast = Toast.makeText(context, "Nom d'usuari o contrasenya incorrectes", Toast.LENGTH_LONG);
-                toast.show();
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } else {
+            Toast toast = Toast.makeText(context, "El server no funciona", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 }
