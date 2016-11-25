@@ -12,6 +12,7 @@ def create_user(name, surname, email, password, belonging_list, following_list):
     user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
     user = User(name, surname, email, password=password)
     user = user_ctrl.insert(user)
+    user.password = None
     belonging_ctrl = get_belonging_ctrl(DB(db_configuration).get_database_connection())
     belonging_ctrl.insert_belonging_batch(belonging_list, user.id)
     following_ctrl = get_following_ctrl(DB(db_configuration).get_database_connection())
