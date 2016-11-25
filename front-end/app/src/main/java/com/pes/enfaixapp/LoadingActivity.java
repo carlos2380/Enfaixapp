@@ -1,11 +1,13 @@
 package com.pes.enfaixapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -24,13 +26,24 @@ public class LoadingActivity extends AppCompatActivity {
             String sessionToken = preferences.getString("session-token", null);
             if (sessionToken == null) {
                 startActivity(new Intent(LoadingActivity.this, LogInActivity.class));
+                finish();
             } else {
                 startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
+                finish();
             }
         }
         else {
-            Toast toast = Toast.makeText(this,"No estàs connectat", Toast.LENGTH_LONG);
-            toast.show();
+            new AlertDialog.Builder(this)
+                    .setTitle("No esteu connectats")
+                    .setMessage("Si us plau, connecteu-vos a la xarxa")
+                    .setPositiveButton("Acceptar",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    finish();
+                                }
+                            }).show();
         }
     }
 

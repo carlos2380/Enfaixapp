@@ -370,6 +370,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     Usuari u = JSONConverter.toUser(output);
                     intent.putExtra("User", u);
                     startActivity(intent);
+                    finish();
                 }
                 else {      //cas error 500
                     Toast toast = Toast.makeText(context, "ERROR 500: INTERNAL SERVER ERROR", Toast.LENGTH_LONG);

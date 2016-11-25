@@ -76,6 +76,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                     Usuari u = JSONConverter.toUser(output);
                     intent.putExtra("User", u);
                     startActivity(intent);
+                    finish();
                 }
                 else if (response == HttpURLConnection.HTTP_FORBIDDEN) { // cas autentificació incorrecte
                     Toast toast = Toast.makeText(context, "El correu o la contrasenya no són correctes", Toast.LENGTH_LONG);
