@@ -34,3 +34,10 @@ def create_token(email, user_id):
     user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
     user_ctrl.add_token(user_id, token)
     return token
+
+
+def get_token_by_user_id(user_id):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    token_ctrl = get_token_ctrl(DB(db_configuration).get_database_connection())
+    token = token_ctrl.get(user_id)
+    return token

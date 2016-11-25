@@ -6,7 +6,7 @@ from flask import request, make_response
 
 from api import app
 from api.db.DB import DB
-from api.login.auth_ctrl import create_user, check_password, create_token
+from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id
 from api.db.CtrlFactory import get_user_ctrl
 
 
@@ -20,7 +20,7 @@ def log_in():
     user = user_ctrl.get_by_email(email)
     if user is not None:
         if check_password(email, password):
-            token = create_token(email=email, user_id=user.id)
+            token = get_token_by_user_id(user_id=user.id)
             user.session_token = token
             return make_response(jsonify(user.__dict__), 200)
     return abort(403)
