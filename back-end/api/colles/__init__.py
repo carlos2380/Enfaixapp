@@ -14,17 +14,17 @@ from api.db.DB import DB
 def get_colles():
     db_configuration = json.loads(open("api/db/db.json").read())
     tipus_colla = request.args.get('type')
-    from db.CtrlFactory import get_colla_ctrl
-    ctrl_user = get_colla_ctrl(DB(db_configuration).get_database_connection())
+    from api.db.CtrlFactory import get_colla_ctrl
+    ctrl_colla = get_colla_ctrl(DB(db_configuration).get_database_connection())
 
     if tipus_colla == 'uni':
-        colles = ctrl_user.get_universitaries()
+        colles = ctrl_colla.get_universitaries()
     elif tipus_colla == 'conv':
-        colles = ctrl_user.get_convencionals()
+        colles = ctrl_colla.get_convencionals()
     else:
-        colles = ctrl_user.get_all()
+        colles = ctrl_colla.get_all()
 
-    json_string = json.dumps([colla.__dict__ for colla in colles])
+    json_string = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8")
 
     return make_response(json_string, 200)
 

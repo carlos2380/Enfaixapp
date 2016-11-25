@@ -1,4 +1,5 @@
 import json
+import urllib
 
 from flask import abort, jsonify
 from flask import request, make_response
@@ -22,14 +23,13 @@ def log_in():
             token = create_token(email=email, user_id=user.id)
             user.session_token = token
             return make_response(jsonify(user.__dict__), 200)
-
     return abort(403)
 
 
 @app.route('/signin', methods=['POST'])
 def sign_in():
     try:
-        body = json.loads(request.data)
+        body = json.loads(urllib.unquote(request.data))
         email = body['email']
         password = body['password']
         name = body['name']
