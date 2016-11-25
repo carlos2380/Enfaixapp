@@ -1,4 +1,4 @@
-from tokenn.TCtrl import TokenCtrl
+from api.tokenn.TCtrl import TokenCtrl
 
 
 class TokenCtrlMySQL(TokenCtrl):
