@@ -4,7 +4,7 @@ from flask import json
 
 from api.db.DB import DB
 from api.users.User import User
-from api.db.CtrlFactory import get_user_ctrl, get_following_ctrl, get_belonging_ctrl
+from api.db.CtrlFactory import get_user_ctrl, get_following_ctrl, get_belonging_ctrl, get_token_ctrl
 
 
 def create_user(name, surname, email, password, belonging_list, following_list):
