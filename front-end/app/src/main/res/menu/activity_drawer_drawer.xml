@@ -14,6 +14,12 @@
             android:id="@+id/nav_results"
             android:icon="@drawable/ic_results"
             android:title="Resultats" />
+
+        <item
+            android:id="@+id/crearEsdv"
+            android:title="Crear Esdeveniment" />
+
+
     </group>
 
     <group android:title="Altres"

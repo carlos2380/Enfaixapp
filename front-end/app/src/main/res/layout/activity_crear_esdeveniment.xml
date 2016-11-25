@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pes.enfaixapp.CrearEsdevenimentActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Títol de l'esdeveniment"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imatgeCrearEsdeveniment"
+            />
+
+        <Button
+            android:text="Camara"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/afegirViaCamara" />
+
+        <Button
+            android:text="Dispositiu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/afegirViaDispositiu" />
+
+        <Button
+            android:text="Eliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eliminarFoto" />
+
+
+
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

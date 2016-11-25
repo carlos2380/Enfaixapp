@@ -91,17 +91,17 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
             //----------------------------
-        } /*else if (id == R.id.nav_classification) {
+        } else if (id == R.id.nav_classification) {
             //------------------------------------
             //INSERTAR FRAGMENTO INICIAL
 
-            ClassificationFragment fragment = new ClassificationFragment();
+            CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
             //----------------------------
-        } else if (id == R.id.nav_results) {
+        } /*else if (id == R.id.nav_results) {
 
             ResultsFragment fragment = new ResultsFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
