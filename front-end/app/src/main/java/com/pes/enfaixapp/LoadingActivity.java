@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(isConnectedToNetwork()) {
-            SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
             String sessionToken = preferences.getString("session-token", null);
             if (sessionToken == null) {
                 startActivity(new Intent(LoadingActivity.this, LogInActivity.class));

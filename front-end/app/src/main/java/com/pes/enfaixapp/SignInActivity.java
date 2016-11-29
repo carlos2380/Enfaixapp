@@ -2,6 +2,7 @@ package com.pes.enfaixapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -369,6 +370,11 @@ public class SignInActivity extends Activity implements AsyncResult {
                     Intent intent = new Intent(SignInActivity.this, DrawerActivity.class);
                     Usuari u = JSONConverter.toUser(output);
                     intent.putExtra("User", u);
+                    String token = output.getString("session_token");
+                    SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("session-token", token);
+                    editor.apply();
                     startActivity(intent);
                     finish();
                 }
