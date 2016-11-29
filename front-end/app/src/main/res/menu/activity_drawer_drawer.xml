@@ -16,8 +16,9 @@
             android:title="Resultats" />
 
         <item
-            android:id="@+id/crearEsdv"
-            android:title="Crear Esdeveniment" />
+            android:id="@+id/nav_esdv"
+            android:title="Esdeveniments"
+            android:icon="@drawable/ic_fecha_y_hora_del_evento_simbolo"/>
 
 
     </group>

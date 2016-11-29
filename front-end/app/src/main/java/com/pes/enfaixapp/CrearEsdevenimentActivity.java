@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.pes.enfaixapp.Models.Esdeveniment;
@@ -38,8 +39,10 @@ public class CrearEsdevenimentActivity extends Fragment {
     private Button afegirFotoViaDisp;
     private Button afegirFotoViaCam;
     private Button eliminarFoto;
+    private ImageView crearEsdv;
     final static int RESULTADO_FOTO = 0;
     final static int RESULTADO_GALERIA = 1;
+    final static int RESULTADO_BORRAR_FOTO = 2;
 
     private Esdeveniment esdv = new Esdeveniment();
 
@@ -53,10 +56,11 @@ public class CrearEsdevenimentActivity extends Fragment {
        View viewCrearEsdv = inflater.inflate(R.layout.activity_crear_esdeveniment, container, false);
 
         imageView = (ImageView) viewCrearEsdv.findViewById(R.id.imatgeCrearEsdeveniment);
-        afegirFotoViaCam = (Button) viewCrearEsdv.findViewById(R.id.afegirViaCamara);
+        //afegirFotoViaCam = (Button) viewCrearEsdv.findViewById(R.id.afegirViaCamara);
         afegirFotoViaDisp = (Button) viewCrearEsdv.findViewById(R.id.afegirViaDispositiu);
         eliminarFoto = (Button) viewCrearEsdv.findViewById(R.id.eliminarFoto);
-        afegirFotoViaCam.setOnClickListener(new View.OnClickListener() {
+        crearEsdv = (ImageButton) viewCrearEsdv.findViewById(R.id.crearEsv);
+        /*afegirFotoViaCam.setOnClickListener(new View.OnClickListener() {   //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -66,7 +70,7 @@ public class CrearEsdevenimentActivity extends Fragment {
                 ((AppCompatActivity)getActivity()).startActivityForResult(intent, RESULTADO_FOTO);
             }
 
-        });
+        });*/
         afegirFotoViaDisp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +80,23 @@ public class CrearEsdevenimentActivity extends Fragment {
                 startActivityForResult(intent, RESULTADO_GALERIA);            }
         });
 
+        eliminarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(intent, RESULTADO_BORRAR_FOTO);
+            }
+        });
+
+        crearEsdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
+            }
+
+
+        });
 
         return viewCrearEsdv;
     }
@@ -95,8 +116,13 @@ public class CrearEsdevenimentActivity extends Fragment {
             ponerFoto(imageView, esdv.getFoto());
 
         }
-        if(requestCode == RESULTADO_FOTO) {
+        /*if(requestCode == RESULTADO_FOTO) {           //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
             esdv.setFoto(uriFoto.toString());
+            ponerFoto(imageView, esdv.getFoto());
+        }*/
+
+        else if(requestCode == RESULTADO_BORRAR_FOTO) {           //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
+            esdv.setFoto(null);
             ponerFoto(imageView, esdv.getFoto());
         }
     }
