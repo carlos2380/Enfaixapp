@@ -108,6 +108,7 @@
                         android:id="@+id/afegirViaCamara" /> -->
 
                     <Button
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:text="Afegir foto des del dispositiu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -117,7 +118,11 @@
                         android:paddingRight="@dimen/activity_vertical_margin"
                         android:layout_gravity="center"/>
 
+                        <!--android:background="@drawable/button"-->
+
+
                     <Button
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:text="Eliminar fotografia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,6 +131,8 @@
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:layout_gravity="center"/>
+                        <!--android:background="@drawable/button"-->
+
 
                 </LinearLayout>
 
