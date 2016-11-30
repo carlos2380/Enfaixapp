@@ -4,6 +4,7 @@ package com.pes.enfaixapp;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ import com.pes.enfaixapp.Models.Noticia;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +76,9 @@ public class NoticiaActivity extends Fragment {
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
+
         return view;
 
     }
@@ -91,4 +97,6 @@ public class NoticiaActivity extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

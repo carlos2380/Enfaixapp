@@ -354,10 +354,16 @@ public class SignInActivity extends Activity implements AsyncResult {
             try {
                 int response = output.getInt("response");
                 if (response == HttpURLConnection.HTTP_OK || response == HttpURLConnection.HTTP_CREATED) {
-                    Intent intent = new Intent(SignInActivity.this, DrawerActivity.class);
+                    Intent launchNextActivity;
+                    launchNextActivity = new Intent(SignInActivity.this, DrawerActivity.class);
+                    launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);     //POSEM AL TOP DE LA STACK DACTIVITATS
+                    launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);   // LA QUE ANEM A LLENÇAR I LES D'ABANS
+                    launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // LES BUIDEM DE LA STACK
+                    startActivity(launchNextActivity);
+
                     Usuari u = JSONConverter.toUser(output);
-                    intent.putExtra("User", u);
-                    startActivity(intent);
+                    launchNextActivity.putExtra("User", u);
+                    startActivity(launchNextActivity);
                 }
                 else {      //cas error 500
                     Toast toast = Toast.makeText(context, "ERROR 500: INTERNAL SERVER ERROR", Toast.LENGTH_LONG);

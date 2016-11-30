@@ -121,7 +121,7 @@ public class CrearEsdevenimentActivity extends Fragment {
             ponerFoto(imageView, esdv.getFoto());
         }*/
 
-        else if(requestCode == RESULTADO_BORRAR_FOTO) {           //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
+        else if(requestCode == RESULTADO_BORRAR_FOTO) {
             esdv.setFoto(null);
             ponerFoto(imageView, esdv.getFoto());
         }
