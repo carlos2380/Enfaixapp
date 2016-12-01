@@ -18,5 +18,16 @@ class BelongCtrlMySQL(BelongCtrl):
         self.cnx.commit()
         return
 
-    def get_belonging_colles(self, user_id):
-        return
+    def get_name_belonging_colles_by_user(self, user_id):
+        sql = "SELECT c.name FROM belongsTo b LEFT JOIN colles c ON b.id_colla=c.id WHERE b.id_user = %s" % user_id
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        result = cursor.fetchall()
+        names = []
+        for tuple in result:
+            names.append(tuple[0])
+        return names
+
+
+

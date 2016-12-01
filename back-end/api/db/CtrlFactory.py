@@ -23,3 +23,11 @@ def get_following_ctrl(data_source_connection):
 
 def get_token_ctrl(data_source_connection):
     return TokenCtrlMySQL(data_source_connection)
+
+
+def get_follow_ctrl(data_source_connection):
+    return FollowCtrlMySQL(data_source_connection)
+
+
+def get_belong_ctrl(data_source_connetction):
+    return BelongCtrlMySQL(data_source_connetction)
