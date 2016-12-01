@@ -1,19 +1,28 @@
 package com.pes.enfaixapp.Adapters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.pes.enfaixapp.AsyncResult;
+import com.pes.enfaixapp.HTTPHandler;
+import com.pes.enfaixapp.JSONConverter;
 import com.pes.enfaixapp.Models.Noticia;
 import com.pes.enfaixapp.R;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -29,9 +38,12 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private RecyclerView recycler;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager lManager;
+    private static RecyclerView recycler;
+    private static RecyclerView.Adapter adapter;
+    private static RecyclerView.LayoutManager lManager;
+    private static View rootView;
+    private static SwipeRefreshLayout mSwipeRefreshLayout;
+    private static ProgressBar loading;
     public ListadoNoticiasFragmentSeguidas() {
     }
 
@@ -45,12 +57,6 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
         Bundle args = new Bundle();
 
         List<Noticia> noticias;
-        if(sectionNumber == 1) {
-            args.putBoolean("TODASNOTICIAS", true);;
-        }else {
-            noticias = getNoticiasBackend(false);
-            args.putBoolean("TODASNOTICIAS", false);;
-        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,8 +64,28 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_noticia, container, false);
+        rootView = inflater.inflate(R.layout.fragment_noticia, container, false);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        loading = (ProgressBar) rootView.findViewById(R.id.loadingWall);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                ListadoNoticiasFragmentSeguidas.MyAsync async = new ListadoNoticiasFragmentSeguidas.MyAsync(rootView.getContext());
+                async.callWall(rootView.getContext());
+            }
+        });
+
+        ListadoNoticiasFragmentSeguidas.MyAsync async = new ListadoNoticiasFragmentSeguidas.MyAsync(rootView.getContext());
+        async.callWall(rootView.getContext());
+        return rootView;
+    }
+
+    public void insertarNoticias(final List<Noticia> noticas) {
         // Obtener el Recycler
+        loading.setVisibility(View.GONE);
         recycler = (RecyclerView) rootView.findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
 
@@ -67,44 +93,41 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
         lManager = new LinearLayoutManager(rootView.getContext());
         recycler.setLayoutManager(lManager);
 
-        final List<Noticia> noticiasAdapter = getNoticiasBackend(getArguments().getBoolean("TODASNOTICIAS"));
-
         // Crear un nuevo adaptador
-        adapter = new NoticiasAdapter((List<Noticia>) noticiasAdapter);
+        adapter = new NoticiasAdapter((List<Noticia>) noticas);
         recycler.setAdapter(adapter);
 
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(rootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        Uri uri = Uri.parse(noticiasAdapter.get(position).getUrl());
+                        Uri uri = Uri.parse(noticas.get(position).getUrl());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                     }
                 })
         );
-
-        return rootView;
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private static List<Noticia> getNoticiasBackend(boolean todasNoticies) {
-        List noticias = new ArrayList();
-
-        if(todasNoticies) {
-            noticias.add(new Noticia("Vila 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vila 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vila 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilafd 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vi o la 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilau 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-        }else {
-            noticias.add(new Noticia("Castellers", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Castellers VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Castellers vs Castellers", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
+    private class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
         }
 
-        return noticias;
+        public void callWall(Context context) {
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("GET", "http://10.4.41.165:5000/wall", null);
+        }
+
+        @Override
+        public void processFinish(JSONObject output) {
+            try {
+                insertarNoticias(JSONConverter.toNoticies(output));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

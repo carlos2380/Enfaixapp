@@ -10,7 +10,10 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.Date;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,8 +49,13 @@ public class JSONConverter {
                     Noticia noticia= new Noticia();
                     noticia.setTitulo(URLDecoder.decode(objNoticia.getString("title"), "UTF-8"));
                     noticia.setUrl(URLDecoder.decode(objNoticia.getString("link"), "UTF-8"));
-                    //noticia.setDate(Date.valueOf(objNoticia.getString("date")));
+
                     noticia.setDescription(String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("description"), "UTF-8"))));
+
+                    //DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZ");
+                    //String data = String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("date"), "UTF-8")));
+                    //Date date = formatter.parse(data);
+                    //noticia.setDate(date);
                     noticias.add(noticia);
                 }else {
                     continuar = false;
@@ -55,7 +63,9 @@ public class JSONConverter {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        } /*catch (ParseException e) {
+            e.printStackTrace();
+        }*/
         return noticias;
     }
 }
