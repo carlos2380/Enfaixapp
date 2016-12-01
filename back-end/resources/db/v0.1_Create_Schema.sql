@@ -5,7 +5,7 @@ CREATE TABLE users (
   email    VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(256) 	  NOT NULL,
   PRIMARY KEY (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE colles (
   id       INTEGER AUTO_INCREMENT,
@@ -14,7 +14,7 @@ CREATE TABLE colles (
   color    NVARCHAR(7),
   img_path VARCHAR(255),
   PRIMARY KEY (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE belongsTo (
   id_user  INTEGER NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE belongsTo (
   PRIMARY KEY (id_user, id_colla),
   CONSTRAINT fk_belongsTo_users FOREIGN KEY (id_user) REFERENCES users (id),
   CONSTRAINT fk_belongTo_colles FOREIGN KEY (id_colla) REFERENCES colles (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE follows (
   id_user  INTEGER NOT NULL,
@@ -30,11 +30,11 @@ CREATE TABLE follows (
   PRIMARY KEY (id_user, id_colla),
   CONSTRAINT fk_follows_users FOREIGN KEY (id_user) REFERENCES users (id),
   CONSTRAINT fk_follows_colles FOREIGN KEY (id_colla) REFERENCES colles (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE tokens (
 	id_user INTEGER,
     token VARCHAR(256) UNIQUE,
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
