@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pes.enfaixapp.EsdevenimentActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/imatgeCrearEsdeveniment"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titolEsdvMostrar"
+                    android:textSize="15sp"
+                    android:focusable="true"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:textColorHint="#222222"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/direccioEsdvMostrar"
+                    android:textSize="15sp"
+                    android:focusable="true"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:textColorHint="#222222"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:padding="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/descripcioEsdvMostrar"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

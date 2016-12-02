@@ -1,0 +1,146 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pes.enfaixapp.ModificarEsdevenimentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Títol"
+            android:layout_marginTop="20dp"
+            android:id="@+id/titolEsdvLabelModify"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/titolEsdvModify"
+            android:textSize="15sp"
+            android:focusable="true"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="#222222"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripció"
+            android:layout_marginTop="20dp"
+            android:id="@+id/descrEsdvLabelModify"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/descrEsdvModify"
+            android:textSize="15sp"
+            android:focusable="true"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="#222222"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Localització"
+            android:layout_marginTop="20dp"
+            android:id="@+id/localitzacioEsdvLabelModify"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/localitzacioEsdvModify"
+            android:textSize="15sp"
+            android:focusable="true"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="#222222"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Afegeix una fotografia a l'esdeveniment:"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="50dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/imatgeModificarEsdeveniment"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+                <!-- <Button        DE MOMENT NO HO IMPLEMENTAREM
+                    android:text="Camara"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/afegirViaCamara" /> -->
+
+                <Button
+                    android:text="Afegir foto des del dispositiu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/afegirViaDispositiu"
+                    android:textAlignment="center"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin"
+                    android:layout_gravity="center"/>
+
+                <Button
+                    android:text="Eliminar fotografia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eliminarFoto"
+                    android:textAlignment="center"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/modificarEsv"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="130dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_editar"
+            android:background="@drawable/ic_editar"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

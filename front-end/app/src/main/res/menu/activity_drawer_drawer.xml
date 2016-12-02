@@ -14,6 +14,13 @@
             android:id="@+id/nav_results"
             android:icon="@drawable/ic_results"
             android:title="Resultats" />
+
+        <item
+            android:id="@+id/nav_esdv"
+            android:title="Esdeveniments"
+            android:icon="@drawable/ic_fecha_y_hora_del_evento_simbolo"/>
+
+
     </group>
 
     <group android:title="Altres"
