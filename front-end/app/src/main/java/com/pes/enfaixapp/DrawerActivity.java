@@ -149,14 +149,14 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
             //----------------------------
-        } /*else if (id == R.id.nav_results) {
+        } else if (id == R.id.nav_esdv) {
 
-            ResultsFragment fragment = new ResultsFragment();
+            EsdevenimentListActivity fragment = new EsdevenimentListActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        } else if (id == R.id.nav_configuration) {
+        }/* else if (id == R.id.nav_configuration) {
 
             ConfigurationFragment fragment = new ConfigurationFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

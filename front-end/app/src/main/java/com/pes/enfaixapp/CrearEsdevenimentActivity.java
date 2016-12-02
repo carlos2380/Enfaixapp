@@ -2,6 +2,7 @@ package com.pes.enfaixapp;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,12 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.pes.enfaixapp.Adapters.ListadoNoticiasFragmentSeguidas;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.EmptyStackException;
 
 
@@ -43,9 +52,12 @@ public class CrearEsdevenimentActivity extends Fragment {
     final static int RESULTADO_FOTO = 0;
     final static int RESULTADO_GALERIA = 1;
     final static int RESULTADO_BORRAR_FOTO = 2;
-
+    static View viewCrearEsdv;
     private Esdeveniment esdv = new Esdeveniment();
 
+    private EditText titolEsdv;
+    private EditText etdireccio;
+    private EditText etdescript;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +65,20 @@ public class CrearEsdevenimentActivity extends Fragment {
         // Inflate the layout for this fragment
 
 
-       View viewCrearEsdv = inflater.inflate(R.layout.activity_crear_esdeveniment, container, false);
+       viewCrearEsdv = inflater.inflate(R.layout.activity_crear_esdeveniment, container, false);
+
+        Bundle bundle = this.getArguments();
+
+        String s = "CASA";
+        if (bundle != null) {
+            s = bundle.getString("CLAVE");
+        }
+        Toast toast = Toast.makeText(viewCrearEsdv.getContext(), s, Toast.LENGTH_LONG);
+        toast.show();
+
+        titolEsdv = (EditText) viewCrearEsdv.findViewById(R.id.titolEsdv);
+        etdireccio = (EditText) viewCrearEsdv.findViewById(R.id.localitzacioEsdv);
+        etdescript = (EditText) viewCrearEsdv.findViewById(R.id.descrEsdv);
 
         imageView = (ImageView) viewCrearEsdv.findViewById(R.id.imatgeCrearEsdeveniment);
         //afegirFotoViaCam = (Button) viewCrearEsdv.findViewById(R.id.afegirViaCamara);
@@ -93,6 +118,12 @@ public class CrearEsdevenimentActivity extends Fragment {
         crearEsdv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
+                CrearEsdevenimentActivity.MyAsync async = new CrearEsdevenimentActivity.MyAsync(viewCrearEsdv.getContext());
+                try {
+                    async.createEsdeveniment(viewCrearEsdv.getContext());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
 
@@ -136,6 +167,13 @@ public class CrearEsdevenimentActivity extends Fragment {
         }
     }
 
+    public void guardaryvolver() {
+        //***********************************//
+        //     TOAST DE GUARDADO OK
+        //     VOLVER
+        //***********************************//
+    }
+
     //Abrir Galeria o similar
     public void galeria(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -145,6 +183,36 @@ public class CrearEsdevenimentActivity extends Fragment {
     }
 
 
+    private class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
+        }
+
+        public void createEsdeveniment(Context context) throws JSONException {
+            JSONObject jsonUser = new JSONObject();
+            jsonUser.accumulate("title", titolEsdv.getText().toString());
+            jsonUser.accumulate("description", etdescript.getText().toString());
+            jsonUser.accumulate("path", uriFoto);
+            jsonUser.accumulate("address", etdireccio.getText().toString());
+            //***********************************//
+            //      PONER USUARIO                //
+            //***********************************//
+            jsonUser.accumulate("id_user", "1");
+            //***********************************//
+            //      PONER COLLA                  //
+            //***********************************//
+            jsonUser.accumulate("id_colla", "1");
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("POST", "http://10.4.41.165:5000/wall", null);
+        }
+
+        @Override
+        public void processFinish(JSONObject output) {
+            guardaryvolver();
+        }
+    }
 
 
 
