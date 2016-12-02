@@ -36,3 +36,13 @@ class EventCtrlMySQL(EventCtrl):
                           colla_id=result[6])
 
         return event
+
+    def insert (self, event):
+        sql = "INSERT INTO events (title, description, path, address, id_user, id_colla) " \
+              "VALUES ('%s','%s','%s','%s','%s','%s')" % (event.title, event.description, event.img, event.address, event.user_id, event.colla_id)
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+        self.cnx.commit()
+
+        last_id = cursor.lastrowid
+        event.id = last_id

@@ -8,4 +8,5 @@ class Event(json.JSONEncoder):
         self.id = id
         self.user_id = user_id
         self.colla_id = colla_id
+        self.address = address
         self.title = title
