@@ -15,11 +15,17 @@ from api.events.Event import Event
 def get_events():
     db_configuration = json.loads(open("api/db/db.json").read())
     events_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
-    events = events_ctrl.get_all()
+    if user_id is None:
+        events = events_ctrl.get_all()
+    else:
+        eventsFollows = events_ctrl.get_events_follows(user_id)
+        eventsBelongs = event_ctrl_get_event_belongs(user_id)
+        events = eventsFollows + eventsBelongs
     if not events:
         abort(404)
     json_event_list = json.dumps([event.__dict__ for event in events], ensure_ascii=False, encoding="utf-8")
     return make_response(json_event_list, 200)
+
 
 
 @app.route("/events", methods=["POST"])
