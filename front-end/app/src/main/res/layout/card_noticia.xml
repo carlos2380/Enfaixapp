@@ -47,12 +47,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#ffd5d5d5"
+                android:layout_alignParentTop="true"
+                android:id="@+id/linea">
+            </View>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ic_menu_share"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/linea"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </LinearLayout>

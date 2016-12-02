@@ -6,11 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pes.enfaixapp.AsyncResult;
@@ -43,6 +45,8 @@ public class ListadoNoticiasFragment extends Fragment {
     private static RecyclerView.Adapter adapter;
     private static RecyclerView.LayoutManager lManager;
     private static View rootView;
+    private static SwipeRefreshLayout mSwipeRefreshLayout;
+    private static ProgressBar loading;
     public ListadoNoticiasFragment() {
     }
 
@@ -56,13 +60,6 @@ public class ListadoNoticiasFragment extends Fragment {
         Bundle args = new Bundle();
 
         List<Noticia> noticias;
-        if(sectionNumber == 1) {
-            args.putBoolean("TODASNOTICIAS", true);;
-        }else {
-            noticias = getNoticiasBackend(false);
-            args.putBoolean("TODASNOTICIAS", false);;
-        }
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -71,6 +68,18 @@ public class ListadoNoticiasFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_noticia, container, false);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        loading = (ProgressBar) rootView.findViewById(R.id.loadingWall);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                MyAsync async = new MyAsync(rootView.getContext());
+                async.callWall(rootView.getContext());
+            }
+        });
+
         MyAsync async = new MyAsync(rootView.getContext());
         async.callWall(rootView.getContext());
         return rootView;
@@ -78,6 +87,7 @@ public class ListadoNoticiasFragment extends Fragment {
 
     public void insertarNoticias(final List<Noticia> noticas) {
         // Obtener el Recycler
+        loading.setVisibility(View.GONE);
         recycler = (RecyclerView) rootView.findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
 
@@ -98,27 +108,8 @@ public class ListadoNoticiasFragment extends Fragment {
                     }
                 })
         );
-    }
-    private static List<Noticia> getNoticiasBackend(boolean todasNoticies) {
-        List noticias = new ArrayList();
 
-        if(todasNoticies) {
-            noticias.add(new Noticia("Vila 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vila 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vila 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilas 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilafd 1", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vi o la 2 VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Vilau 3", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-        }else {
-            noticias.add(new Noticia("Castellers", "Atentado terrorista en", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Castellers VilaFranca", "25 years old", R.drawable.ic_menu_camera));
-            noticias.add(new Noticia("Castellers vs Castellers", "Enfaixapp guanya la competicio de apps", R.drawable.ic_menu_camera));
-        }
-
-        return noticias;
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private class MyAsync implements AsyncResult {
