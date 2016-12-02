@@ -28,7 +28,14 @@ def server_error(e):
     return make_response(jsonify({'error': 'Internal server error'}), 500)
 
 
+@app.errorhandler(501)
+def server_error(e):
+    return make_response(jsonify({'error': 'Not implemented yet'}), 501)
+
+
+
 import api.users
 import api.login
 import api.colles
 import api.wall
+import api.events

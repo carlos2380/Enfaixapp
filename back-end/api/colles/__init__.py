@@ -24,9 +24,9 @@ def get_colles():
     else:
         colles = ctrl_colla.get_all()
 
-    json_string = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8")
+    json_colla_list = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8")
 
-    return make_response(json_string, 200)
+    return make_response(json_colla_list, 200)
 
 
 @app.route('/colles', methods=['POST'])
