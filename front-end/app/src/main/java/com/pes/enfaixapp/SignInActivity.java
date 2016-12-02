@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Àlex on 17/10/2016.
@@ -66,12 +68,16 @@ public class SignInActivity extends Activity implements AsyncResult {
     final ArrayList<Colla> collesTotes = new ArrayList<Colla>();
 
     Usuari user;
-    String psswd, psswdCheck = "buit";
     private SignInActivity context;
     private ListView listViewCollesConvencionals;
     private ListView listViewCollesUniversitaries;
     private ListView listViewTotes;
     private ArrayList<Colla> CollesSeguides;
+    private Colla choosenCollaConv;
+    private Colla choosenCollaUni;
+    private AdaptadorColla adaptadorCollesConv;
+    private AdaptadorColla adaptadorCollesUni;
+    private AdaptadorCollesSeguides adaptadorCollesTotes;
 
     public void hideSoftKeyboard() {
         if (getCurrentFocus() != null) {
@@ -97,6 +103,10 @@ public class SignInActivity extends Activity implements AsyncResult {
         hideSoftKeyboard();
 
         context = this;
+
+        HTTPHandler httpHandler = new HTTPHandler();
+        httpHandler.setAsyncResult(this);
+        httpHandler.execute("GET", "http://10.4.41.165:5000/colles", null);
 
         aboutYouButton = (Button) findViewById(R.id.aboutYouButton);
         chooseCollaConvButton = (Button) findViewById(R.id.button2);
@@ -124,45 +134,37 @@ public class SignInActivity extends Activity implements AsyncResult {
         allCollesLayout = findViewById(R.id.allCollesLayout);
 
         listViewCollesConvencionals = (ListView) findViewById(R.id.conventionalList);
-        listViewCollesUniversitaries = (ListView) findViewById(R.id.universitariesList);
-        listViewTotes = (ListView) findViewById(R.id.allList);
+        adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
+        listViewCollesConvencionals.setAdapter(adaptadorCollesConv);
+        listViewCollesConvencionals.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                choosenCollaConv = (Colla) adapterView.getItemAtPosition(i);
+            }
+        });
 
+        listViewCollesUniversitaries = (ListView) findViewById(R.id.universitariesList);
+        adaptadorCollesUni = new AdaptadorColla(getApplicationContext(), collesUni);
+        listViewCollesUniversitaries.setAdapter(adaptadorCollesUni);
+        listViewCollesUniversitaries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                choosenCollaUni = (Colla) adapterView.getItemAtPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        listViewTotes = (ListView) findViewById(R.id.allList);
+        adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
+        listViewTotes.setAdapter(adaptadorCollesTotes);
 
         cb = (CheckBox) findViewById(R.id.checkBox);
 
         CollesSeguides = new ArrayList<Colla>();
-
-
-
-        Colla AZU = new Colla("Arreplegats de la Zona Universitaria", "AZU", R.drawable.logo_azu);
-        Colla CDV = new Colla("Castellers de Vilafranca", "Els jefes", R.drawable.logo_cdv);
-        Colla CVXV = new Colla("Colla Vella dels Xiquets de Valls", "Puta Vella!", R.drawable.logo_cvxv);
-        Colla CJXT = new Colla("Colla Jove dels Xiquets de Tarragona", "Puta Jove!", R.drawable.logo_cjxt);
-        Colla CDS = new Colla("Castellers de Sants", "CDS", R.drawable.logo_sants);
-        Colla CJXV = new Colla("Colla Joves dels Xiquets de Valls", "I jove, i jove, i jove jove jove!!", R.drawable.logo_cjxv);
-        Colla GUAB = new Colla("Ganàpies de la UAB", "Puta Ganàpies!", R.drawable.logo_ganapies);
-        Colla PTCM = new Colla("Passerells del Tecnoampus de Mataró", "Passerells", R.drawable.logo_passarells);
-        Colla CAP = new Colla("No pertanyo a cap colla", true, R.drawable.ic_account_circle_login_24dp);
-
-        collesUni.add(CAP);
-        collesUni.add(AZU);
-        collesUni.add(GUAB);
-        collesUni.add(PTCM);
-
-        collesConv.add(CAP);
-        collesConv.add(CDV);
-        collesConv.add(CVXV);
-        collesConv.add(CJXT);
-        collesConv.add(CDS);
-        collesConv.add(CJXV);
-
-        collesTotes.add(CJXT);
-        collesTotes.add(AZU);
-        collesTotes.add(GUAB);
-        collesTotes.add(PTCM);
-        collesTotes.add(CDV);
-        collesTotes.add(CVXV);
-        collesTotes.add(CDS);
 
         userInfoLayout.setVisibility(View.VISIBLE);
         collesConvencionalsLayout.setVisibility(View.GONE);
@@ -214,9 +216,6 @@ public class SignInActivity extends Activity implements AsyncResult {
                     collesConvencionalsLayout.setVisibility(View.VISIBLE);
                     collesUniversitariesLayout.setVisibility(View.GONE);
                     allCollesLayout.setVisibility(View.GONE);
-
-                    AdaptadorColla adaptadorCollesConv = new AdaptadorColla(getApplicationContext(), collesConv);
-                    listViewCollesConvencionals.setAdapter(adaptadorCollesConv);
                 } else {
                     collesConvencionalsLayout.setVisibility(View.GONE);
                 }
@@ -233,10 +232,6 @@ public class SignInActivity extends Activity implements AsyncResult {
                     collesConvencionalsLayout.setVisibility(View.GONE);
                     collesUniversitariesLayout.setVisibility(View.VISIBLE);
                     allCollesLayout.setVisibility(View.GONE);
-
-                    AdaptadorColla adaptadorCollesUni = new AdaptadorColla(getApplicationContext(), collesUni);
-                    listViewCollesUniversitaries.setAdapter(adaptadorCollesUni);
-
                 } else {
                     collesUniversitariesLayout.setVisibility(View.GONE);
                 }
@@ -252,9 +247,6 @@ public class SignInActivity extends Activity implements AsyncResult {
                     collesConvencionalsLayout.setVisibility(View.GONE);
                     collesUniversitariesLayout.setVisibility(View.GONE);
                     allCollesLayout.setVisibility(View.VISIBLE);
-
-                    AdaptadorCollesSeguides adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
-                    listViewTotes.setAdapter(adaptadorCollesTotes);
 
                     listViewTotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -294,15 +286,12 @@ public class SignInActivity extends Activity implements AsyncResult {
                             String hash = bigInteger.toString(64);
                             user.setPsswd(hash);
 
-
-                            Colla CollaConvEscollida = (Colla) listViewCollesConvencionals.getSelectedItem();
-                            if (CollaConvEscollida != null) {
-                                user.addCollaQuePertany(CollaConvEscollida);
+                            if (choosenCollaConv != null) {
+                                user.addCollaQuePertany(choosenCollaConv);
                             }
 
-                            Colla CollaUniEscollida = (Colla) listViewCollesUniversitaries.getSelectedItem();
-                            if (CollaUniEscollida != null) {
-                                user.addCollaQuePertany(CollaUniEscollida);
+                            if (choosenCollaUni != null) {
+                                user.addCollaQuePertany(choosenCollaUni);
                             }
 
                             user.setCollesSeguides(CollesSeguides);
@@ -313,15 +302,12 @@ public class SignInActivity extends Activity implements AsyncResult {
                             jsonUser.accumulate("surname", user.getCognoms());
                             jsonUser.accumulate("belongs", new JSONArray(user.getCollesALesQuePertany()));
                             jsonUser.accumulate("follows", new JSONArray(user.getCollesSeguides()));
-                            //////////////////////////////////////////////////////////
-                            //jsonUser.accumulate("totesColles",user.getCollesALesQuePertany() ); //DEFINIR EL ATRIBUT QUE ES FA SERVIR A BACKEND PER TOTES
-                            //////////////////////////////////////////////////////////
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
-
 
                         HTTPHandler httphandler = new HTTPHandler();
                         httphandler.setAsyncResult(context);
@@ -366,7 +352,7 @@ public class SignInActivity extends Activity implements AsyncResult {
         if (output != null) {
             try {
                 int response = output.getInt("response");
-                if (response == HttpURLConnection.HTTP_OK || response == HttpURLConnection.HTTP_CREATED) {
+                if (response == HttpURLConnection.HTTP_CREATED) {
                     Intent intent = new Intent(SignInActivity.this, DrawerActivity.class);
                     Usuari u = JSONConverter.toUser(output);
                     intent.putExtra("User", u);
@@ -377,6 +363,17 @@ public class SignInActivity extends Activity implements AsyncResult {
                     editor.apply();
                     startActivity(intent);
                     finish();
+                }
+                else if (response == HttpURLConnection.HTTP_OK) {
+                    List<Colla> colles = JSONConverter.toCollaList(output);
+                    for (Colla colla : colles) {
+                        collesTotes.add(colla);
+                        if (colla.isUniversitaria()) {
+                            collesUni.add(colla);
+                        } else {
+                            collesConv.add(colla);
+                        }
+                    }
                 }
                 else {      //cas error 500
                     Toast toast = Toast.makeText(context, "ERROR 500: INTERNAL SERVER ERROR", Toast.LENGTH_LONG);

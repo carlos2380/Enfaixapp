@@ -2,8 +2,10 @@ package com.pes.enfaixapp;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -55,7 +57,14 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
                 } else {
                     response = parseResponse(connection.getErrorStream());
                 }
-                JSONObject result = new JSONObject(response);
+                Object json = new JSONTokener(response).nextValue();
+                JSONObject result = new JSONObject();
+                if (json instanceof JSONArray) {
+                    JSONArray array = (JSONArray) json;
+                    result.accumulate("array", array);
+                } else if (json instanceof JSONObject) {
+                    result = (JSONObject) json;
+                }
                 result.accumulate("connection", connection.getResponseMessage());
                 result.accumulate("response", responseCode);
                 return result;

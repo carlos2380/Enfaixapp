@@ -1,10 +1,13 @@
 package com.pes.enfaixapp;
 
+import android.graphics.Color;
 import android.text.Html;
 
+import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Noticia;
 import com.pes.enfaixapp.Models.Usuari;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +32,7 @@ public class JSONConverter {
             usuari.setNom(jsonObject.getString("name"));
             usuari.setCognoms(jsonObject.getString("surname"));
             usuari.setCorreu(jsonObject.getString("email"));
-            // TODO: Falta parsejar les colles i el session-token
+            // TODO: Falta parsejar les colles
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,12 +44,12 @@ public class JSONConverter {
         try {
             Iterator iter = jsonObject.keys();
             boolean continuar = true;
-            while(iter.hasNext() && continuar){
+            while (iter.hasNext() && continuar) {
 
-                String key = (String)iter.next();
-                if(jsonObject.getString(key).toString() != "connection") {
+                String key = (String) iter.next();
+                if (jsonObject.getString(key).toString() != "connection") {
                     JSONObject objNoticia = jsonObject.getJSONObject(key);
-                    Noticia noticia= new Noticia();
+                    Noticia noticia = new Noticia();
                     noticia.setTitulo(URLDecoder.decode(objNoticia.getString("title"), "UTF-8"));
                     noticia.setUrl(URLDecoder.decode(objNoticia.getString("link"), "UTF-8"));
 
@@ -57,7 +60,7 @@ public class JSONConverter {
                     //Date date = formatter.parse(data);
                     //noticia.setDate(date);
                     noticias.add(noticia);
-                }else {
+                } else {
                     continuar = false;
                 }
             }
@@ -67,5 +70,27 @@ public class JSONConverter {
             e.printStackTrace();
         }*/
         return noticias;
+    }
+
+    public static List<Colla> toCollaList(JSONObject output) {
+        List<Colla> collaList = new ArrayList<>();
+        try {
+            JSONArray jsonColles = output.getJSONArray("array");
+            for (int i = 0; i < jsonColles.length(); ++i) {
+                JSONObject jsonColla = jsonColles.getJSONObject(i);
+                Colla colla = new Colla();
+                colla.setId(jsonColla.getInt("id"));
+                colla.setName(jsonColla.getString("name"));
+                if (jsonColla.getInt("uni") == 1) {
+                    colla.setUniversitaria(true);
+                } else {
+                    colla.setUniversitaria(false);
+                }
+                collaList.add(colla);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return collaList;
     }
 }

@@ -6,62 +6,73 @@ package com.pes.enfaixapp.Models;
 
 public class Colla {
 
-    private String nom;
-    private String description;
-    private int imagen;
-    private boolean checked;
+    private int id;
+    private String name;
+    private int color;
+    private String image;
+    private boolean uni;
 
     public Colla() {
         super();
     }
 
-    public Colla(String title, String description, int imagen) {
-        super();
-        this.nom = title;
-        this.description = description;
-        this.imagen = imagen;
-        this.checked = false;
+    public Colla(int id, String title, int color) {
+        this.id = id;
+        this.name = title;
+        this.color = color;
     }
 
-
-    public Colla(String title, boolean checked, int imagen) {
-        super();
-        this.nom = title;
-        this.checked = checked;
-        this.imagen = imagen;
+    public String getName() {
+        return name;
     }
 
-
-    public String getNom() {
-        return nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNom(String title) {
-        this.nom = title;
+    public String getImage() {
+        return image;
     }
 
-    public String getDescription() {
-        return description;
+    public void setImagen(String image) {
+        this.image = image;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isUniversitaria() {
+        return uni;
     }
 
-    public int getImage() {
-        return imagen;
+    public void setUniversitaria(Boolean uni) {
+        this.uni = uni;
     }
 
-    public void setImagen(int imagen) {
-        this.imagen = imagen;
+    public int getColor() {
+        return this.color;
     }
 
-    public void setChecked() {
-        this.checked = true;
+    public void setColor(int color) {
+        this.color = color;
     }
 
-    public boolean getChecked() {
-        return checked;
+    public void setId(int id) {
+        this.id = id;
     }
 
+    public int getId() {return id;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Colla colla = (Colla) o;
+
+        return id == colla.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

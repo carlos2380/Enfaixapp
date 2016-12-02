@@ -87,9 +87,7 @@ public class AdaptadorColla extends ArrayAdapter {
         });
 
         Colla c = (Colla) getItem(position);
-        nomColla.setText(c.getNom());
-        imatgeColla.setImageResource(c.getImage());
-
+        nomColla.setText(c.getName());
 
         chkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
