@@ -33,7 +33,7 @@ CREATE TABLE follows (
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE tokens (
-	id_user INTEGER,
+  id_user INTEGER,
   token VARCHAR(256) UNIQUE,
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users (id)
@@ -44,6 +44,7 @@ CREATE TABLE events (
   title VARCHAR(256) NOT NULL,
   description TEXT,
   path VARCHAR(256),
+  date DATE NOT NULL,
   address VARCHAR(512),
   id_user INTEGER NOT NULL,
   id_colla INTEGER NOT NULL,

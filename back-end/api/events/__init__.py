@@ -12,14 +12,20 @@ from api.events.Event import Event
 
 
 @app.route("/events", methods=["GET"])
+#/events
+#   Tots els esdeveniments
+#/events?user_id="1"
+#   Esdeveniments preferits del usuari 1
 def get_events():
     db_configuration = json.loads(open("api/db/db.json").read())
     events_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
+    user_id = request.args.get('user_id')
+    print user_id
     if user_id is None:
         events = events_ctrl.get_all()
     else:
         eventsFollows = events_ctrl.get_events_follows(user_id)
-        eventsBelongs = event_ctrl_get_event_belongs(user_id)
+        eventsBelongs = events_ctrl.get_event_belongs(user_id)
         events = eventsFollows + eventsBelongs
     if not events:
         abort(404)
@@ -35,12 +41,14 @@ def create_event():
         title = body['title']
         description = body['description']
         img = body['img']
+        date = body['date']
         address = body['address']
         user_id = body['user_id']
         colla_id = body['colla_id']
         db_configuration = json.loads(open("api/db/db.json").read())
         event_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
-        event = Event(title=title, description=description, img=img, address=address, user_id=user_id, colla_id=colla_id);
+        event = Event(title=title, description=description, img=img, date=date,
+                      address=address, user_id=user_id, colla_id=colla_id);
         event_ctrl.insert(event)
         return make_response(jsonify(event.__dict__), 201)
         abort(409)
