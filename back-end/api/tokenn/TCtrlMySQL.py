@@ -13,3 +13,11 @@ class TokenCtrlMySQL(TokenCtrl):
         token = cursor.fetchone()
         return token
 
+    def delete(self, token):
+        sql = "DELETE FROM tokens WHERE token = %s" % token
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+        self.cnx.commit()
+
+        result = cursor.fetchone()
+        return

@@ -6,7 +6,7 @@ from flask import request, make_response
 
 from api import app
 from api.db.DB import DB
-from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id
+from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id, delete_token
 from api.db.CtrlFactory import get_user_ctrl
 
 
@@ -50,3 +50,9 @@ def sign_in():
         abort(409)
     except KeyError:
         abort(500)
+
+
+@app.route('/login/<string:token>', methods=['DELETE'])
+def log_out(token):
+    delete_token(token)
+    return make_response(jsonify({}), 204)

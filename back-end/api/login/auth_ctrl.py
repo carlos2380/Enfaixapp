@@ -41,3 +41,10 @@ def get_token_by_user_id(user_id):
     token_ctrl = get_token_ctrl(DB(db_configuration).get_database_connection())
     token = token_ctrl.get(user_id)
     return token
+
+
+def delete_token(token):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    token_ctrl = get_token_ctrl(DB(db_configuration).get_database_connection())
+    token_ctrl.delete(token)
+    return

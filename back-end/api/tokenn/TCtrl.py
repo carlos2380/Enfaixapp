@@ -12,3 +12,7 @@ class TokenCtrl:
     @abc.abstractmethod
     def get(self, id_user):
         pass
+
+    @abc.abstractmethod
+    def delete(self, token):
+        pass
