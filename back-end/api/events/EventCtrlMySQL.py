@@ -29,7 +29,7 @@ class EventCtrlMySQL(EventCtrl):
     def get_events_follows(self, user_id):
         db_configuration = json.loads(open("api/db/db.json").read())
         follow_ctrl = api.db.CtrlFactory.get_follow_ctrl(DB(db_configuration).get_database_connection())
-        id_colles_follow = follow_ctrl.get_name_followed_colles_by_user_id(user_id)
+        id_colles_follow = follow_ctrl.get_id_followed_colles_by_user(user_id)
         events = []
         for id_colla in id_colles_follow:
             sql = "SELECT * FROM events WHERE id_colla = %s" % id_colla
@@ -45,11 +45,10 @@ class EventCtrlMySQL(EventCtrl):
 
         return events
 
-
     def get_event_belongs(self, user_id):
         db_configuration = json.loads(open("api/db/db.json").read())
         belong_ctrl = api.db.CtrlFactory.get_belong_ctrl(DB(db_configuration).get_database_connection())
-        id_colles_belongs = belong_ctrl.get_name_belonging_colles_by_user_id(user_id)
+        id_colles_belongs = belong_ctrl.get_id_belonging_colles_by_user(user_id)
         events = []
         for id_colla in id_colles_belongs:
             sql = "SELECT * FROM events WHERE id_colla = %s" % id_colla
@@ -64,7 +63,6 @@ class EventCtrlMySQL(EventCtrl):
                 events.append(event)
 
         return events
-
 
     def get(self, event_id):
         sql = "SELECT * FROM events WHERE id = %s" % event_id
@@ -90,3 +88,5 @@ class EventCtrlMySQL(EventCtrl):
 
         last_id = cursor.lastrowid
         event.id = last_id
+
+        return event

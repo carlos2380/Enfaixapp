@@ -1,3 +1,4 @@
+from flask import abort
 from flask import json
 from flask import make_response
 from flask import request
@@ -32,8 +33,5 @@ def get_colles():
 @app.route('/colles', methods=['POST'])
 #@requires_auth
 def create_colla():
-    # create new instance of user
-    # ask the controller to create this instance in db
-    # return the resource created and 201 creation code
-    return "Not implemented yet"
+    abort(501)
 

@@ -33,7 +33,6 @@ def get_events():
     return make_response(json_event_list, 200)
 
 
-
 @app.route("/events", methods=["POST"])
 def create_event():
     try:
@@ -48,10 +47,9 @@ def create_event():
         db_configuration = json.loads(open("api/db/db.json").read())
         event_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
         event = Event(title=title, description=description, img=img, date=date,
-                      address=address, user_id=user_id, colla_id=colla_id);
-        event_ctrl.insert(event)
+                      address=address, user_id=user_id, colla_id=colla_id)
+        event = event_ctrl.insert(event)
         return make_response(jsonify(event.__dict__), 201)
-        abort(409)
     except KeyError:
         abort(500)
 

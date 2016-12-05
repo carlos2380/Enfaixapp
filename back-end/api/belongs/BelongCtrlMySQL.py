@@ -18,7 +18,7 @@ class BelongCtrlMySQL(BelongCtrl):
         self.cnx.commit()
         return
 
-    def get_name_belonging_colles_by_user_name(self, user_id):
+    def get_name_belonging_colles_by_user(self, user_id):
         sql = "SELECT c.name FROM belongsTo b LEFT JOIN colles c ON b.id_colla=c.id WHERE b.id_user = %s" % user_id
         cursor = self.cnx.cursor()
         cursor.execute(sql)
@@ -29,8 +29,7 @@ class BelongCtrlMySQL(BelongCtrl):
             names.append(tuple[0])
         return names
 
-
-    def get_name_belonging_colles_by_user_id(self, user_id):
+    def get_id_belonging_colles_by_user(self, user_id):
         sql = "SELECT c.id FROM belongsTo b LEFT JOIN colles c ON b.id_colla=c.id WHERE b.id_user = %s" % user_id
         cursor = self.cnx.cursor()
         cursor.execute(sql)

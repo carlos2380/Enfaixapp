@@ -29,7 +29,7 @@ def server_error(e):
 
 
 @app.errorhandler(501)
-def server_error(e):
+def not_implemented_error(e):
     return make_response(jsonify({'error': 'Not implemented yet'}), 501)
 
 
