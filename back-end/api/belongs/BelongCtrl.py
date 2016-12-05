@@ -14,5 +14,9 @@ class BelongCtrl:
         pass
 
     @abc.abstractmethod
-    def get_name_belonging_colles_by_user(self, user_id):
+    def get_name_belonging_colles_by_user_name(self, user_id):
+        pass
+
+    @abc.abstractmethod
+    def get_name_belonging_colles_by_user_id(self, user_id):
         pass

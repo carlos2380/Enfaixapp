@@ -9,11 +9,15 @@ class EventCtrl:
         self.db = DB.getDatabase(dbconfig.user, dbconfig.password, dbconfig.database_name)
 
     @abc.abstractmethod
-    def insert(self, event):
+    def get_all(self):
         pass
 
     @abc.abstractmethod
-    def get_all(self):
+    def get_events_follows(self, user_id):
+        pass
+
+    @abc.abstractmethod
+    def get_event_belongs(self, user_id):
         pass
 
     @abc.abstractmethod

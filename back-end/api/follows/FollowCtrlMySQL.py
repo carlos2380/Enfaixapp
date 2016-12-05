@@ -18,7 +18,7 @@ class FollowCtrlMySQL(FollowCtrl):
 
         return
 
-    def get_name_followed_colles_by_user(self, id_user):
+    def get_name_followed_colles_by_user_name(self, id_user):
         sql = "SELECT c.name FROM follows f LEFT JOIN colles c ON f.id_colla=c.id WHERE f.id_user = %s" % id_user
         cursor = self.cnx.cursor()
         cursor.execute(sql)
@@ -29,4 +29,13 @@ class FollowCtrlMySQL(FollowCtrl):
             names.append(tuple[0])
         return names
 
+    def get_name_followed_colles_by_user_id(self, id_user):
+        sql = "SELECT c.id FROM follows f LEFT JOIN colles c ON f.id_colla=c.id WHERE f.id_user = %s" % id_user
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
 
+        result = cursor.fetchall()
+        ids = []
+        for tuple in result:
+            ids.append(tuple[0])
+        return ids
