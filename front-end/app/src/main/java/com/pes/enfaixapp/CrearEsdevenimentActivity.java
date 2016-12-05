@@ -29,13 +29,17 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EmptyStackException;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CrearEsdevenimentActivity extends Fragment {
+public class CrearEsdevenimentActivity extends Activity {
 
 
     private ImageView imageView;
@@ -52,7 +56,6 @@ public class CrearEsdevenimentActivity extends Fragment {
     final static int RESULTADO_FOTO = 0;
     final static int RESULTADO_GALERIA = 1;
     final static int RESULTADO_BORRAR_FOTO = 2;
-    static View viewCrearEsdv;
     private Esdeveniment esdv = new Esdeveniment();
 
     private EditText titolEsdv;
@@ -60,31 +63,29 @@ public class CrearEsdevenimentActivity extends Fragment {
     private EditText etdescript;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_crear_esdeveniment);
 
-
-       viewCrearEsdv = inflater.inflate(R.layout.activity_crear_esdeveniment, container, false);
-
-        Bundle bundle = this.getArguments();
+        /*Bundle bundle = this.getArguments();
 
         String s = "CASA";
         if (bundle != null) {
             s = bundle.getString("CLAVE");
         }
         Toast toast = Toast.makeText(viewCrearEsdv.getContext(), s, Toast.LENGTH_LONG);
-        toast.show();
+        toast.show(); */
 
-        titolEsdv = (EditText) viewCrearEsdv.findViewById(R.id.titolEsdv);
-        etdireccio = (EditText) viewCrearEsdv.findViewById(R.id.localitzacioEsdv);
-        etdescript = (EditText) viewCrearEsdv.findViewById(R.id.descrEsdv);
+        titolEsdv = (EditText) findViewById(R.id.titolEsdv);
+        etdireccio = (EditText) findViewById(R.id.localitzacioEsdv);
+        etdescript = (EditText) findViewById(R.id.descrEsdv);
 
-        imageView = (ImageView) viewCrearEsdv.findViewById(R.id.imatgeCrearEsdeveniment);
+        imageView = (ImageView) findViewById(R.id.imatgeCrearEsdeveniment);
         //afegirFotoViaCam = (Button) viewCrearEsdv.findViewById(R.id.afegirViaCamara);
-        afegirFotoViaDisp = (Button) viewCrearEsdv.findViewById(R.id.afegirViaDispositiu);
-        eliminarFoto = (Button) viewCrearEsdv.findViewById(R.id.eliminarFoto);
-        crearEsdv = (ImageButton) viewCrearEsdv.findViewById(R.id.crearEsv);
+        afegirFotoViaDisp = (Button) findViewById(R.id.afegirViaDispositiu);
+        eliminarFoto = (Button) findViewById(R.id.eliminarFoto);
+        crearEsdv = (ImageButton) findViewById(R.id.crearEsv);
         /*afegirFotoViaCam.setOnClickListener(new View.OnClickListener() {   //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
             @Override
             public void onClick(View v) {
@@ -118,9 +119,9 @@ public class CrearEsdevenimentActivity extends Fragment {
         crearEsdv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
-                CrearEsdevenimentActivity.MyAsync async = new CrearEsdevenimentActivity.MyAsync(viewCrearEsdv.getContext());
+                CrearEsdevenimentActivity.MyAsync async = new CrearEsdevenimentActivity.MyAsync(getApplicationContext());
                 try {
-                    async.createEsdeveniment(viewCrearEsdv.getContext());
+                    async.createEsdeveniment(getApplicationContext());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -128,8 +129,6 @@ public class CrearEsdevenimentActivity extends Fragment {
 
 
         });
-
-        return viewCrearEsdv;
     }
 
     //Recoger la vuelta a la actividad
@@ -172,6 +171,10 @@ public class CrearEsdevenimentActivity extends Fragment {
         //     TOAST DE GUARDADO OK
         //     VOLVER
         //***********************************//
+
+        Toast toast = Toast.makeText(getApplicationContext(), "Esdeveniment creat correctament", Toast.LENGTH_LONG);
+        toast.show();
+        //falta fer intent cap enrere
     }
 
     //Abrir Galeria o similar
@@ -183,7 +186,7 @@ public class CrearEsdevenimentActivity extends Fragment {
     }
 
 
-    private class MyAsync implements AsyncResult {
+    class MyAsync implements AsyncResult {
         Context context;
         public MyAsync(Context context) {
             this.context = context;
@@ -194,10 +197,24 @@ public class CrearEsdevenimentActivity extends Fragment {
             jsonUser.accumulate("title", titolEsdv.getText().toString());
             jsonUser.accumulate("description", etdescript.getText().toString());
             jsonUser.accumulate("path", uriFoto);
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd,MMMM,YYYY");
+            String dateStr = sdf.format(c.getTime());
+            Date date = null;
+            try {
+                date = sdf.parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            jsonUser.accumulate("date", date);
+
             jsonUser.accumulate("address", etdireccio.getText().toString());
             //***********************************//
             //      PONER USUARIO                //
             //***********************************//
+
             jsonUser.accumulate("id_user", "1");
             //***********************************//
             //      PONER COLLA                  //
@@ -205,7 +222,7 @@ public class CrearEsdevenimentActivity extends Fragment {
             jsonUser.accumulate("id_colla", "1");
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
-            httphandler.execute("POST", "http://10.4.41.165:5000/wall", null);
+            httphandler.execute("POST", "http://10.4.41.165:5000/events", null);
         }
 
         @Override

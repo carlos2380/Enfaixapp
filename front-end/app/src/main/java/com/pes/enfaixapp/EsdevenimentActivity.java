@@ -1,6 +1,7 @@
 package com.pes.enfaixapp;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import com.pes.enfaixapp.Models.Esdeveniment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EsdevenimentActivity extends Fragment {
+public class EsdevenimentActivity extends Activity {
 
 
     public EsdevenimentActivity() {
@@ -27,15 +28,16 @@ public class EsdevenimentActivity extends Fragment {
     private TextView descripcioEsdv;
     private TextView direccioEsdv;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View viewDisplayEsdv = inflater.inflate(R.layout.activity_esdeveniment, container, false);
-        foto = (ImageView) viewDisplayEsdv.findViewById(R.id.imatgeCrearEsdeveniment);
-        titolEsdv = (TextView) viewDisplayEsdv.findViewById(R.id.titolEsdvMostrar);
-        descripcioEsdv = (TextView) viewDisplayEsdv.findViewById(R.id.descripcioEsdvMostrar);
-        direccioEsdv = (TextView) viewDisplayEsdv.findViewById(R.id.direccioEsdvMostrar);
+    protected void onCreate(Bundle savedInstanceState)  {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_esdeveniment);
+
+        foto = (ImageView) findViewById(R.id.imatgeCrearEsdeveniment);
+        titolEsdv = (TextView) findViewById(R.id.titolEsdvMostrar);
+        descripcioEsdv = (TextView) findViewById(R.id.descripcioEsdvMostrar);
+        direccioEsdv = (TextView) findViewById(R.id.direccioEsdvMostrar);
 
         //      TODO: AGAFAR LA FOTO DE LA GALERIA
 
@@ -52,14 +54,6 @@ public class EsdevenimentActivity extends Fragment {
         titolEsdv.setText(esdv.getTitol());
         direccioEsdv.setText(esdv.getDireccio());
 
-
-
-
-
-
-
-
-        return viewDisplayEsdv;
     }
 
 }

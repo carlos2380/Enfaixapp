@@ -73,13 +73,14 @@
             android:textColorHint="#222222"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:padding="5dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Afegeix una fotografia a l'esdeveniment:"
+            android:text="Modifica la fotografia de l'esdeveniment:"
             android:layout_marginTop="30dp"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            />
+            android:id="@+id/textView2" />
 
         <LinearLayout
             android:layout_width="match_parent"
