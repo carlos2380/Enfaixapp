@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 
 public class DrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AsyncResult {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -142,12 +142,12 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if(id == R.id.nav_logout) {
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
-            String token = preferences.getString("session-token", null);
-            token = token.replace("[","");
-            token = token.replace("]","");
-            HTTPHandler httpHandler = new HTTPHandler();
-            httpHandler.setAsyncResult(context);
-            httpHandler.execute("DELETE", "http://10.4.41.165:5000/login/"+token, null);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove("session-token");
+            editor.apply();
+            Intent intent = new Intent(DrawerActivity.this, LogInActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         /* else if (id == R.id.nav_configuration) {
@@ -171,29 +171,4 @@ public class DrawerActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void processFinish(JSONObject output) {
-        if (output != null) {
-            try {
-                int response = output.getInt("response");
-                if (response == HttpURLConnection.HTTP_OK) {
-                    SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.remove("session-token");
-                    editor.apply();
-                    Intent intent = new Intent(DrawerActivity.this, LogInActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast toast = Toast.makeText(context, "Alguna cosa ha anat malament al servidor", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast toast = Toast.makeText(context, "El servidor no funciona", Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
 }
