@@ -29,12 +29,12 @@ public class DrawerActivity extends AppCompatActivity
 
         //------------------------------------
         //INSERTAR FRAGMENTO INICIAL
-
+/*
         NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
         fragmentTransaction.commit();
-
+*/
         //----------------------------
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

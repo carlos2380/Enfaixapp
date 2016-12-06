@@ -2,14 +2,19 @@ package com.pes.enfaixapp;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import java.io.File;
 
 
 /**
@@ -41,15 +46,20 @@ public class EsdevenimentListActivity extends Fragment {
                 return supportFragmentManager;
             }
 
+
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("CLAVE", "VALOR");
-                CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                //CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
+                /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
+
+                Intent intent = new Intent(getActivity(), CrearEsdevenimentActivity.class);
+                //intent.putExtra(MediaStore.EXTRA_OUTPUT, uriFoto);
+                ((AppCompatActivity)getActivity()).startActivity(intent);
             }
         });
         return view;

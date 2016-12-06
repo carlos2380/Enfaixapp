@@ -174,6 +174,7 @@ public class CrearEsdevenimentActivity extends Activity {
 
         Toast toast = Toast.makeText(getApplicationContext(), "Esdeveniment creat correctament", Toast.LENGTH_LONG);
         toast.show();
+
         //falta fer intent cap enrere
     }
 
@@ -193,12 +194,12 @@ public class CrearEsdevenimentActivity extends Activity {
         }
 
         public void createEsdeveniment(Context context) throws JSONException {
-            JSONObject jsonUser = new JSONObject();
-            jsonUser.accumulate("title", titolEsdv.getText().toString());
-            jsonUser.accumulate("description", etdescript.getText().toString());
-            jsonUser.accumulate("path", uriFoto);
+            JSONObject jsonEvent = new JSONObject();
+            jsonEvent.accumulate("title", titolEsdv.getText().toString());
+            jsonEvent.accumulate("description", etdescript.getText().toString());
+            jsonEvent.accumulate("path", uriFoto);
 
-            Calendar c = Calendar.getInstance();
+            /*Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd,MMMM,YYYY");
             String dateStr = sdf.format(c.getTime());
             Date date = null;
@@ -206,23 +207,23 @@ public class CrearEsdevenimentActivity extends Activity {
                 date = sdf.parse(dateStr);
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
+            Date date = null;
+            jsonEvent.accumulate("date", date);
 
-            jsonUser.accumulate("date", date);
-
-            jsonUser.accumulate("address", etdireccio.getText().toString());
+            jsonEvent.accumulate("address", etdireccio.getText().toString());
             //***********************************//
             //      PONER USUARIO                //
             //***********************************//
 
-            jsonUser.accumulate("id_user", "1");
+            jsonEvent.accumulate("id_user", "1");
             //***********************************//
             //      PONER COLLA                  //
             //***********************************//
-            jsonUser.accumulate("id_colla", "1");
+            jsonEvent.accumulate("id_colla", "1");
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
-            httphandler.execute("POST", "http://10.4.41.165:5000/events", null);
+            httphandler.execute("POST", "http://10.4.41.165:5000/events", jsonEvent.toString());
         }
 
         @Override

@@ -36,6 +36,16 @@
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CrearEsdevenimentActivity"
+            android:label="crearEsdeveniment" />
+        <activity
+            android:name=".ModificarEsdevenimentActivity"
+            android:label="modificarEsdeveniment" />
+        <activity
+            android:name=".EsdevenimentActivity"
+            android:label="esdeveniment" />
+
 
         <activity android:name=".EmptyActivity"></activity>
     </application>
