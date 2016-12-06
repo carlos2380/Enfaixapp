@@ -1,6 +1,7 @@
 package com.pes.enfaixapp;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -16,16 +17,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+
 public class DrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AsyncResult {
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
     NoticiaActivity fragmentNoticia = new NoticiaActivity();
+    private DrawerActivity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        context = this;
 
         //------------------------------------
         //INSERTAR FRAGMENTO INICIAL
@@ -76,31 +85,6 @@ public class DrawerActivity extends AppCompatActivity
         }
     }
 
-    private Boolean exit = false;
-
-   /* @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == event.KEYCODE_BACK) {    //handling del botó ENRERE
-            if (exit) {
-                finish(); // finish activity
-            } else {
-                Toast.makeText(this, "Press Back again to Exit.",
-                        Toast.LENGTH_SHORT).show();
-                exit = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        exit = false;
-                    }
-                }, 3 * 1000);
-
-            }
-
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -156,7 +140,17 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        }/* else if (id == R.id.nav_configuration) {
+        } else if(id == R.id.nav_logout) {
+            SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
+            String token = preferences.getString("session-token", null);
+            token = token.replace("[","");
+            token = token.replace("]","");
+            HTTPHandler httpHandler = new HTTPHandler();
+            httpHandler.setAsyncResult(context);
+            httpHandler.execute("DELETE", "http://10.4.41.165:5000/login/"+token, null);
+        }
+
+        /* else if (id == R.id.nav_configuration) {
 
             ConfigurationFragment fragment = new ConfigurationFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -175,5 +169,31 @@ public class DrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void processFinish(JSONObject output) {
+        if (output != null) {
+            try {
+                int response = output.getInt("response");
+                if (response == HttpURLConnection.HTTP_OK) {
+                    SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.remove("session-token");
+                    editor.apply();
+                    Intent intent = new Intent(DrawerActivity.this, LogInActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast toast = Toast.makeText(context, "Alguna cosa ha anat malament al servidor", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast toast = Toast.makeText(context, "El servidor no funciona", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 }

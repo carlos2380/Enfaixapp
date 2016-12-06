@@ -19,13 +19,15 @@
             android:id="@+id/nav_esdv"
             android:title="Esdeveniments"
             android:icon="@drawable/ic_fecha_y_hora_del_evento_simbolo"/>
-
-
     </group>
 
     <group android:title="Altres"
         android:checkableBehavior="single">
         <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout_24dp"
+                android:title="Tancar sessió"/>
             <item
                 android:id="@+id/nav_configuration"
                 android:icon="@drawable/ic_settings_black_24dp"

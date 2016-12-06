@@ -57,8 +57,8 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
                 } else {
                     response = parseResponse(connection.getErrorStream());
                 }
-                Object json = new JSONTokener(response).nextValue();
                 JSONObject result = new JSONObject();
+                Object json = new JSONTokener(response).nextValue();
                 if (json instanceof JSONArray) {
                     JSONArray array = (JSONArray) json;
                     result.accumulate("array", array);
@@ -68,9 +68,7 @@ public class HTTPHandler extends AsyncTask<String, Void, JSONObject> {
                 result.accumulate("connection", connection.getResponseMessage());
                 result.accumulate("response", responseCode);
                 return result;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
