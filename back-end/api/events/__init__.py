@@ -62,6 +62,7 @@ def create_event():
         event = Event(title=title, description=description, img=image_name, date=date,
                       address=address, user_id=user_id, colla_id=colla_id)
         event = event_ctrl.insert(event)
+        event.img = img
         return make_response(jsonify(event.__dict__), 201)
     except KeyError:
         abort(500)
