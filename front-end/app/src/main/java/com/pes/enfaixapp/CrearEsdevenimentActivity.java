@@ -4,15 +4,19 @@ package com.pes.enfaixapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +35,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +78,7 @@ public class CrearEsdevenimentActivity extends Activity {
 
     private TextView dateView;
     private int year, month, day;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -78,21 +86,11 @@ public class CrearEsdevenimentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_esdeveniment);
 
-        /*Bundle bundle = this.getArguments();
-
-        String s = "CASA";
-        if (bundle != null) {
-            s = bundle.getString("CLAVE");
-        }
-        Toast toast = Toast.makeText(viewCrearEsdv.getContext(), s, Toast.LENGTH_LONG);
-        toast.show(); */
-
         titolEsdv = (EditText) findViewById(R.id.titolEsdv);
         etdireccio = (EditText) findViewById(R.id.localitzacioEsdv);
         etdescript = (EditText) findViewById(R.id.descrEsdv);
 
         imageView = (ImageView) findViewById(R.id.imatgeCrearEsdeveniment);
-        //afegirFotoViaCam = (Button) viewCrearEsdv.findViewById(R.id.afegirViaCamara);
         afegirFotoViaDisp = (Button) findViewById(R.id.afegirViaDispositiu);
         eliminarFoto = (Button) findViewById(R.id.eliminarFoto);
         crearEsdv = (ImageButton) findViewById(R.id.crearEsv);
@@ -104,23 +102,10 @@ public class CrearEsdevenimentActivity extends Activity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day);
 
-        /*afegirFotoViaCam.setOnClickListener(new View.OnClickListener() {   //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                uriFoto = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES) + File.separator + "img_" + (System.currentTimeMillis() / 1000) + ".jpg"));
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriFoto);
-                ((AppCompatActivity)getActivity()).startActivityForResult(intent, RESULTADO_FOTO);
-            }
-
-        });*/
         afegirFotoViaDisp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, RESULTADO_GALERIA);            }
         });
 
@@ -152,16 +137,36 @@ public class CrearEsdevenimentActivity extends Activity {
     //Recoger la vuelta a la actividad
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*if (requestCode == RESULTADO_EDITAR) {
-            actualizarVistas();
-
-            //Forzar a acutalizar la vista
-            findViewById(R.id.scrollView1).invalidate();
-        }*/
+        super.onActivityResult(requestCode, resultCode, data);
         if (/* Si no a cancelado la accion y esta correcto*/ requestCode == RESULTADO_GALERIA
                ) {
-            esdv.setFoto(data.getDataString());
-            ponerFoto(imageView, esdv.getFoto());
+            /*Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                imageView.setImageBitmap(bitmap);
+            }*/
+
+            Uri contentURI = Uri.parse(data.getDataString());
+            ContentResolver cr = getContentResolver();
+            InputStream in = null;
+            try {
+                in = cr.openInputStream(contentURI);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize=8;
+            Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
+            imageView.setImageBitmap(thumb);
+            imageView.buildDrawingCache();
+            image = bitMapToString(thumb);
+
+            //esdv.setFoto(data.getDataString());
+            //ponerFoto(imageView, esdv.getFoto());
 
         }
         /*if(requestCode == RESULTADO_FOTO) {           //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
@@ -177,6 +182,13 @@ public class CrearEsdevenimentActivity extends Activity {
 
     public void ponerFoto(ImageView img, String foto) {
         //Compruba que es una foto y la pone
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.id.imageView, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        String imageType = options.outMimeType;
+
         imageView.setImageURI(uriFoto);
         if (foto != null) {
         } else {
@@ -215,21 +227,13 @@ public class CrearEsdevenimentActivity extends Activity {
             JSONObject jsonEvent = new JSONObject();
             jsonEvent.accumulate("title", titolEsdv.getText().toString());
             jsonEvent.accumulate("description", etdescript.getText().toString());
-            jsonEvent.accumulate("img", "1234");
+            jsonEvent.accumulate("img", image);
 
             String date = dateView.getText().toString();
 
             jsonEvent.accumulate("date", date);
-
             jsonEvent.accumulate("address", etdireccio.getText().toString());
-            //***********************************//
-            //      PONER USUARIO                //
-            //***********************************//
-
             jsonEvent.accumulate("user_id", "1");
-            //***********************************//
-            //      PONER COLLA                  //
-            //***********************************//
             jsonEvent.accumulate("colla_id", "1");
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
@@ -277,6 +281,14 @@ public class CrearEsdevenimentActivity extends Activity {
     private void showDate(int year, int month, int day) {
         dateView.setText(new StringBuilder().append(year).append("/")
                 .append(month).append("/").append(day));
+    }
+
+    private String bitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 
 
