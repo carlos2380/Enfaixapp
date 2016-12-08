@@ -1,5 +1,3 @@
-import base64
-
 from flask import json
 
 import api.db.CtrlFactory
@@ -20,12 +18,7 @@ class EventCtrlMySQL(EventCtrl):
         result = cursor.fetchall()
         events = []
         for (id, title, description, path, date, address, user_id, colla_id) in result:
-            encoded_img = None
-            if path is not None:
-                with open(path, "rb") as fh:
-                    encoded_img = base64.b64encode(fh.read())
-
-            event = Event(id=id, title=title, description=description, date=date, address=address, img=encoded_img,
+            event = Event(id=id, title=title, description=description, date=date, address=address, img=path,
                           user_id=user_id, colla_id=colla_id)
             events.append(event)
 
@@ -45,7 +38,7 @@ class EventCtrlMySQL(EventCtrl):
             event = None
             if result is not None:
                 event = Event(title=result[0], description=result[1], img=result[2], date=result[3],
-                      address=result[4], user_id=result[5], colla_id=result[6])
+                              address=result[4], user_id=result[5], colla_id=result[6])
                 events.append(event)
 
         return events
@@ -77,13 +70,8 @@ class EventCtrlMySQL(EventCtrl):
         result = cursor.fetchone()
         event = None
         if result:
-            encoded_img = None
-            if result[3] is not None:
-                with open(result[3], "rb") as fh:
-                    encoded_img = base64.b64encode(fh.read())
-            event = Event(id=result[0], title=result[1], description=result[2],
-                          img=encoded_img, date=result[4], address=result[5], user_id=result[6],
-                          colla_id=result[7])
+            event = Event(id=result[0], title=result[1], description=result[2], img=result[3], date=result[4],
+                          address=result[5], user_id=result[6], colla_id=result[7])
 
         return event
 
@@ -96,5 +84,13 @@ class EventCtrlMySQL(EventCtrl):
 
         last_id = cursor.lastrowid
         event.id = last_id
+
+        return event
+
+    def update(self, event):
+        sql = "UPDATE events SET title = %s, description = %s, path = %s, date = %s, address = %s, id_user = %s, id_colla = %s WHERE id = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id, event.id))
+        self.cnx.commit()
 
         return event

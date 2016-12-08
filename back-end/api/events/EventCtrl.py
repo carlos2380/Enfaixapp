@@ -27,3 +27,7 @@ class EventCtrl:
     @abc.abstractmethod
     def insert(self, event):
         pass
+
+    @abc.abstractmethod
+    def update(self, event):
+        pass
