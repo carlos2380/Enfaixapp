@@ -1,4 +1,4 @@
-from _bsddb import api, DB
+import base64
 
 from flask import json
 
@@ -20,7 +20,12 @@ class EventCtrlMySQL(EventCtrl):
         result = cursor.fetchall()
         events = []
         for (id, title, description, path, date, address, user_id, colla_id) in result:
-            event = Event(id=id, title=title, description=description, date=date, address=address, img=path,
+            encoded_img = None
+            if path is not None:
+                with open(path, "rb") as fh:
+                    encoded_img = base64.b64encode(fh.read())
+
+            event = Event(id=id, title=title, description=description, date=date, address=address, img=encoded_img,
                           user_id=user_id, colla_id=colla_id)
             events.append(event)
 
@@ -72,18 +77,21 @@ class EventCtrlMySQL(EventCtrl):
         result = cursor.fetchone()
         event = None
         if result:
+            encoded_img = None
+            if result[3] is not None:
+                with open(result[3], "rb") as fh:
+                    encoded_img = base64.b64encode(fh.read())
             event = Event(id=result[0], title=result[1], description=result[2],
-                          img=result[3], date=result[4], address=result[5], user_id=result[6],
+                          img=encoded_img, date=result[4], address=result[5], user_id=result[6],
                           colla_id=result[7])
 
         return event
 
     def insert(self, event):
         sql = "INSERT INTO events (title, description, path, date, address, id_user, id_colla) " \
-              "VALUES ('%s','%s','%s','%s','%s','%s','%s')" % (event.title, event.description, event.img, event.date,
-                                                               event.address, event.user_id, event.colla_id)
+              "VALUES (%s,%s,%s,%s,%s,%s,%s)"
         cursor = self.cnx.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id))
         self.cnx.commit()
 
         last_id = cursor.lastrowid

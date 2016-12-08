@@ -1,5 +1,7 @@
+import os
 import urllib
 
+import datetime
 from flask import abort
 from flask import json, jsonify
 from flask import make_response
@@ -40,13 +42,18 @@ def create_event():
         title = body['title']
         description = body['description']
         img = body['img']
+        image_name = None
+        if img is not None:
+            image_name = os.path.expanduser("~/images") + "/" + datetime.datetime.today().strftime("%Y-%m-%d_%H:%M:%S") + ".png"
+            with open(image_name, "wb") as fh:
+                fh.write(img.decode('base64'))
         date = body['date']
         address = body['address']
         user_id = body['user_id']
         colla_id = body['colla_id']
         db_configuration = json.loads(open("api/db/db.json").read())
         event_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
-        event = Event(title=title, description=description, img=img, date=date,
+        event = Event(title=title, description=description, img=image_name, date=date,
                       address=address, user_id=user_id, colla_id=colla_id)
         event = event_ctrl.insert(event)
         return make_response(jsonify(event.__dict__), 201)
