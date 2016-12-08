@@ -2,6 +2,8 @@ package com.pes.enfaixapp;
 
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,9 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pes.enfaixapp.Adapters.ListadoNoticiasFragmentSeguidas;
@@ -62,6 +66,12 @@ public class CrearEsdevenimentActivity extends Activity {
     private EditText etdireccio;
     private EditText etdescript;
 
+    private DatePicker datePicker;
+    private Calendar calendar;
+
+    private TextView dateView;
+    private int year, month, day;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
@@ -86,6 +96,14 @@ public class CrearEsdevenimentActivity extends Activity {
         afegirFotoViaDisp = (Button) findViewById(R.id.afegirViaDispositiu);
         eliminarFoto = (Button) findViewById(R.id.eliminarFoto);
         crearEsdv = (ImageButton) findViewById(R.id.crearEsv);
+        dateView = (TextView) findViewById(R.id.textView3);
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        showDate(year, month+1, day);
+
         /*afegirFotoViaCam.setOnClickListener(new View.OnClickListener() {   //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
             @Override
             public void onClick(View v) {
@@ -174,7 +192,7 @@ public class CrearEsdevenimentActivity extends Activity {
 
         Toast toast = Toast.makeText(getApplicationContext(), "Esdeveniment creat correctament", Toast.LENGTH_LONG);
         toast.show();
-
+        finish();
         //falta fer intent cap enrere
     }
 
@@ -197,18 +215,10 @@ public class CrearEsdevenimentActivity extends Activity {
             JSONObject jsonEvent = new JSONObject();
             jsonEvent.accumulate("title", titolEsdv.getText().toString());
             jsonEvent.accumulate("description", etdescript.getText().toString());
-            jsonEvent.accumulate("path", uriFoto);
+            jsonEvent.accumulate("img", "1234");
 
-            /*Calendar c = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd,MMMM,YYYY");
-            String dateStr = sdf.format(c.getTime());
-            Date date = null;
-            try {
-                date = sdf.parse(dateStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
-            Date date = null;
+            String date = dateView.getText().toString();
+
             jsonEvent.accumulate("date", date);
 
             jsonEvent.accumulate("address", etdireccio.getText().toString());
@@ -216,11 +226,11 @@ public class CrearEsdevenimentActivity extends Activity {
             //      PONER USUARIO                //
             //***********************************//
 
-            jsonEvent.accumulate("id_user", "1");
+            jsonEvent.accumulate("user_id", "1");
             //***********************************//
             //      PONER COLLA                  //
             //***********************************//
-            jsonEvent.accumulate("id_colla", "1");
+            jsonEvent.accumulate("colla_id", "1");
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
             httphandler.execute("POST", "http://10.4.41.165:5000/events", jsonEvent.toString());
@@ -230,6 +240,43 @@ public class CrearEsdevenimentActivity extends Activity {
         public void processFinish(JSONObject output) {
             guardaryvolver();
         }
+    }
+
+
+    @SuppressWarnings("deprecation")
+    public void setDate(View view) {
+        showDialog(999);
+        Toast.makeText(getApplicationContext(), "ca",
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this,
+                    myDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    showDate(arg1, arg2+1, arg3);
+                }
+            };
+
+    private void showDate(int year, int month, int day) {
+        dateView.setText(new StringBuilder().append(year).append("/")
+                .append(month).append("/").append(day));
     }
 
 
