@@ -2,8 +2,12 @@ package com.pes.enfaixapp;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pes.enfaixapp.Models.Esdeveniment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -43,17 +50,28 @@ public class EsdevenimentActivity extends Activity {
 
         // AGAFAR DADES DE L'ESDEVENIMENT
         Esdeveniment esdv = new Esdeveniment();
-        esdv.setTitol("Títol de prova");
-        esdv.setDescripcio("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        esdv.setDireccio("C/Jordi Girona 2342353");
+
 
         //SETEJAR LES DADES DE L'ESDEVENIMENT
 
+        //Bitmap image = StringToBitMap();
 
         descripcioEsdv.setText(esdv.getDescripcio());
         titolEsdv.setText(esdv.getTitol());
         direccioEsdv.setText(esdv.getDireccio());
-
+       // foto.setImageBitmap(image);
     }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 
 }

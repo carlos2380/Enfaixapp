@@ -112,10 +112,7 @@ public class CrearEsdevenimentActivity extends Activity {
         eliminarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                startActivityForResult(intent, RESULTADO_BORRAR_FOTO);
+                imageView.setImageResource(0);
             }
         });
 
@@ -165,6 +162,7 @@ public class CrearEsdevenimentActivity extends Activity {
             imageView.buildDrawingCache();
             image = bitMapToString(thumb);
 
+
             //esdv.setFoto(data.getDataString());
             //ponerFoto(imageView, esdv.getFoto());
 
@@ -175,8 +173,8 @@ public class CrearEsdevenimentActivity extends Activity {
         }*/
 
         else if(requestCode == RESULTADO_BORRAR_FOTO) {
-            esdv.setFoto(null);
-            ponerFoto(imageView, esdv.getFoto());
+            //esdv.setFoto(null);
+            //ponerFoto(imageView, esdv.getFoto());
         }
     }
 
@@ -289,6 +287,17 @@ public class CrearEsdevenimentActivity extends Activity {
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 

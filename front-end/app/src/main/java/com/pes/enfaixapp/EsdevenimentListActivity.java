@@ -57,7 +57,7 @@ public class EsdevenimentListActivity extends Fragment {
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.commit();*/
 
-                Intent intent = new Intent(getActivity(), CrearEsdevenimentActivity.class);
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
                 //intent.putExtra(MediaStore.EXTRA_OUTPUT, uriFoto);
                 ((AppCompatActivity)getActivity()).startActivity(intent);
             }
