@@ -2,6 +2,8 @@ package com.pes.enfaixapp.Models;
 
 import android.graphics.Bitmap;
 
+import java.util.Date;
+
 /**
  * Created by Àlex on 25/11/2016.
  */
@@ -12,11 +14,13 @@ public class Esdeveniment {
     private String descripcio;
     private String foto;
     private String direccio; //localitzacio
+    private Date date;
     private Usuari usuari;  //usuari que crea l'esdeveniment
     private Colla colla;    //colla a la que pertany l'esdeveniment
     private int numAssistents;
     private float latitut;          //long i lat per la localització
     private float longitut;
+
 
     public String getTitol() {
         return titol;
@@ -88,5 +92,13 @@ public class Esdeveniment {
 
     public void setLongitut(float longitut) {
         this.longitut = longitut;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

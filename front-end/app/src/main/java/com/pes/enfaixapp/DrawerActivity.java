@@ -38,12 +38,12 @@ public class DrawerActivity extends AppCompatActivity
 
         //------------------------------------
         //INSERTAR FRAGMENTO INICIAL
-
+/*
         NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
         fragmentTransaction.commit();
-
+*/
         //----------------------------
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,10 +127,10 @@ public class DrawerActivity extends AppCompatActivity
             //------------------------------------
             //INSERTAR FRAGMENTO INICIAL
 
-            CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
+            /*CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
 
             //----------------------------
         } else if (id == R.id.nav_esdv) {

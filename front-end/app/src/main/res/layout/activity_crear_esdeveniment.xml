@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="80dp">
+        android:orientation="vertical">
 
 
         <TextView
@@ -74,6 +73,36 @@
             android:textColorHint="#222222"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:padding="5dp"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:onClick="setDate"
+            android:text="Escull una data"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/button1"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="72dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="100dp"/>
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,12 +129,6 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <!-- <Button        DE MOMENT NO HO IMPLEMENTAREM
-                        android:text="Camara"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/afegirViaCamara" /> -->
 
                     <Button
                         style="@style/Widget.AppCompat.Button.Colored"
@@ -151,4 +174,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

@@ -71,14 +71,14 @@ public class ListadoNoticiasFragment extends Fragment {
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         loading = (ProgressBar) rootView.findViewById(R.id.loadingWall);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Refresh items
                 MyAsync async = new MyAsync(rootView.getContext());
                 async.callWall(rootView.getContext());
             }
-        });
+        });*/
 
         MyAsync async = new MyAsync(rootView.getContext());
         async.callWall(rootView.getContext());
