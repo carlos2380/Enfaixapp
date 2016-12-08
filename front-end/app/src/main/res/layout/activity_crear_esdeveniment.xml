@@ -4,174 +4,181 @@
     android:layout_height="match_parent"
     tools:context="com.pes.enfaixapp.CrearEsdevenimentActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Títol"
-            android:layout_marginTop="20dp"
-            android:id="@+id/titolEsdvLabel"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/titolEsdv"
-            android:textSize="15sp"
-            android:focusable="true"
-            android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="#222222"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:padding="5dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripció"
-            android:layout_marginTop="20dp"
-            android:id="@+id/descrEsdvLabel"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/descrEsdv"
-            android:textSize="15sp"
-            android:focusable="true"
-            android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="#222222"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:padding="5dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Localització"
-            android:layout_marginTop="20dp"
-            android:id="@+id/localitzacioEsdvLabel"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/localitzacioEsdv"
-            android:textSize="15sp"
-            android:focusable="true"
-            android:textColorHighlight="@color/colorPrimary"
-            android:textColorHint="#222222"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:padding="5dp"/>
-
-
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <Button
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:onClick="setDate"
-            android:text="Escull una data"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/button1"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="72dp"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="100dp"/>
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Afegeix una fotografia a l'esdeveniment:"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            />
-
-        <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="50dp">
+                android:text="Títol"
+                android:layout_marginTop="20dp"
+                android:id="@+id/titolEsdvLabel"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                />
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:id="@+id/imatgeCrearEsdeveniment"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/titolEsdv"
+                android:textSize="15sp"
+                android:focusable="true"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="#222222"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"/>
 
-                    <Button
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:text="Afegir foto des del dispositiu"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripció"
+                android:layout_marginTop="20dp"
+                android:id="@+id/descrEsdvLabel"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/descrEsdv"
+                android:textSize="15sp"
+                android:focusable="true"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="#222222"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Localització"
+                android:layout_marginTop="20dp"
+                android:id="@+id/localitzacioEsdvLabel"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/localitzacioEsdv"
+                android:textSize="15sp"
+                android:focusable="true"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="#222222"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"/>
+
+            <fragment
+                android:layout_margin="20dp"
+                android:id="@+id/mapaCrearEsdv"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:onClick="setDate"
+                android:text="Escull una data"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/button1"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="72dp"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="100dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Afegeix una fotografia a l'esdeveniment:"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="50dp">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/imatgeCrearEsdeveniment"
+                        />
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/afegirViaDispositiu"
-                        android:textAlignment="center"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_vertical_margin"
-                        android:layout_gravity="center"/>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin">
 
-                        <!--android:background="@drawable/button"-->
+                        <Button
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:text="Afegir foto des del dispositiu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/afegirViaDispositiu"
+                            android:textAlignment="center"
+                            android:paddingLeft="@dimen/activity_horizontal_margin"
+                            android:paddingRight="@dimen/activity_vertical_margin"
+                            android:layout_gravity="center"/>
+
+                            <!--android:background="@drawable/button"-->
 
 
-                    <Button
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:text="Eliminar fotografia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/eliminarFoto"
-                        android:textAlignment="center"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:layout_gravity="center"/>
-                        <!--android:background="@drawable/button"-->
+                        <Button
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:text="Eliminar fotografia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eliminarFoto"
+                            android:textAlignment="center"
+                            android:paddingLeft="@dimen/activity_horizontal_margin"
+                            android:paddingRight="@dimen/activity_horizontal_margin"
+                            android:layout_gravity="center"/>
+                            <!--android:background="@drawable/button"-->
 
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/crearEsv"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="130dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_mas"
-            android:background="@drawable/ic_mas"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/crearEsv"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="130dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_mas"
+                android:background="@drawable/ic_mas"/>
 
 
-    </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

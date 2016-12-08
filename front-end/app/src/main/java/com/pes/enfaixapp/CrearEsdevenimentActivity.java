@@ -10,12 +10,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +32,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.pes.enfaixapp.Adapters.ListadoNoticiasFragmentSeguidas;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
@@ -38,6 +49,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -45,13 +57,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EmptyStackException;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CrearEsdevenimentActivity extends Activity {
+public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private GoogleMap mGoogleMap;
+    SupportMapFragment mapFragment;
+    Marker marker;
 
     private ImageView imageView;
     private Uri uriFoto;
@@ -89,6 +106,7 @@ public class CrearEsdevenimentActivity extends Activity {
         titolEsdv = (EditText) findViewById(R.id.titolEsdv);
         etdireccio = (EditText) findViewById(R.id.localitzacioEsdv);
         etdescript = (EditText) findViewById(R.id.descrEsdv);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaCrearEsdv);
 
         imageView = (ImageView) findViewById(R.id.imatgeCrearEsdeveniment);
         afegirFotoViaDisp = (Button) findViewById(R.id.afegirViaDispositiu);
@@ -128,6 +146,23 @@ public class CrearEsdevenimentActivity extends Activity {
             }
 
 
+        });
+
+        etdireccio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                syncMap();
+            }
         });
     }
 
@@ -301,6 +336,32 @@ public class CrearEsdevenimentActivity extends Activity {
     }
 
 
+    //MAPA GOOGLE
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> address;
+        try {
+            address = geocoder.getFromLocationName(etdireccio.getText().toString(), 1);
+            if(address.size() > 0) {
+                LatLng latlong = new LatLng(address.get(0).getLatitude(), address.get(0).getLongitude());
+                if(marker != null) marker.remove();
+                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                marker = mGoogleMap.addMarker(new MarkerOptions().position(latlong).title(titolEsdv.getText().toString()));
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 14.0f));
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Add a marker in Sydney and move the camera
+
+    }
+
+    //Para poder llamarlo dentro de OnChange, no es necesario la funcion sino
+    private void syncMap(){
+       mapFragment.getMapAsync(this);
+    }
 
 }
