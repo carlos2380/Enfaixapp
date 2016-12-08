@@ -50,10 +50,9 @@ public class JSONConverter {
                 if (jsonObject.getString(key).toString() != "connection") {
                     JSONObject objNoticia = jsonObject.getJSONObject(key);
                     Noticia noticia = new Noticia();
-                    noticia.setTitulo(URLDecoder.decode(objNoticia.getString("title"), "UTF-8"));
-                    noticia.setUrl(URLDecoder.decode(objNoticia.getString("link"), "UTF-8"));
-
-                    noticia.setDescription(String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("description"), "UTF-8"))));
+                    noticia.setTitulo(objNoticia.getString("title"));
+                    noticia.setUrl(objNoticia.getString("link"));
+                    noticia.setDescription(objNoticia.getString("description"));
 
                     //DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZ");
                     //String data = String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("date"), "UTF-8")));

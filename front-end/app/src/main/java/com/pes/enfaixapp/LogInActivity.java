@@ -52,19 +52,10 @@ public class LogInActivity extends Activity implements AsyncResult {
                     e.printStackTrace();
                 }
 
-                Intent intent = new Intent(LogInActivity.this, DrawerActivity.class);
-                //Usuari u = JSONConverter.toUser(output);
-                //String token = output.getString("session_token");
-                SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                //editor.putString("session-token", token);
-                //editor.apply();
-                //intent.putExtra("User", u);
-                startActivity(intent);
-                finish();
-                //HTTPHandler httphandler = new HTTPHandler();
-                //httphandler.setAsyncResult(context);
-                //httphandler.execute("POST", "http://10.4.41.165:5000/login", jsonLogin.toString());
+
+                HTTPHandler httphandler = new HTTPHandler();
+                httphandler.setAsyncResult(context);
+                httphandler.execute("POST", "http://10.4.41.165:5000/login", jsonLogin.toString());
             }
         });
 
