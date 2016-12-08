@@ -44,22 +44,6 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
     private static View rootView;
     private static SwipeRefreshLayout mSwipeRefreshLayout;
     private static ProgressBar loading;
-    public ListadoNoticiasFragmentSeguidas() {
-    }
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static ListadoNoticiasFragmentSeguidas newInstance(int sectionNumber) {
-
-        ListadoNoticiasFragmentSeguidas fragment = new ListadoNoticiasFragmentSeguidas();
-        Bundle args = new Bundle();
-
-        List<Noticia> noticias;
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

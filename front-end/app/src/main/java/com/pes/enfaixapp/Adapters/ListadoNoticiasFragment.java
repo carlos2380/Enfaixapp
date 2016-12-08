@@ -47,26 +47,11 @@ public class ListadoNoticiasFragment extends Fragment {
     private static View rootView;
     private static SwipeRefreshLayout mSwipeRefreshLayout;
     private static ProgressBar loading;
-    public ListadoNoticiasFragment() {
-    }
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static ListadoNoticiasFragment newInstance(int sectionNumber) {
-
-        ListadoNoticiasFragment fragment = new ListadoNoticiasFragment();
-        Bundle args = new Bundle();
-
-        List<Noticia> noticias;
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_noticia, container, false);
+        rootView = inflater.inflate(R.layout.fragment_noticia, null);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         loading = (ProgressBar) rootView.findViewById(R.id.loadingWall);

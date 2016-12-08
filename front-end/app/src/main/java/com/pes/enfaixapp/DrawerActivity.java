@@ -41,7 +41,7 @@ public class DrawerActivity extends AppCompatActivity
 
         NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
+        fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
         fragmentTransaction.commit();
 
         //----------------------------
@@ -119,7 +119,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragmentNoticia);
+            fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
             fragmentTransaction.commit();
 
             //----------------------------

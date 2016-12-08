@@ -50,9 +50,9 @@ public class JSONConverter {
                 if (jsonObject.getString(key).toString() != "connection") {
                     JSONObject objNoticia = jsonObject.getJSONObject(key);
                     Noticia noticia = new Noticia();
-                    noticia.setTitulo(objNoticia.getString("title"));
-                    noticia.setUrl(objNoticia.getString("link"));
-                    noticia.setDescription(objNoticia.getString("description"));
+                    noticia.setTitulo(Html.fromHtml(objNoticia.getString("title")).toString());
+                    noticia.setUrl(Html.fromHtml(objNoticia.getString("link")).toString());
+                    noticia.setDescription(Html.fromHtml(objNoticia.getString("description")).toString());
 
                     //DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZ");
                     //String data = String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("date"), "UTF-8")));
@@ -92,4 +92,5 @@ public class JSONConverter {
         }
         return collaList;
     }
+
 }

@@ -6,6 +6,7 @@ package com.pes.enfaixapp.Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.pes.enfaixapp.NoticiaActivity;
 
@@ -14,7 +15,7 @@ import com.pes.enfaixapp.NoticiaActivity;
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class FragmentTabNoticiaAdapter extends FragmentPagerAdapter {
+public class FragmentTabNoticiaAdapter extends FragmentStatePagerAdapter {
 
     public FragmentTabNoticiaAdapter(FragmentManager fm) {
         super(fm);
@@ -24,8 +25,8 @@ public class FragmentTabNoticiaAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        if(position == 0) return ListadoNoticiasFragment.newInstance(position + 1);
-        else return ListadoNoticiasFragmentSeguidas.newInstance(position + 1);
+        if(position == 0) return new ListadoNoticiasFragment();
+        else return new ListadoNoticiasFragmentSeguidas();
     }
 
     @Override

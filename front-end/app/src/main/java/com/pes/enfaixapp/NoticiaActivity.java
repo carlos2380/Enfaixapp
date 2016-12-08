@@ -2,6 +2,7 @@ package com.pes.enfaixapp;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -51,21 +52,15 @@ public class NoticiaActivity extends Fragment {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private TabLayout tabLayout;
 
-    public NoticiaActivity() {
-        // Required empty public constructor
-    }
-
-
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_noticia, container, false);
+        View view = inflater.inflate(R.layout.activity_noticia, null);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
        // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mFragmentTabNoticiaAdapter = new FragmentTabNoticiaAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager());
@@ -74,29 +69,19 @@ public class NoticiaActivity extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         mViewPager.setAdapter(mFragmentTabNoticiaAdapter);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                tabLayout.setupWithViewPager(mViewPager);
+            }
+        });
 
 
         return view;
 
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
 }
