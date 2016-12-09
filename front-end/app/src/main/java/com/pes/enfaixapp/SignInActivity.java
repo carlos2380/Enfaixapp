@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +17,9 @@ import android.widget.Toast;
 
 import com.pes.enfaixapp.Adapters.AdaptadorColla;
 import com.pes.enfaixapp.Adapters.AdaptadorCollesSeguides;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Usuari;
 

@@ -8,7 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.pes.enfaixapp.NoticiaActivity;
+import com.pes.enfaixapp.ListadoNoticiasFragment;
+import com.pes.enfaixapp.ListadoNoticiasFragmentSeguidas;
 
 
 /**

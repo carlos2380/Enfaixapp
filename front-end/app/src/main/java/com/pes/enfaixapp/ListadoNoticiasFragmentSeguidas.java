@@ -1,10 +1,9 @@
-package com.pes.enfaixapp.Adapters;
+package com.pes.enfaixapp;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,21 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.pes.enfaixapp.AsyncResult;
-import com.pes.enfaixapp.HTTPHandler;
-import com.pes.enfaixapp.JSONConverter;
+import com.pes.enfaixapp.Adapters.NoticiasAdapter;
+import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Noticia;
-import com.pes.enfaixapp.R;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.pes.enfaixapp.JSONConverter.toNoticies;
 /**
  * Created by carlos on 15/11/2016.
  */
@@ -36,7 +32,7 @@ import static com.pes.enfaixapp.JSONConverter.toNoticies;
 /**
  * A ListadoNoticiasFragment fragment containing a simple view.
  */
-public class ListadoNoticiasFragment extends Fragment {
+public class ListadoNoticiasFragmentSeguidas extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -47,19 +43,20 @@ public class ListadoNoticiasFragment extends Fragment {
     private static View rootView;
     private static SwipeRefreshLayout mSwipeRefreshLayout;
     private static ProgressBar loading;
-    public ListadoNoticiasFragment() {
+    public ListadoNoticiasFragmentSeguidas() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ListadoNoticiasFragment newInstance(int sectionNumber) {
+    public static ListadoNoticiasFragmentSeguidas newInstance(int sectionNumber) {
 
-        ListadoNoticiasFragment fragment = new ListadoNoticiasFragment();
+        ListadoNoticiasFragmentSeguidas fragment = new ListadoNoticiasFragmentSeguidas();
         Bundle args = new Bundle();
 
         List<Noticia> noticias;
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -75,12 +72,12 @@ public class ListadoNoticiasFragment extends Fragment {
             @Override
             public void onRefresh() {
                 // Refresh items
-                MyAsync async = new MyAsync(rootView.getContext());
+                ListadoNoticiasFragmentSeguidas.MyAsync async = new ListadoNoticiasFragmentSeguidas.MyAsync(rootView.getContext());
                 async.callWall(rootView.getContext());
             }
         });
 
-        MyAsync async = new MyAsync(rootView.getContext());
+        ListadoNoticiasFragmentSeguidas.MyAsync async = new ListadoNoticiasFragmentSeguidas.MyAsync(rootView.getContext());
         async.callWall(rootView.getContext());
         return rootView;
     }
@@ -108,7 +105,6 @@ public class ListadoNoticiasFragment extends Fragment {
                     }
                 })
         );
-
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

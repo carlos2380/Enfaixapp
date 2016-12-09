@@ -1,7 +1,6 @@
 package com.pes.enfaixapp;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -14,14 +13,11 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -37,6 +33,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.BitmapUtilities;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
 import org.json.JSONException;
@@ -46,14 +45,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.pes.enfaixapp.R.id.imageView;
 
 
 /**
@@ -190,7 +184,7 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
             Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
             imageView.setImageBitmap(thumb);
             imageView.buildDrawingCache();
-            image = bitMapToString(thumb);
+            image = BitmapUtilities.bitMapToString(thumb);
 
         }
         /*if(requestCode == RESULTADO_FOTO) {           //PER LA POSAR FOTO A TRAVES DE CAM => DE MOMENT HO DEIXEM
@@ -261,25 +255,6 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
             finish();
 
         }
-
-    private String bitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
 
     public void setDate(View view) {
         showDialog(999);

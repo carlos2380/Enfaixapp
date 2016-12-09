@@ -1,29 +1,23 @@
 package com.pes.enfaixapp;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,24 +33,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.pes.enfaixapp.Adapters.ListadoNoticiasFragmentSeguidas;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.BitmapUtilities;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Locale;
 
@@ -195,7 +184,7 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
             Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
             imageView.setImageBitmap(thumb);
             imageView.buildDrawingCache();
-            image = bitMapToString(thumb);
+            image = BitmapUtilities.bitMapToString(thumb);
 
 
             //esdv.setFoto(data.getDataString());
@@ -300,24 +289,9 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
                 .append(month).append("/").append(day));
     }
 
-    private String bitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
+
+
 
 
     //MAPA GOOGLE

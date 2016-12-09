@@ -1,8 +1,9 @@
-package com.pes.enfaixapp.Adapters;
+package com.pes.enfaixapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,20 +11,20 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.pes.enfaixapp.AsyncResult;
-import com.pes.enfaixapp.CrearEsdevenimentActivity;
-import com.pes.enfaixapp.EsdevenimentActivity;
-import com.pes.enfaixapp.HTTPHandler;
-import com.pes.enfaixapp.JSONConverter;
+import com.pes.enfaixapp.Adapters.EsdevenimentAdapter;
+import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.CustomIntent;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
-import com.pes.enfaixapp.ModificarEsdevenimentActivity;
-import com.pes.enfaixapp.R;
 
 import org.json.JSONObject;
 
@@ -124,7 +125,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
                         //intent.putExtra("date", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("description", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("id", esdeveniments.get(position).getId());
-                        intent.putExtra("img", esdeveniments.get(position).getFoto());
+                        CustomIntent.getInstance().setFoto(esdeveniments.get(position).getFoto());
                         intent.putExtra("title", esdeveniments.get(position).getTitol());
                         intent.putExtra("user_id", esdeveniments.get(position).getUsuari());
                         ((AppCompatActivity)getActivity()).startActivity(intent);
@@ -133,6 +134,17 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         );
 
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     private class MyAsync implements AsyncResult {
