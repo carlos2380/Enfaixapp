@@ -74,33 +74,24 @@ public class JSONConverter {
 
     public static List<Esdeveniment> toEsdeveniments(JSONObject jsonObject) throws UnsupportedEncodingException {
         List<Esdeveniment> esdeveniments = new ArrayList<Esdeveniment>();
-        /*try {
-            Iterator iter = jsonObject.keys();
-            boolean continuar = true;
-           /* while (iter.hasNext() && continuar) {
-
-                /*String key = (String) iter.next();
-                if (jsonObject.getString(key).toString() != "connection") {
-                    JSONObject objNoticia = jsonObject.getJSONObject(key);
-                    Noticia noticia = new Noticia();
-                    noticia.setTitulo(Html.fromHtml(objNoticia.getString("title")).toString());
-                    noticia.setUrl(Html.fromHtml(objNoticia.getString("link")).toString());
-                    noticia.setDescription(Html.fromHtml(objNoticia.getString("description")).toString());
-
-                    //DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZ");
-                    //String data = String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("date"), "UTF-8")));
-                    //Date date = formatter.parse(data);
-                    //noticia.setDate(date);
-                    noticias.add(noticia);
-                } else {
-                    continuar = false;
-                }
+        try {
+            JSONArray jsonEsdevs = jsonObject.getJSONArray("array");
+            for (int i = 0; i < jsonEsdevs.length(); ++i) {
+                JSONObject jsonEsdev = jsonEsdevs.getJSONObject(i);
+                Esdeveniment esdeveniment = new Esdeveniment();
+                esdeveniment.setDireccio(jsonEsdev.getString("address"));
+                esdeveniment.setColla(jsonEsdev.getInt("colla_id"));
+                //esdeveniment.setDate(jsonColla.getString("date"));
+                esdeveniment.setDescripcio(jsonEsdev.getString("description"));
+                esdeveniment.setId(jsonEsdev.getInt("id"));
+                esdeveniment.setFoto(jsonEsdev.getString("img"));
+                esdeveniment.setUsuari(jsonEsdev.getInt("user_id"));
+                esdeveniment.setTitol(jsonEsdev.getString("title"));
+                esdeveniments.add(esdeveniment);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        } /*catch (ParseException e) {
-            e.printStackTrace();
-        }*/
+        }
         return esdeveniments;
     }
 

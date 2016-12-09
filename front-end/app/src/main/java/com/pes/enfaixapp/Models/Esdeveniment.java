@@ -10,17 +10,25 @@ import java.util.Date;
 
 public class Esdeveniment {
 
+    private int id;
     private String titol;
     private String descripcio;
     private String foto;
     private String direccio; //localitzacio
-    private Date date;
-    private Usuari usuari;  //usuari que crea l'esdeveniment
-    private Colla colla;    //colla a la que pertany l'esdeveniment
-    private int numAssistents;
-    private float latitut;          //long i lat per la localització
-    private float longitut;
+    private String date;
+    private int usuari;  //usuari que crea l'esdeveniment
+    private int colla;    //colla a la que pertany l'esdeveniment
 
+    public Esdeveniment() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitol() {
         return titol;
@@ -54,51 +62,27 @@ public class Esdeveniment {
         this.direccio = direccio;
     }
 
-    public Usuari getUsuari() {
-        return usuari;
-    }
-
-    public void setUsuari(Usuari usuari) {
-        this.usuari = usuari;
-    }
-
-    public Colla getColla() {
-        return colla;
-    }
-
-    public void setColla(Colla colla) {
-        this.colla = colla;
-    }
-
-    public int getNumAssistents() {
-        return numAssistents;
-    }
-
-    public void setNumAssistents(int numAssistents) {
-        this.numAssistents = numAssistents;
-    }
-
-    public float getLatitut() {
-        return latitut;
-    }
-
-    public void setLatitut(float latitut) {
-        this.latitut = latitut;
-    }
-
-    public float getLongitut() {
-        return longitut;
-    }
-
-    public void setLongitut(float longitut) {
-        this.longitut = longitut;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(int usuari) {
+        this.usuari = usuari;
+    }
+
+    public int getColla() {
+        return colla;
+    }
+
+    public void setColla(int colla) {
+        this.colla = colla;
     }
 }

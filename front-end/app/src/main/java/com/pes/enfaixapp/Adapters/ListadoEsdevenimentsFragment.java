@@ -17,10 +17,12 @@ import android.widget.ProgressBar;
 
 import com.pes.enfaixapp.AsyncResult;
 import com.pes.enfaixapp.CrearEsdevenimentActivity;
+import com.pes.enfaixapp.EsdevenimentActivity;
 import com.pes.enfaixapp.HTTPHandler;
 import com.pes.enfaixapp.JSONConverter;
 import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
+import com.pes.enfaixapp.ModificarEsdevenimentActivity;
 import com.pes.enfaixapp.R;
 
 import org.json.JSONObject;
@@ -95,7 +97,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         return rootView;
     }
 
-    public void insertarNoticias(final List<Esdeveniment> noticas) {
+    public void insertarEsdeveniments(final List<Esdeveniment> esdeveniments) {
         // Obtener el Recycler
         loading.setVisibility(View.GONE);
         recycler = (RecyclerView) rootView.findViewById(R.id.recicladorEsdev);
@@ -106,15 +108,27 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         recycler.setLayoutManager(lManager);
 
         // Crear un nuevo adaptador
-        adapter = new EsdevenimentAdapter((List<Esdeveniment>) noticas);
+        adapter = new EsdevenimentAdapter((List<Esdeveniment>) esdeveniments);
         recycler.setAdapter(adapter);
 
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(rootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                       /* Uri uri = Uri.parse(noticas.get(position).getUrl());
+                       /* Uri uri = Uri.parse(esdeveniments.get(position).getUrl());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);*/
+
+                        Intent intent = new Intent(getActivity(), EsdevenimentActivity.class);
+                        intent.putExtra("address", esdeveniments.get(position).getDireccio());
+                        intent.putExtra("colla_id", esdeveniments.get(position).getColla());
+                        //intent.putExtra("date", esdeveniments.get(position).getDescripcio());
+                        intent.putExtra("description", esdeveniments.get(position).getDescripcio());
+                        intent.putExtra("id", esdeveniments.get(position).getId());
+                        intent.putExtra("address", esdeveniments.get(position).getDescripcio());
+                        intent.putExtra("img", esdeveniments.get(position).getFoto());
+                        intent.putExtra("title", esdeveniments.get(position).getTitol());
+                        intent.putExtra("user_id", esdeveniments.get(position).getUsuari());
+                        ((AppCompatActivity)getActivity()).startActivity(intent);
                     }
                 })
         );
@@ -137,7 +151,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         @Override
         public void processFinish(JSONObject output) {
             try {
-                insertarNoticias(JSONConverter.toEsdeveniments(output));
+                insertarEsdeveniments(JSONConverter.toEsdeveniments(output));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
