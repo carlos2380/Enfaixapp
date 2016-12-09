@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.pes.enfaixapp.AsyncResult;
+import com.pes.enfaixapp.CrearEsdevenimentActivity;
 import com.pes.enfaixapp.HTTPHandler;
 import com.pes.enfaixapp.JSONConverter;
 import com.pes.enfaixapp.Models.Esdeveniment;
@@ -43,6 +46,8 @@ public class ListadoEsdevenimentsFragment extends Fragment {
     private static View rootView;
     private static SwipeRefreshLayout mSwipeRefreshLayout;
     private static ProgressBar loading;
+    private static FloatingActionButton flaotingButton;
+
     public ListadoEsdevenimentsFragment() {
     }
 
@@ -63,6 +68,15 @@ public class ListadoEsdevenimentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_esdeveniment, container, false);
+
+        flaotingButton = (FloatingActionButton)  rootView.findViewById(R.id.crearEsvList);
+        flaotingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CrearEsdevenimentActivity.class);
+                    ((AppCompatActivity)getActivity()).startActivity(intent);
+
+                }
+        });
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayoutEsdv);
         loading = (ProgressBar) rootView.findViewById(R.id.loadingEsdeveniment);
