@@ -39,14 +39,14 @@
             android:label="login" />
         <activity
             android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
+            android:label="Enfaixapp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CrearEsdevenimentActivity"
-            android:label="crearEsdeveniment" />
+            android:label="Crear Esdeveniment" />
         <activity
             android:name=".ModificarEsdevenimentActivity"
-            android:label="modificarEsdeveniment" />
+            android:label="Modificar Esdeveniment" />
         <activity
             android:name=".EsdevenimentActivity"
             android:label="esdeveniment" />

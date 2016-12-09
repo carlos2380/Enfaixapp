@@ -1,4 +1,5 @@
 package com.pes.enfaixapp;
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -116,7 +117,7 @@ public class DrawerActivity extends AppCompatActivity
         if (id == R.id.nav_news) {
             //------------------------------------
             //INSERTAR FRAGMENTO
-
+            getSupportActionBar().setTitle("Notícies");
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
@@ -126,6 +127,7 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_classification) {
             //------------------------------------
             //INSERTAR FRAGMENTO INICIAL
+            getSupportActionBar().setTitle("Classificació");
 
             /*CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -135,10 +137,14 @@ public class DrawerActivity extends AppCompatActivity
             //----------------------------
         } else if (id == R.id.nav_esdv) {
 
+            /*getSupportActionBar().setTitle("Esdeveniments");
             EsdevenimentListActivity fragment = new EsdevenimentListActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
+
+            Intent intent = new Intent(DrawerActivity.this, ModificarEsdevenimentActivity.class);
+            startActivity(intent);
 
         } else if(id == R.id.nav_logout) {
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);

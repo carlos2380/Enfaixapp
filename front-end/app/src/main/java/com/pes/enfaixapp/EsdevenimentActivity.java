@@ -46,7 +46,7 @@ public class EsdevenimentActivity extends Activity {
         descripcioEsdv = (TextView) findViewById(R.id.descripcioEsdvMostrar);
         direccioEsdv = (TextView) findViewById(R.id.direccioEsdvMostrar);
 
-        //      TODO: AGAFAR LA FOTO DE LA GALERIA
+        //      TODO: AGAFAR LA FOTO DE LA GALERIA I POSAR BOTÓ QUE ENLLAÇI A MODIFICAR
 
         // AGAFAR DADES DE L'ESDEVENIMENT
         Esdeveniment esdv = new Esdeveniment();

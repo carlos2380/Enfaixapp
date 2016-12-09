@@ -213,21 +213,6 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
         }
     }
 
-    public void ponerFoto(ImageView img, String foto) {
-        //Compruba que es una foto y la pone
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.imageView, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
-
-        imageView.setImageURI(uriFoto);
-        if (foto != null) {
-        } else {
-            imageView.setImageBitmap(null);
-        }
-    }
 
     public void guardaryvolver() {
         //***********************************//
@@ -238,7 +223,6 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
         Toast toast = Toast.makeText(getApplicationContext(), "Esdeveniment creat correctament", Toast.LENGTH_LONG);
         toast.show();
         finish();
-        //falta fer intent cap enrere
     }
 
     //Abrir Galeria o similar
