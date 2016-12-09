@@ -8,16 +8,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.pes.enfaixapp.NoticiaActivity;
-
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class FragmentTabNoticiaAdapter extends FragmentStatePagerAdapter {
+public class FragmentTabEsdevenimentAdapter extends FragmentStatePagerAdapter {
 
-    public FragmentTabNoticiaAdapter(FragmentManager fm) {
+    public FragmentTabEsdevenimentAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -39,9 +37,9 @@ public class FragmentTabNoticiaAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "TOTES";
+                return "TOTS";
             case 1:
-                return "PREFERIDES";
+                return "PREFERITS";
         }
         return null;
     }

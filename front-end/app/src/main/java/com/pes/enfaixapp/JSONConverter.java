@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.text.Html;
 
 import com.pes.enfaixapp.Models.Colla;
+import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
 import com.pes.enfaixapp.Models.Usuari;
 
@@ -70,6 +71,39 @@ public class JSONConverter {
         }*/
         return noticias;
     }
+
+    public static List<Esdeveniment> toEsdeveniments(JSONObject jsonObject) throws UnsupportedEncodingException {
+        List<Esdeveniment> esdeveniments = new ArrayList<Esdeveniment>();
+        /*try {
+            Iterator iter = jsonObject.keys();
+            boolean continuar = true;
+           /* while (iter.hasNext() && continuar) {
+
+                /*String key = (String) iter.next();
+                if (jsonObject.getString(key).toString() != "connection") {
+                    JSONObject objNoticia = jsonObject.getJSONObject(key);
+                    Noticia noticia = new Noticia();
+                    noticia.setTitulo(Html.fromHtml(objNoticia.getString("title")).toString());
+                    noticia.setUrl(Html.fromHtml(objNoticia.getString("link")).toString());
+                    noticia.setDescription(Html.fromHtml(objNoticia.getString("description")).toString());
+
+                    //DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZ");
+                    //String data = String.valueOf(Html.fromHtml(URLDecoder.decode(objNoticia.getString("date"), "UTF-8")));
+                    //Date date = formatter.parse(data);
+                    //noticia.setDate(date);
+                    noticias.add(noticia);
+                } else {
+                    continuar = false;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } /*catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+        return esdeveniments;
+    }
+
 
     public static List<Colla> toCollaList(JSONObject output) {
         List<Colla> collaList = new ArrayList<>();
