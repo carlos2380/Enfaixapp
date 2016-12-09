@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
+    <provider android:authorities="com.facebook.app.FacebookContentProvider261255144289507"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name=".LoadingActivity"
             android:label="@string/app_name"

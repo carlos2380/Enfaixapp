@@ -15,6 +15,7 @@
     <string name="email">Correu electrònic</string>
     <string name="repeat">Repeteix la contrasenya*</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="facebook_app_id">261255144289507</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.facebook.FacebookSdk;
+
 public class LogInActivity extends Activity implements AsyncResult {
 
     private Button loginButton, signInButton; //log in, cancel
@@ -28,6 +30,7 @@ public class LogInActivity extends Activity implements AsyncResult {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_log_in);
         context = this;
         loginButton =(Button)findViewById(R.id.logInButton);
