@@ -124,7 +124,6 @@ public class ListadoEsdevenimentsFragment extends Fragment {
                         //intent.putExtra("date", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("description", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("id", esdeveniments.get(position).getId());
-                        intent.putExtra("address", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("img", esdeveniments.get(position).getFoto());
                         intent.putExtra("title", esdeveniments.get(position).getTitol());
                         intent.putExtra("user_id", esdeveniments.get(position).getUsuari());

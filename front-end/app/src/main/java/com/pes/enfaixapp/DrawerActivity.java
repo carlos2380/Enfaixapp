@@ -137,14 +137,11 @@ public class DrawerActivity extends AppCompatActivity
             //----------------------------
         } else if (id == R.id.nav_esdv) {
 
-            /*getSupportActionBar().setTitle("Esdeveniments");
+            getSupportActionBar().setTitle("Esdeveniments");
             EsdevenimentListActivity fragment = new EsdevenimentListActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();*/
-
-            Intent intent = new Intent(DrawerActivity.this, ModificarEsdevenimentActivity.class);
-            startActivity(intent);
+            fragmentTransaction.commit();
 
         } else if(id == R.id.nav_logout) {
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
