@@ -14,23 +14,27 @@ from api.db.DB import DB
 from api.events.Event import Event
 
 
-@app.route("/events", methods=["GET"])
-#/events
+# /events
 #   Tots els esdeveniments
-#/events?user_id="1"
+# /events?user_id="1"
 #   Esdeveniments preferits del usuari 1
+@app.route("/events", methods=["GET"])
 def get_events():
     db_configuration = json.loads(open("api/db/db.json").read())
     events_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
     user_id = request.args.get('user_id')
+    events = []
     if user_id is None:
         events = events_ctrl.get_all()
     else:
-        eventsFollows = events_ctrl.get_events_follows(user_id)
-        eventsBelongs = events_ctrl.get_event_belongs(user_id)
-        events = eventsFollows + eventsBelongs
-    if not events:
-        abort(404)
+        user_ctrl = api.db.CtrlFactory.get_user_ctrl(DB(db_configuration).get_database_connection())
+        user = user_ctrl.get(user_id)
+        if user:
+            events_follows = events_ctrl.get_events_follows(user_id)
+            events_belongs = events_ctrl.get_event_belongs(user_id)
+            events = events_follows + events_belongs
+        else:
+            abort(404)
     for event in events:
         encoded_img = None
         if event.img is not None:
@@ -50,7 +54,8 @@ def create_event():
         img = body['img']
         image_name = None
         if img is not None:
-            image_name = os.path.expanduser("~/images") + "/" + datetime.datetime.today().strftime("%Y-%m-%d_%H:%M:%S") + ".png"
+            image_name = os.path.expanduser("~/images") + "/" + datetime.datetime.today().strftime(
+                "%Y-%m-%d_%H:%M:%S") + ".png"
             with open(image_name, "wb") as fh:
                 fh.write(img.decode('base64'))
         date = body['date']
@@ -120,3 +125,17 @@ def update_event(event_id):
         except KeyError:
             abort(500)
     abort(404)
+
+
+@app.route('/events/<int:event_id>', methods=['DELETE'])
+def delete(event_id):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    events_ctrl = api.db.CtrlFactory.get_event_ctrl(DB(db_configuration).get_database_connection())
+    event = events_ctrl.get(event_id)
+    if event:
+        if event.img is not None and os.path.exists(event.img):
+            os.remove(event.img)
+        events_ctrl.delete(event)
+        return make_response(jsonify({}), 204)
+    else:
+        abort(404)

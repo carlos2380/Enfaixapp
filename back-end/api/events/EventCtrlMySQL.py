@@ -70,8 +70,8 @@ class EventCtrlMySQL(EventCtrl):
         result = cursor.fetchone()
         event = None
         if result:
-            event = Event(id=result[0], title=result[1], description=result[2], img=result[3], date=result[4],
-                          address=result[5], user_id=result[6], colla_id=result[7])
+            event = Event(id=int(result[0]), title=result[1], description=result[2], img=result[3], date=result[4],
+                          address=result[5], user_id=int(result[6]), colla_id=int(result[7]))
 
         return event
 
@@ -94,3 +94,11 @@ class EventCtrlMySQL(EventCtrl):
         self.cnx.commit()
 
         return event
+
+    def delete(self, event):
+        sql = "DELETE FROM events WHERE id = %s" % event.id
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+        self.cnx.commit()
+
+        return

@@ -31,3 +31,7 @@ class EventCtrl:
     @abc.abstractmethod
     def update(self, event):
         pass
+
+    @abc.abstractmethod
+    def delete(self,event):
+        pass
