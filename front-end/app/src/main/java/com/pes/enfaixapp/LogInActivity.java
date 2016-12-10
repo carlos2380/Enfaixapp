@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Usuari;
@@ -79,11 +80,12 @@ public class LogInActivity extends Activity implements AsyncResult {
                     Intent intent = new Intent(LogInActivity.this, DrawerActivity.class);
                     Usuari u = JSONConverter.toUser(output);
                     String token = output.getString("session_token");
-                    String user_id = output.getString("user_id");
+                    String user_id = output.getString("id");
                     SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("session-token", token);
-                    //TTTeditor.putString("user_id", user_id);
+                    editor.putString("user_id", user_id);
+                    ContextUser.getInstance().setId(user_id);
                     editor.apply();
                     intent.putExtra("User", u);
                     startActivity(intent);

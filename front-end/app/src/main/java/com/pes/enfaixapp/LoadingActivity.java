@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import com.pes.enfaixapp.Controllers.ContextUser;
+
 public class LoadingActivity extends AppCompatActivity {
 
     private Context context;
@@ -27,6 +29,8 @@ public class LoadingActivity extends AppCompatActivity {
                 startActivity(new Intent(LoadingActivity.this, LogInActivity.class));
                 finish();
             } else {
+                String user_id = preferences.getString("user_id", null);
+                ContextUser.getInstance().setId(user_id);
                 startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
                 finish();
             }

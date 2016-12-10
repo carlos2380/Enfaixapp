@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * A ListadoNoticiasFragment fragment containing a simple view.
  */
-public class ListadoEsdevenimentsFragment extends Fragment {
+public class ListadoEsdevenimentsFragmentSeguides extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -52,16 +52,16 @@ public class ListadoEsdevenimentsFragment extends Fragment {
     private static ProgressBar loading;
     private static FloatingActionButton flaotingButton;
 
-    public ListadoEsdevenimentsFragment() {
+    public ListadoEsdevenimentsFragmentSeguides() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ListadoEsdevenimentsFragment newInstance(int sectionNumber) {
+    public static ListadoEsdevenimentsFragmentSeguides newInstance(int sectionNumber) {
 
-        ListadoEsdevenimentsFragment fragment = new ListadoEsdevenimentsFragment();
+        ListadoEsdevenimentsFragmentSeguides fragment = new ListadoEsdevenimentsFragmentSeguides();
         Bundle args = new Bundle();
 
         List<Noticia> noticias;

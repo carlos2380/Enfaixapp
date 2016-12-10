@@ -33,10 +33,10 @@ public final class DateUtils {
         Integer year = cal.get(Calendar.YEAR);
         y = year.toString();
         Integer month = cal.get(Calendar.MONTH)+1;
-        if(month < 10) m = month.toString();
+        if(month > 9) m = month.toString();
         else m = "0" + month.toString();
         Integer day = cal.get(Calendar.DAY_OF_MONTH);
-        if(day < 10) d = day.toString();
+        if(day > 9) d = day.toString();
         else d = "0" + day.toString();
         String date =  d + "/" + m + "/" + y;
         return  date;

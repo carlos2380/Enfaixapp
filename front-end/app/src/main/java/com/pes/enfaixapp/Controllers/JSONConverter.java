@@ -42,51 +42,55 @@ public class JSONConverter {
 
     public static List<Noticia> toNoticies(JSONObject jsonObject) throws Exception {
         List<Noticia> noticias = new ArrayList<Noticia>();
-        try {
-            Iterator iter = jsonObject.keys();
-            boolean continuar = true;
-            while (iter.hasNext() && continuar) {
+        if(jsonObject != null) {
+            try {
+                Iterator iter = jsonObject.keys();
+                boolean continuar = true;
+                while (iter.hasNext() && continuar) {
 
-                String key = (String) iter.next();
-                if (key != "connection") {
-                    JSONObject objNoticia = jsonObject.getJSONObject(key);
-                    Noticia noticia = new Noticia();
-                    noticia.setTitulo(Html.fromHtml(objNoticia.getString("title")).toString());
-                    noticia.setUrl(Html.fromHtml(objNoticia.getString("link")).toString());
-                    noticia.setDescription(Html.fromHtml(objNoticia.getString("description")).toString());
-                    noticia.setDate(DateUtils.parseStringCompleteToStringSimple(Html.fromHtml(objNoticia.getString("date")).toString()));
-                    noticias.add(noticia);
-                } else {
-                    continuar = false;
+                    String key = (String) iter.next();
+                    if (key != "connection") {
+                        JSONObject objNoticia = jsonObject.getJSONObject(key);
+                        Noticia noticia = new Noticia();
+                        noticia.setTitulo(Html.fromHtml(objNoticia.getString("title")).toString());
+                        noticia.setUrl(Html.fromHtml(objNoticia.getString("link")).toString());
+                        noticia.setDescription(Html.fromHtml(objNoticia.getString("description")).toString());
+                        noticia.setDate(DateUtils.parseStringCompleteToStringSimple(Html.fromHtml(objNoticia.getString("date")).toString()));
+                        noticias.add(noticia);
+                    } else {
+                        continuar = false;
+                    }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                throw new Exception("Internal Error: Converter Json to News");
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            throw new Exception("Internal Error: Converter Json to News");
         }
         return noticias;
     }
 
     public static List<Esdeveniment> toEsdeveniments(JSONObject jsonObject) throws Exception {
         List<Esdeveniment> esdeveniments = new ArrayList<Esdeveniment>();
-        try {
-            JSONArray jsonEsdevs = jsonObject.getJSONArray("array");
-            for (int i = 0; i < jsonEsdevs.length(); ++i) {
-                JSONObject jsonEsdev = jsonEsdevs.getJSONObject(i);
-                Esdeveniment esdeveniment = new Esdeveniment();
-                esdeveniment.setDireccio(jsonEsdev.getString("address"));
-                esdeveniment.setColla(jsonEsdev.getInt("colla_id"));
-                esdeveniment.setDate(DateUtils.parseStringCompleteToStringSimple(jsonEsdev.getString("date")));
-                esdeveniment.setDescripcio(jsonEsdev.getString("description"));
-                esdeveniment.setId(jsonEsdev.getInt("id"));
-                esdeveniment.setFoto(jsonEsdev.getString("img"));
-                esdeveniment.setUsuari(jsonEsdev.getInt("user_id"));
-                esdeveniment.setTitol(jsonEsdev.getString("title"));
-                esdeveniments.add(esdeveniment);
+        if(jsonObject != null) {
+            try {
+                JSONArray jsonEsdevs = jsonObject.getJSONArray("array");
+                for (int i = 0; i < jsonEsdevs.length(); ++i) {
+                    JSONObject jsonEsdev = jsonEsdevs.getJSONObject(i);
+                    Esdeveniment esdeveniment = new Esdeveniment();
+                    esdeveniment.setDireccio(jsonEsdev.getString("address"));
+                    esdeveniment.setColla(jsonEsdev.getInt("colla_id"));
+                    esdeveniment.setDate(DateUtils.parseStringCompleteToStringSimple(jsonEsdev.getString("date")));
+                    esdeveniment.setDescripcio(jsonEsdev.getString("description"));
+                    esdeveniment.setId(jsonEsdev.getInt("id"));
+                    esdeveniment.setFoto(jsonEsdev.getString("img"));
+                    esdeveniment.setUsuari(jsonEsdev.getInt("user_id"));
+                    esdeveniment.setTitol(jsonEsdev.getString("title"));
+                    esdeveniments.add(esdeveniment);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                throw new Exception("Internal Error: Converter Json to News");
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            throw new Exception("Internal Error: Converter Json to News");
         }
         return esdeveniments;
     }
