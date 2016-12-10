@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pes.enfaixapp.Models.Noticia;
@@ -21,16 +20,17 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.Notici
 
     public static class NoticiasViewHolder extends RecyclerView.ViewHolder {
         // Campos respectivos de un item
-        public ImageView imagen;
-        public TextView nombre;
-        public TextView visitas;
+        public TextView titulo;
+        public TextView descripcion;
+        public TextView data;
 
         public NoticiasViewHolder(View v) {
 
             super(v);
             //imagen = (ImageView) v.findViewById(R.id.imagen);
-            nombre = (TextView) v.findViewById(R.id.titulo);
-            visitas = (TextView) v.findViewById(R.id.contentido);
+            titulo = (TextView) v.findViewById(R.id.titulo);
+            descripcion = (TextView) v.findViewById(R.id.contentido);
+            data = (TextView) v.findViewById(R.id.dateNotCard);
         }
     }
 
@@ -53,7 +53,8 @@ public class NoticiasAdapter extends RecyclerView.Adapter<NoticiasAdapter.Notici
     @Override
     public void onBindViewHolder(NoticiasViewHolder viewHolder, int i) {
         //viewHolder.imagen.setImageResource(items.get(i).getPhotoId());
-        viewHolder.nombre.setText(items.get(i).getTitulo());
-        viewHolder.visitas.setText(items.get(i).getDescription());
+        viewHolder.titulo.setText(items.get(i).getTitulo());
+        viewHolder.descripcion.setText(items.get(i).getDescription());
+        viewHolder.data.setText(items.get(i).getDate());
     }
 }

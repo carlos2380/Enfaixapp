@@ -14,7 +14,7 @@ public class Noticia {
     String titulo;
     String description;
     String url;
-    Date date;
+    String date;
 
     public Noticia() {
     }
@@ -54,11 +54,11 @@ public class Noticia {
         this.url = url;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

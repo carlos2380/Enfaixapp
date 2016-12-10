@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.pes.enfaixapp.Adapters.EsdevenimentAdapter;
 import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
@@ -122,7 +123,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), EsdevenimentActivity.class);
                         intent.putExtra("address", esdeveniments.get(position).getDireccio());
                         intent.putExtra("colla_id", esdeveniments.get(position).getColla());
-                        //intent.putExtra("date", esdeveniments.get(position).getDescripcio());
+                        intent.putExtra("date", esdeveniments.get(position).getDate());
                         intent.putExtra("description", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("id", esdeveniments.get(position).getId());
                         CustomIntent.getInstance().setFoto(esdeveniments.get(position).getFoto());
@@ -147,6 +148,10 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         }
     }
 
+    private void showError(String err) {
+        Toast.makeText(rootView.getContext(), err, Toast.LENGTH_LONG).show();
+    }
+
     private class MyAsync implements AsyncResult {
         Context context;
         public MyAsync(Context context) {
@@ -165,6 +170,10 @@ public class ListadoEsdevenimentsFragment extends Fragment {
                 insertarEsdeveniments(JSONConverter.toEsdeveniments(output));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+                showError("Internal Error: Can't push the news");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError(e.getMessage().toString());
             }
         }
     }
