@@ -39,3 +39,4 @@ import api.login
 import api.colles
 import api.wall
 import api.events
+import api.results
