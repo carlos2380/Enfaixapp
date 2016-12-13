@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.pes.enfaixapp.Adapters.EsdevenimentAdapter;
 import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
 import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.CustomIntent;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
@@ -164,7 +165,7 @@ public class ListadoEsdevenimentsFragmentSeguides extends Fragment {
         public void callEsdeveniment(Context context) {
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
-            httphandler.execute("GET", "http://10.4.41.165:5000/events", null);
+            httphandler.execute("GET", "http://10.4.41.165:5000/events?user_id=" + ContextUser.getInstance().getId(), null);
         }
 
         @Override

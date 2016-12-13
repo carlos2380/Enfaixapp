@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.pes.enfaixapp.Adapters.NoticiasAdapter;
 import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
 import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
+import com.pes.enfaixapp.Controllers.CustomIntent;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Noticia;
@@ -122,7 +124,7 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
         public void callWall(Context context) {
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
-            httphandler.execute("GET", "http://10.4.41.165:5000/wall", null);
+            httphandler.execute("GET", "http://10.4.41.165:5000/wall/" + ContextUser.getInstance().getId(), null);
         }
 
         @Override
