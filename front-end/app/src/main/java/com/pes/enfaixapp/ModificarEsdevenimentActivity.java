@@ -95,7 +95,15 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
         afegirFotoViaDisp = (Button) findViewById(R.id.afegirViaDispositiu);
         eliminarFoto = (Button) findViewById(R.id.eliminarFoto);
 
+
         modificarEsdv = (ImageButton) findViewById(R.id.crearEsv);  //canviem la imatge
+
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            modificarEsdv.setBackgroundDrawable( getResources().getDrawable(R.drawable.ic_editar) );
+        } else {
+            modificarEsdv.setBackground( getResources().getDrawable(R.drawable.ic_editar));
+        }
         modificarEsdv.setImageResource(R.drawable.ic_editar);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaCrearEsdv);

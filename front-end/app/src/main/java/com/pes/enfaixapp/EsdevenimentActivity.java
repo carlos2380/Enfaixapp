@@ -3,6 +3,7 @@ package com.pes.enfaixapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -14,6 +15,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pes.enfaixapp.Controllers.BitmapUtilities;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.CustomIntent;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
@@ -61,7 +64,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
     private String title;
     private String user_id;
     private String foto;
-
+    private ImageButton modificarib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -73,6 +76,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         descripcioEsdv = (TextView) findViewById(R.id.descripcioEsdvMostrar);
         direccioEsdv = (TextView) findViewById(R.id.direccioEsdvMostrar);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaEsdv);
+        modificarib = (ImageButton) findViewById(R.id.modificarEsv);
 
         //      TODO: AGAFAR LA FOTO DE LA GALERIA I POSAR BOTÓ QUE ENLLAÇI A MODIFICAR
 
@@ -100,10 +104,15 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         fotoiv.setImageBitmap(BitmapUtilities.stringToBitMap(foto));
         mapFragment.getMapAsync(this);
 
+        modificarib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
+                Intent intent = new Intent(getApplicationContext(), ModificarEsdevenimentActivity.class);
+                startActivity(intent);
+            }
 
 
-
-
+        });
 
 
     }
