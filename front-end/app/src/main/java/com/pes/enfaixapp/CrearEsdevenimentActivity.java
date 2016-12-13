@@ -182,6 +182,7 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize=8;
             Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
+            thumb = BitmapUtilities.redimensionarImagenMaximo(thumb, 250, 250);
             imageView.setImageBitmap(thumb);
             imageView.buildDrawingCache();
             image = BitmapUtilities.bitMapToString(thumb);
@@ -233,6 +234,7 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
             JSONObject jsonEvent = new JSONObject();
             jsonEvent.accumulate("title", titolEsdv.getText().toString());
             jsonEvent.accumulate("description", etdescript.getText().toString());
+
             jsonEvent.accumulate("img", image);
 
             String date = dateView.getText().toString();
