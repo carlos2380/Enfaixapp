@@ -98,3 +98,8 @@ VALUES
 ('Colla Jove de Castellers de Sitges' , false, null, null),
 ('Colla Castellera Nyerros de la Plana' , false, null, null),
 ('Colla Castellera Jove de Barcelona' , false, null, null);
+
+
+INSERT INTO PRACTICE (date, description, address, id_colla) VALUES ("2017-12-12 10:00:00", null, null, 1);
+
+INSERT INTO ATTENDANTS (id_user, id_colla, date) VALUES (1, 1, "2017-12-12 10:00:00");
