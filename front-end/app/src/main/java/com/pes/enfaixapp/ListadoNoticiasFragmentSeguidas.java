@@ -124,7 +124,7 @@ public class ListadoNoticiasFragmentSeguidas extends Fragment {
         public void callWall(Context context) {
             HTTPHandler httphandler = new HTTPHandler();
             httphandler.setAsyncResult(this);
-            httphandler.execute("GET", "http://10.4.41.165:5000/wall/" + ContextUser.getInstance().getId(), null);
+            httphandler.execute("GET", "http://10.4.41.165:5000/wall?user_id=" + ContextUser.getInstance().getId(), null);
         }
 
         @Override

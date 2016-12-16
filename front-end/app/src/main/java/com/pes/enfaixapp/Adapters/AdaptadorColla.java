@@ -112,6 +112,7 @@ public class AdaptadorColla extends ArrayAdapter {
         });
 
         chkbox.setChecked(position==selected_position);
+        c.setSeleccionada(position==selected_position);
 
 
 

@@ -84,6 +84,7 @@ public class AdaptadorCollesSeguides extends ArrayAdapter {
         Colla c = (Colla) getItem(position);
         nomColla.setText(c.getName());
         chkbox.setChecked(position==selected_position);
+        c.setSeleccionadaSeguida(position==selected_position);
 
         return convertView;
     }

@@ -15,15 +15,15 @@ public class Usuari implements Serializable {
     private String cognoms;
     private String psswd;
     private String correu;
-    private List<Colla> collesALesQuePertany;
-    private List<Colla> collesSeguides;
+    private List<Integer> collesALesQuePertany;
+    private List<Integer> collesSeguides;
 
     public Usuari() {
         collesSeguides = new ArrayList<>();
         collesALesQuePertany = new ArrayList<>();
     }
 
-    public Usuari(String nom, int id, String cognoms, String psswd, String correu, ArrayList<Colla> collesSeguides) {
+    public Usuari(String nom, int id, String cognoms, String psswd, String correu, ArrayList<Integer> collesSeguides) {
         this.nom = nom;
         this.id = id;
         this.cognoms = cognoms;
@@ -73,23 +73,23 @@ public class Usuari implements Serializable {
         this.correu = correu;
     }
 
-    public List<Colla> getCollesSeguides() {
+    public List<Integer> getCollesSeguides() {
         return collesSeguides;
     }
 
-    public void setCollesSeguides(ArrayList<Colla> collesSeguides) {
-        this.collesSeguides = collesSeguides;
+    public void addCollesSeguides(int collaSeguida) {
+        collesSeguides.add(collaSeguida);
     }
 
-    public List<Colla> getCollesALesQuePertany() {
+    public List<Integer> getCollesALesQuePertany() {
         return collesALesQuePertany;
     }
 
-    public void setCollesALesQuePertany(ArrayList<Colla> collesALesQuePertany) {
+    public void setCollesALesQuePertany(ArrayList<Integer> collesALesQuePertany) {
         this.collesALesQuePertany = collesALesQuePertany;
     }
 
-    public void addCollaQuePertany(Colla collaConvEscollida) {
+    public void addCollaQuePertany(int collaConvEscollida) {
         collesALesQuePertany.add(collaConvEscollida);
     }
 }

@@ -289,15 +289,32 @@ public class SignInActivity extends Activity implements AsyncResult {
                             String hash = bigInteger.toString(64);
                             user.setPsswd(hash);
 
+                            for (int i=0; i < adaptadorCollesConv.getCount(); ++i) {
+                                if ( ((Colla)adaptadorCollesConv.getItem(i)).isSeleccionada())
+                                    user.addCollaQuePertany(((Colla) adaptadorCollesConv.getItem(i)).getId());
+
+                            }
+
+                            for (int i=0; i < adaptadorCollesUni.getCount(); ++i) {
+                                if ( ((Colla)adaptadorCollesUni.getItem(i)).isSeleccionada())
+                                    user.addCollaQuePertany(((Colla) adaptadorCollesUni.getItem(i)).getId());
+
+                            }
+
+
+                            /*listViewCollesConvencionals.getItemAtPosition(1);
                             if (choosenCollaConv != null) {
                                 user.addCollaQuePertany(choosenCollaConv);
                             }
 
                             if (choosenCollaUni != null) {
                                 user.addCollaQuePertany(choosenCollaUni);
-                            }
+                            }*/
+                            /*for (int i=0; i < adaptadorCollesTotes.getCount(); ++i) {
+                                if ( ((Colla)adaptadorCollesTotes.getItem(i)).isSeleccionadaSeguida())
+                                    user.addCollesSeguides(((Colla) adaptadorCollesTotes.getItem(i)).getId());
+                            }*/
 
-                            user.setCollesSeguides(CollesSeguides);
 
                             jsonUser.accumulate("email", user.getCorreu());
                             jsonUser.accumulate("password", user.getPsswd());

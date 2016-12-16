@@ -11,6 +11,11 @@ public class Colla {
     private int color;
     private String image;
     private boolean uni;
+    private boolean seleccionada;
+
+
+
+    private boolean seleccionadaSeguida;
 
     public Colla() {
         super();
@@ -59,6 +64,22 @@ public class Colla {
     }
 
     public int getId() {return id;}
+
+    public boolean isSeleccionada() {
+        return seleccionada;
+    }
+
+    public void setSeleccionada(boolean seleccionada) {
+        this.seleccionada = seleccionada;
+    }
+
+    public boolean isSeleccionadaSeguida() {
+        return seleccionadaSeguida;
+    }
+
+    public void setSeleccionadaSeguida(boolean seleccionadaSeguida) {
+        this.seleccionadaSeguida = seleccionadaSeguida;
+    }
 
     @Override
     public boolean equals(Object o) {
