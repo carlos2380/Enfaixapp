@@ -99,7 +99,7 @@ VALUES
 ('Colla Castellera Nyerros de la Plana' , false, null, null),
 ('Colla Castellera Jove de Barcelona' , false, null, null);
 
+INSERT INTO PRACTICE (date, description, address, id_colla) VALUES ("2017-12-12 11:00:00", null, null, 1);
 
-INSERT INTO PRACTICE (date, description, address, id_colla) VALUES ("2017-12-12 10:00:00", null, null, 1);
+INSERT INTO PRACTICE (date, description, address, id_colla) VALUES ("2017-12-12 12:00:00", "alex correa gay", "casa del correa", 1);
 
-INSERT INTO ATTENDANTS (id_user, id_colla, date) VALUES (1, 1, "2017-12-12 10:00:00");

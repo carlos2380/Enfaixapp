@@ -1,9 +1,10 @@
 from flask import json
 
 import feedparser
-import urllib2
 from bs4 import BeautifulSoup
 
+#S'ha d'agafar nom de l'actuació amb l'any (fm st felix 16) després amb lo que rebem entrar
+#a una taula "actuacions" guardar: actuació - colla - ronda - intent- tipus castell - resultat
 
 def rss_results(url, number_of_entries=5):
     d = feedparser.parse(url)
