@@ -8,14 +8,19 @@ def hello():
     return "Hello World!\n"
 
 
-@app.errorhandler(404)
-def not_found(e):
-    return make_response(jsonify({'error': 'Resource not found'}), 404)
+@app.errorhandler(400)
+def not_authorized(e):
+    return make_response(jsonify({'error': 'Bad request'}), 403)
 
 
 @app.errorhandler(403)
 def not_authorized(e):
     return make_response(jsonify({'error': 'Unauthorized access'}), 403)
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return make_response(jsonify({'error': 'Resource not found'}), 404)
 
 
 @app.errorhandler(409)
@@ -40,3 +45,4 @@ import api.colles
 import api.wall
 import api.events
 import api.ranking
+import api.admin

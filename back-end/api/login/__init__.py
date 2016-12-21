@@ -7,7 +7,7 @@ from flask import request, make_response
 from api import app
 from api.db.DB import DB
 from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id, delete_token
-from api.db.CtrlFactory import get_user_ctrl
+from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl
 
 
 @app.route('/login', methods=['POST'])
@@ -22,6 +22,7 @@ def log_in():
         if check_password(email, password):
             token = get_token_by_user_id(user_id=user.id)
             user.session_token = token
+            user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(user.id)
             return make_response(jsonify(user.__dict__), 200)
     return abort(403)
 
@@ -46,6 +47,7 @@ def sign_in():
             new_user.session_token = token
             new_user.follows = colles_followed
             new_user.belongs = colles_that_belongs_to
+            new_user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(new_user.id)
             return make_response(jsonify(new_user.__dict__), 201)
         abort(409)
     except KeyError:

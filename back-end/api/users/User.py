@@ -12,6 +12,7 @@ class User(json.JSONEncoder):
         self.belongs = []
         self.follows = []
         self.session_token = None
+        self.admin = False
 
     def get_complete_name(self):
         return self.name, " ", self.surname

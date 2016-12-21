@@ -71,4 +71,3 @@ class UserCtrlMySQL(UserCtrl):
         cursor.execute(sql)
         self.cnx.commit()
         return
-

@@ -1,3 +1,4 @@
+from api.admin.AdminCtrlMySQL import AdminCtrlMySQL
 from api.colles.CollaCtrlMySQL import CollaCtrlMySQL
 from api.users.UserCtrlMySQL import UserCtrlMySQL
 from api.belongs.BelongCtrlMySQL import BelongCtrlMySQL
@@ -36,3 +37,7 @@ def get_belong_ctrl(data_source_connetction):
 
 def get_event_ctrl(data_source_connetction):
     return EventCtrlMySQL(data_source_connetction)
+
+
+def get_admin_ctrl(data_source_connection):
+    return AdminCtrlMySQL(data_source_connection)

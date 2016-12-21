@@ -55,3 +55,15 @@ class CollaCtrlMySQL(CollaCtrl):
             convencionals.append(colla)
 
         return convencionals
+
+    def get(self, colla_id):
+        sql = "SELECT * FROM colles WHERE id = %s" % colla_id
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        result = cursor.fetchone()
+        colla = None
+        if result:
+            colla = Colla(colla_id=result[0], name=result[1], uni=result[2], color=result[3], img=result[4])
+
+        return colla

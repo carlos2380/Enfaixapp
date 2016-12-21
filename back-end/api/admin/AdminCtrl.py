@@ -1,29 +1,21 @@
 import abc
+
 from api.db.DB import DB
 
 
-class CollaCtrl:
+class AdminCtrl:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, dbconfig):
         self.db = DB.getDatabase(dbconfig.user, dbconfig.password, dbconfig.database_name)
 
     @abc.abstractmethod
-    def insert(self, colla):
+    def insert(self, user_id, colla_id):
         pass
 
     @abc.abstractmethod
-    def get_all(self):
+    def delete(self, user_id, colla_id):
         pass
 
-    @abc.abstractmethod
-    def get_universitaries(self):
-        pass
-
-    @abc.abstractmethod
-    def get_convencionals(self):
-        pass
-
-    @abc.abstractmethod
-    def get(self, colla_id):
+    def is_admin(self, user_id):
         pass
