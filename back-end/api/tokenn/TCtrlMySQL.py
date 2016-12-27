@@ -11,7 +11,7 @@ class TokenCtrlMySQL(TokenCtrl):
         cursor.execute(sql)
 
         token = cursor.fetchone()
-        return token
+        return token[0]
 
     def delete(self, token):
         sql = "DELETE FROM tokens WHERE token = %s" % token

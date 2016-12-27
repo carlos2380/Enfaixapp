@@ -5,6 +5,7 @@ from api.db.DB import DB
 from db.CtrlFactory import get_user_ctrl, get_colla_ctrl, get_admin_ctrl
 
 
+# POST /admin?user_id=_&colla_id=_
 @app.route('/admin', methods=['POST'])
 def grant_admin():
     user_id = request.args.get('user_id')
@@ -23,6 +24,7 @@ def grant_admin():
     return make_response(jsonify({}), 202)
 
 
+# DELETE /admin?user_id=_&colla_id=_
 @app.route('/admin', methods=['DELETE'])
 def revoke_admin():
     user_id = request.args.get('user_id')

@@ -7,7 +7,7 @@ from flask import request, make_response
 from api import app
 from api.db.DB import DB
 from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id, delete_token
-from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl
+from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl, get_following_ctrl, get_belonging_ctrl
 
 
 @app.route('/login', methods=['POST'])
@@ -23,6 +23,10 @@ def log_in():
             token = get_token_by_user_id(user_id=user.id)
             user.session_token = token
             user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(user.id)
+            user.follows = get_following_ctrl(
+                DB(db_configuration).get_database_connection()).get_id_followed_colles_by_user(user.id)
+            user.belongs = get_belonging_ctrl(
+                DB(db_configuration).get_database_connection()).get_id_belonging_colles_by_user(user.id)
             return make_response(jsonify(user.__dict__), 200)
     return abort(403)
 
