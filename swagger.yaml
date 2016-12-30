@@ -1,0 +1,518 @@
+swagger: '2.0'
+
+info:
+  version: "1.0.0"
+  title: Enfaixapp API
+  description: |
+    Aquesta API ha estat desenvolupada pel grup 13 de l'assignatura de [Projecte d'Enginyeria del Software](http://www.fib.upc.edu/fib/estudiar-enginyeria-informatica/assignatures/PES) de la [Facultat d'Informàtica de Barcelona](http://www.fib.upc.edu/fib.html) en el quadrimestre de Tardor 2016-2017 per a l'aplicació del món casteller Enfaixapp.
+    
+    Aquesta API només està disponible des de la xarxa d'adreces internes a la UPC o vía la seva VPN.    
+    
+    Desenvolupadors:
+    - [Carlos Álamo](https://github.com/carlos2380)
+    - [Àlex Correa](https://github.com/alexct33)
+    - [Jordi Guiu](https://github.com/guiu23)
+    - [Marc Martí](https://github.com/marc1161)
+    - [Eduard Maura](https://github.com/mapu77)
+    - [Arnau Orriols](https://github.com/aog182)
+
+produces:
+  - application/json
+  
+consumes:
+  - application/json
+  
+host: 10.4.41.165:5000
+
+tags:
+  - name: Administrador
+  - name: Colles
+  - name: Esdeveniments
+  - name: Login
+  - name: Ranking
+  - name: Usuaris
+  - name: Notícies
+
+paths:
+  /admin:
+    post:
+      description: Otorga autorització a l'`Usuari` per ser administrador de la `Colla` que es reben com a paràmetres obligatoris de la crida
+      tags:
+        - Administrador
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: true
+          type: number
+          format: integer
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: number
+          format: integer
+      responses:
+        '202':
+          description: Success
+        '404':
+          description: Resource not found
+        '409':
+          description: The resource is duplicated
+    delete:
+      description: Revoca l'autorització d'administració de la colla a l'usuari que es reben com a paràmetres obligatoris de la crida
+      tags:
+        - Administrador
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: true
+          type: number
+          format: integer
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: number
+          format: integer
+      responses:
+        '202':
+          description: Success
+        '404':
+          description: Resource not found
+          
+  /colles:
+    get:
+      description: Obté totes les colles del sistema.El paràmetre opcional **type** permet filtrar el tipus de `Colla` castellera que es vol obtenir; o bé convencional (**conv**) o bé universitària (**uni**)
+      tags:
+        - Colles
+      parameters:
+        -
+          name: type
+          in: query
+          description: Tipus de colla (**conv**encional o **uni**verstirària)
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Colla'
+        '400':
+          description: Bad request
+  /events:
+    get:
+      description: Obté els últims `Esdeveniments` registrats al sistema. El paràmetre opcional **user_id** permet obtenir els `Esdeveniments` referents a les colles les quals segueix o pertany l'usuari
+      tags:
+        - Esdeveniments
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Esdeveniment'
+        '404':
+          description: User not found
+    post:
+      description: Crea un nou esdeveniment de la colla que indiqui el contingut de la crida
+      tags:
+        - Esdeveniments
+      parameters:
+        -
+          name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/NewEsdeveniment'
+      responses:
+        '201':
+          description: Resource created
+          schema:
+            $ref: "#/definitions/Esdeveniment"
+        '404':
+          description: User or colla not found
+          
+  /events/{id}:
+    get:
+      description: Obté l'`Esdeveniment` identificat per **id**
+      tags:
+        - Esdeveniments
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'esdeveniment
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Esdeveniment"
+        '404':
+          description: User not found
+    put:
+      description: Modifica l'`Esdeveniment` identificat per **id**
+      tags:
+        - Esdeveniments
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'esdeveniment
+          required: true
+          type: integer
+          format: int64
+        -
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Esdeveniment"
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/Esdeveniment"
+        '404':
+          description: Event not found
+    delete:
+      description: Esborra l'`Esdeveniment` identificat per **id**
+      tags:
+        - Esdeveniments
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'esdeveniment
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: Success
+        '404':
+          description: Event not found
+
+  /login:
+    post:
+      description: Inici de sessió
+      tags:
+        - Login
+      parameters:
+        -
+          name: body
+          in: body
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '403':
+          description: Unauthorized access
+          
+  /signin:
+    post:
+      description: Enregistrament
+      tags:
+      - Login
+      parameters:
+        -
+           name: body
+           in: body
+           required: true
+           schema:
+            $ref: "#/definitions/NewUsuari"
+      responses:
+        '201':
+          description: Resource created
+          schema:
+            $ref: "#/definitions/Usuari"
+        '409':
+          description: Conflict
+          
+  /ranking:
+    get:
+      description: Obté la última actualització de la classificació castellera
+      tags:
+        - Ranking
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RankingItem'
+  
+  /users/{id}:
+    get:
+      description: Obté la informació bàsica d'un usuari
+      tags:
+        - Usuaris
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'esdeveniment
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '404':
+          description: Resource not found
+  
+  /wall:
+    get:
+      description: Obté notícies sobre el món casteller. El paràmetre opcional **user_id** permet filtrar les notícies segons les colles castelleres les quals segueix o pertany l'usuari.
+      tags:
+        - Notícies
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/New'
+        '404':
+          description: Resource not found
+    
+          
+definitions:
+  Colla:
+    type: object
+    description: Representa una colla castellera
+    properties:
+      id:
+        description: Identificador únic de la colla
+        type: integer
+        format: int64
+      name:
+        description: Nom de la colla
+        type: string
+      uni:
+        description: Expressa si és una colla universitària
+        type: boolean
+      color:
+        description: Codi RGB del color característic de la colla
+        type: string
+      img:
+        description: Logotip de la colla castellera
+        type: string
+        format: byte
+  
+  Esdeveniment:
+    type: object
+    description: Representa un esdeveniment
+    properties:
+      id:
+        description: Identificador únic de l'esdeveniment
+        type: integer
+        format: int64
+      title:
+        description: Títol informatiu de l'esdeveniment
+        type: string
+      description:
+        description: Descripció informativa de l'esdeveniment
+        type: string
+      address:
+        description: Addreça de l'esdeveniment
+        type: string
+      date:
+        description: Data de l'esdeveniment
+        type: string
+        format: date-time
+      user_id:
+        description: Identificador de l'usuari qui crea l'esdeveniment
+        type: integer
+        format: int64
+      colla_id:
+        description: Identificador de la colla la qual organitza l'esdeveniment
+        type: integer
+        format: int64
+      img:
+        description: Imatge informativa de l'esdeveniment
+        type: string
+        format: byte
+        
+  NewEsdeveniment:
+    type: object
+    description: Representa un nou esdeveniment
+    required: 
+      - title
+      - date
+      - colla_id
+      - user_id
+    properties:
+      title:
+        description: Títol informatiu de l'esdeveniment
+        type: string
+      description:
+        description: Descripció informativa de l'esdeveniment
+        type: string
+      address:
+        description: Addreça de l'esdeveniment
+        type: string
+      date:
+        description: Data de l'esdeveniment
+        type: string
+        format: date-time
+      user_id:
+        description: Identificador de l'usuari qui crea l'esdeveniment
+        type: integer
+        format: int64
+      colla_id:
+        description: Identificador de la colla la qual organitza l'esdeveniment
+        type: integer
+        format: int64
+      img:
+        description: Imatge informativa de l'esdeveniment
+        type: string
+        format: byte
+        
+  Login:
+    type: object
+    description: Informació mínima per iniciar sessió
+    required:
+      - email
+      - password
+    properties:
+      email:
+        description: Correu electrònic de l'usuari
+        type: string
+      password:
+        description: Contrasenya encriptada de l'usuari
+        type: string
+        format: password
+        
+  Usuari:
+    type: object
+    description: Representa un usuari del sistema
+    properties:
+      id:
+        description: Identificador únic de l'usuari
+        type: integer
+        format: int64
+      email:
+        description: Correu electònic de l'usuari
+        type: string
+      name:
+        description: Nom del'usuari
+        type: string
+      surname:
+        description: Cognom de l'usuari
+        type: string
+      password:
+        description: Contrasenya encriptada de l'usuari
+        type: string
+        format: password
+      belongs:
+        description: Llistat de les colles les quals pertany l'usuari
+        type: array
+        items:
+          $ref: '#/definitions/Colla'
+      follows:
+        description: Llistat de lescolles les quals segueix l'usuari
+        type: array
+        items:
+          $ref: "#/definitions/Colla"
+      session_token:
+        description: Token identificatiu de la sessió de l'usuari
+        type: string
+      admin:
+        description: Expressa si l'usuari és administrador
+        type: boolean
+    
+  NewUsuari:
+    type: object
+    description: Representa un usuari del sistema
+    required:
+    - email
+    - name
+    - surname
+    - password
+    properties:
+      email:
+        description: Correu electònic de l'usuari
+        type: string
+      name:
+        description: Nom del'usuari
+        type: string
+      surname:
+        description: Cognom de l'usuari
+        type: string
+      password:
+        description: Contrasenya encriptada de l'usuari
+        type: string
+        format: password
+      belongs:
+        description: Llistat de les colles les quals pertany l'usuari
+        type: array
+        items:
+          $ref: '#/definitions/Colla'
+      follows:
+        description: Llistat de lescolles les quals segueix l'usuari
+        type: array
+        items:
+          $ref: "#/definitions/Colla"
+  
+  RankingItem:
+    type: object
+    description: Representa la posició d'una colla castellera i la seva puntuació en la classificació
+    properties:
+      pos:
+        description: Posició en la classificació
+        type: integer
+        format: int32
+      name:
+        description: Nom de la colla castellera
+        type: string
+      punctuation:
+        description: Puntutació en la classificació
+        type: integer
+        format: int64
+  New:
+    type: object
+    description: Representa una notícia
+    properties:
+      title:
+        description: Titular de la notícia
+        type: string
+      description:
+        description: Cos de la notícia
+        type: string
+      link:
+        description: Enllaç al web de la notícia
+        type: string
+      date:
+        description: Data de publicació de la notícia
+        type: string
+        format: full-date
+      
