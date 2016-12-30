@@ -71,3 +71,11 @@ class UserCtrlMySQL(UserCtrl):
         cursor.execute(sql)
         self.cnx.commit()
         return
+
+    def update(self, user):
+        sql = "UPDATE users SET name = %s, surnames = %s, password = %s WHERE id = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (user.name, user.surname, user.password, user.id))
+        self.cnx.commit()
+
+        return user

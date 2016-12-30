@@ -32,3 +32,7 @@ class UserCtrl:
     @abc.abstractmethod
     def add_token(self, user_id, token):
         pass
+
+    @abc.abstractmethod
+    def update(self, user):
+        pass
