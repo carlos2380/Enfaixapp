@@ -33,3 +33,24 @@ def get_attendants(id_practice):
     attendants = practices_ctrl.get_attendants(id_practice)
     json_attendants_list = json.dumps([attendant for attendant in attendants], ensure_ascii=False, encoding="utf-8")
     return make_response(json_attendants_list, 200)
+
+
+@app.route('/practices/<int:id_practice>', methods=['DELETE'])
+# @requires_auth
+def delete_practice(id_practice):
+    pass
+
+@app.route('/practices/<int:id_practice>', methods=['PUT'])
+# @requires_auth
+def modify_practice(id_practice):
+    pass
+
+@app.route('/practices', methods=['POST'])
+# @requires_auth
+def create_practice():
+    pass
+
+@app.route('/practices/<int:id_practice>', methods=['POST'])
+# @requires_auth
+def create_assistance(id_practice):
+    pass
