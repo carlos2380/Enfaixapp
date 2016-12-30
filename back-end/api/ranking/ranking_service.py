@@ -17,9 +17,10 @@ def get_ranking():
             cells = row.find_all('td')
             nom_colla = cells[1].get_text()
             mapper = {
-                'nom': nom_colla.strip(),
+                'pos': number,
+                'name': nom_colla.strip(),
                 'punctuation': cells[2].get_text()
             }
-            ranking.append({number: mapper})
+            ranking.append(mapper)
 
     return ranking
