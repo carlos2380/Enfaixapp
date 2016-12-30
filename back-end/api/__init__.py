@@ -10,7 +10,7 @@ def hello():
 
 @app.errorhandler(400)
 def not_authorized(e):
-    return make_response(jsonify({'error': 'Bad request'}), 400)
+    return make_response(jsonify({'error': 'Bad request'}), 403)
 
 
 @app.errorhandler(403)
