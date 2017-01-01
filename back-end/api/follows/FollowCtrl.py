@@ -28,3 +28,7 @@ class FollowCtrl:
     @abc.abstractmethod
     def insert_following_batch(self, following_list, user_id):
         pass
+
+    @abc.abstractmethod
+    def delete(self, user_id, colla_id):
+        pass

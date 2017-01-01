@@ -49,3 +49,10 @@ def add_following(user_id, colla_id):
     if not following_ctrl.exists(user_id, colla_id):
         following_ctrl.insert(user_id, colla_id)
     return
+
+
+def remove_following(user_id, colla_id):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    following_ctrl = get_following_ctrl(DB(db_configuration).get_database_connection())
+    following_ctrl.delete(user_id, colla_id)
+    return

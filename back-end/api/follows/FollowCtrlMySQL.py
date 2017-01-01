@@ -54,3 +54,10 @@ class FollowCtrlMySQL(FollowCtrl):
         for tuple in result:
             ids.append(tuple[0])
         return ids
+
+    def delete(self, user_id, colla_id):
+        sql = "DELETE FROM follows WHERE id_user = %s AND id_colla = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (user_id, colla_id))
+        self.cnx.commit()
+        return
