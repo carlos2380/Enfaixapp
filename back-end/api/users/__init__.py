@@ -59,3 +59,20 @@ def add_belong(user_id):
             else:
                 abort(409)
         abort(400)
+
+
+@app.route('/users/<int:user_id>/belongs', methods=['DELETE'])
+def remove_belong(user_id):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    user_ctrl = get_user_ctrl(DB(db_configuration).get_database_connection())
+    user = user_ctrl.get(user_id)
+    if user is None:
+        abort(404)
+    else:
+        colla_id = request.args.get('colla_id')
+        if colla_id is not None:
+            colla = get_colla_ctrl(DB(db_configuration).get_database_connection()).get(colla_id)
+            user_service.remove_belong(user, colla)
+            user = user_service.get_all_info(user)
+            return make_response(jsonify(user.__dict__), 200)
+        abort(400)

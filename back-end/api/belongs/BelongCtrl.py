@@ -28,3 +28,7 @@ class BelongCtrl:
     @abc.abstractmethod
     def get_belonging_colles_by_user(self, user_id):
         pass
+
+    @abc.abstractmethod
+    def delete(self, user_id, colla_id):
+        pass

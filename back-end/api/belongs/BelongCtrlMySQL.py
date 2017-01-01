@@ -59,3 +59,10 @@ class BelongCtrlMySQL(BelongCtrl):
             result.append(colla)
 
         return result
+
+    def delete(self, user_id, colla_id):
+        sql = "DELETE FROM belongsTo WHERE id_user = %s AND id_colla = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (user_id, colla_id))
+        self.cnx.commit()
+        return

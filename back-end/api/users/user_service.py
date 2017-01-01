@@ -35,3 +35,9 @@ def get_all_info(user):
     user.follows = get_following_ctrl(
         DB(db_configuration).get_database_connection()).get_id_followed_colles_by_user(user.id)
     return user
+
+
+def remove_belong(user, colla):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    get_belonging_ctrl(DB(db_configuration).get_database_connection()).delete(user.id, colla.id)
+    return
