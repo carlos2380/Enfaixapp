@@ -10,6 +10,14 @@ class FollowCtrl:
         self.db = DB.getDatabase(dbconfig.user, dbconfig.password, dbconfig.database_name)
 
     @abc.abstractmethod
+    def insert(self, user_id, colla_id):
+        pass
+
+    @abc.abstractmethod
+    def exists(self, user_id, coll_id):
+        pass
+
+    @abc.abstractmethod
     def get_name_followed_colles_by_user(self, id_user):
         pass
 

@@ -41,3 +41,11 @@ def remove_belong(user, colla):
     db_configuration = json.loads(open("api/db/db.json").read())
     get_belonging_ctrl(DB(db_configuration).get_database_connection()).delete(user.id, colla.id)
     return
+
+
+def add_following(user_id, colla_id):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    following_ctrl = get_following_ctrl(DB(db_configuration).get_database_connection())
+    if not following_ctrl.exists(user_id, colla_id):
+        following_ctrl.insert(user_id, colla_id)
+    return

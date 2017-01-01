@@ -51,7 +51,7 @@ class UserCtrlMySQL(UserCtrl):
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
-        count = cursor.fetchone()[0]
+        count = cursor.fetchone()
         return count > 0
 
     def check_password(self, expected_email, expected_password):
