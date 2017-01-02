@@ -18,6 +18,7 @@ def get_user(user_id):
     if user is None:
         abort(404)
     else:
+        user = user_service.get_all_info(user)
         return make_response(jsonify(user.__dict__), 200)
 
 

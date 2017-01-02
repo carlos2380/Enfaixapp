@@ -12,7 +12,7 @@ from api.db.DB import DB
 def get_colles():
     db_configuration = json.loads(open("api/db/db.json").read())
     tipus_colla = request.args.get('type')
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     ctrl_colla = get_colla_ctrl(DB(db_configuration).get_database_connection())
 
     if tipus_colla == 'uni':
@@ -30,7 +30,7 @@ def get_colles():
 @app.route('/colles/<int:colla_id>', methods=["GET"])
 def get_colla(colla_id):
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colla = colla_ctrl.get(colla_id)
     if colla:
