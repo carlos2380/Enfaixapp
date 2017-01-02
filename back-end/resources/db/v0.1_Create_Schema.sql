@@ -54,8 +54,8 @@ CREATE TABLE events (
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE admin_colles(
-  id_user INTEGER NOT NULL UNIQUE,
-  id_colla INTEGER NOT NULL UNIQUE,
+  id_user INTEGER NOT NULL,
+  id_colla INTEGER NOT NULL,
   PRIMARY KEY (id_user, id_colla),
   CONSTRAINT fk_admin_colles_user FOREIGN KEY (id_user) REFERENCES users(id),
   CONSTRAINT fk_admin_colles_colla FOREIGN KEY (id_colla) REFERENCES colles(id)
