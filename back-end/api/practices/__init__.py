@@ -1,3 +1,5 @@
+import urllib
+
 import flask
 from flask import abort, jsonify
 from flask import json
@@ -7,7 +9,7 @@ from flask import request
 from api import app
 import api.db.CtrlFactory
 from api.db.DB import DB
-
+from api.practices.Practice import Practice
 
 
 @app.route('/practices', methods=['GET'])
@@ -38,7 +40,32 @@ def get_attendants(id_practice):
 @app.route('/practices/<int:id_practice>', methods=['DELETE'])
 # @requires_auth
 def delete_practice(id_practice):
-    pass
+    db_configuration = json.loads(open("api/db/db.json").read())
+    practices_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
+    if practices_ctrl.get_practice_by_id(id_practice) is None:
+        abort(404)
+    else:
+        practices_ctrl.delete_practice(id_practice)
+    return make_response(jsonify({}), 200)
+
+@app.route('/practices', methods=['DELETE'])
+# @requires_auth
+def delete_attendants():
+    db_configuration = json.loads(open("api/db/db.json").read())
+    practices_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
+    id_practice = request.args.get('id_practice')
+    if practices_ctrl.get_practice_by_id(id_practice) is None:
+        abort(404)
+    id_user = request.args.get('id_user')
+    user_ctrl = api.db.CtrlFactory.get_user_ctrl(DB(db_configuration).get_database_connection())
+    if user_ctrl.get(id_user) is None:
+        abort(404)
+    else:
+        if practices_ctrl.get_practice_by_id(id_practice) is None:
+            abort(404)
+        else:
+            practices_ctrl.delete_attendants(id_practice, id_user)
+    return make_response(jsonify({}), 200)
 
 @app.route('/practices/<int:id_practice>', methods=['PUT'])
 # @requires_auth
@@ -48,7 +75,17 @@ def modify_practice(id_practice):
 @app.route('/practices', methods=['POST'])
 # @requires_auth
 def create_practice():
-    pass
+    body = json.loads(urllib.unquote(request.data))
+    date = body['date']
+    description = body['description']
+    address = body['address']
+    id_colla = body['id_colla']
+    db_configuration = json.loads(open("api/db/db.json").read())
+    practice_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
+    practice = Practice(date=date, description=description, address=address, id_colla=id_colla)
+    practice = practice_ctrl.insert(practice)
+    return make_response(jsonify(practice.__dict__), 201)
+
 
 @app.route('/practices/<int:id_practice>', methods=['POST'])
 # @requires_auth

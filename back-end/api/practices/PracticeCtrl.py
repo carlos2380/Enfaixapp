@@ -16,3 +16,20 @@ class PracticeCtrl:
     def get_attendants(self, practice_id):
         pass
 
+    @abc.abstractmethod
+    def delete_practice(self, id_practice):
+        pass
+
+    @abc.abstractmethod
+    def get_practice_by_id(self, id_practice):
+        pass
+
+    @abc.abstractmethod
+    def delete_attendants(self, id_practice):
+        pass
+
+    @abc.abstractmethod
+    def insert(self, practice):
+        pass
+
+
