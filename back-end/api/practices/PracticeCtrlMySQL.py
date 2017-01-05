@@ -77,6 +77,18 @@ class PracticeCtrlMySQL(PracticeCtrl):
 
         return practice
 
+    def insert_attendant(self, attendant):
+        sql = "INSERT INTO attendants (id_user, id_practice) " \
+              "VALUES (%s,%s)"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (attendant.id_user, attendant.id_practice))
+        self.cnx.commit()
+
+        last_id = cursor.lastrowid
+        attendant.id = last_id
+
+        return attendant
+
 
 
 

@@ -10,6 +10,7 @@ from api import app
 import api.db.CtrlFactory
 from api.db.DB import DB
 from api.practices.Practice import Practice
+from api.practices.Attendant import Attendant
 
 
 @app.route('/practices', methods=['GET'])
@@ -90,4 +91,10 @@ def create_practice():
 @app.route('/practices/<int:id_practice>', methods=['POST'])
 # @requires_auth
 def create_assistance(id_practice):
-    pass
+    body = json.loads(urllib.unquote(request.data))
+    id_user = body['id_user']
+    db_configuration = json.loads(open("api/db/db.json").read())
+    practice_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
+    attendant = Attendant(id_user = id_user, id_practice =id_practice)
+    attendant = practice_ctrl.insert_attendant(attendant)
+    return make_response(jsonify(attendant.__dict__), 201)

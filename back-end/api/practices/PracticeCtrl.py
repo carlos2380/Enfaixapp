@@ -32,4 +32,8 @@ class PracticeCtrl:
     def insert(self, practice):
         pass
 
+    @abc.abstractmethod
+    def insert_attendant(self, attendant):
+        pass
+
 
