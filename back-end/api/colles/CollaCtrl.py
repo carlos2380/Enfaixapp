@@ -31,3 +31,7 @@ class CollaCtrl:
     @abc.abstractmethod
     def get_full(self, colla_id):
         pass
+
+    @abc.abstractmethod
+    def update(self, colla):
+        pass

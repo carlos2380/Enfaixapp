@@ -104,3 +104,40 @@ def get_all():
                 colla.img = encoded_img
 
     return colles
+
+
+def update(colla, body):
+    name = body['name']
+    uni = body['uni']
+    description = body['description']
+    phoneNumber = body['phoneNumber']
+    email = body['email']
+    web = body['web']
+    address = body['address']
+    color = body['color']
+    img = body['img']
+
+    image_name = None
+    if img is not None:
+        if colla.img is not None and os.path.exists(colla.img):
+            os.remove(colla.img)
+        image_name = os.path.expanduser("~/images/colles") + "/" + colla.name.lower() + ".png"
+        with open(image_name, "wb") as fh:
+            fh.write(img.decode('base64'))
+
+    colla.name = name
+    colla.uni = uni
+    colla.description = description
+    colla.phoneNumber = phoneNumber
+    colla.email = email
+    colla.web = web
+    colla.address = address
+    colla.color = color
+    colla.img = image_name
+
+    db_configuration = json.loads(open("api/db/db.json").read())
+    from api.db.CtrlFactory import get_colla_ctrl
+    colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
+    colla_ctrl.update(colla)
+    colla.img = img
+    return colla

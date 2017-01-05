@@ -81,3 +81,10 @@ class CollaCtrlMySQL(CollaCtrl):
                           img=result[9])
 
         return colla
+
+    def update(self, colla):
+        sql = "UPDATE colles SET name = %s, uni = %s, description = %s, phoneNumber = %s, email = %s, web = %s, address = %s, color = %s, img_path = %s WHERE id = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (colla.name, colla.uni, colla.description, colla.phoneNumber, colla.email, colla.web, colla.address, colla.color, colla.img, colla.id))
+        self.cnx.commit()
+        return

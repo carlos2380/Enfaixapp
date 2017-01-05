@@ -1,4 +1,7 @@
-from flask import abort, json, make_response, request
+import os
+import urllib
+
+from flask import abort, json, make_response, request, jsonify
 
 from api import app
 from api.db.DB import DB
@@ -34,6 +37,19 @@ def get_colla(colla_id):
         response = make_response(colla, 200)
         response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
         return response
+    abort(404)
+
+
+@app.route('/colles/<int:colla_id>', methods=["PUT"])
+def modify_colla(colla_id):
+    colla = colla_service.get_all_info_colla(colla_id)
+    if colla:
+        try:
+            body = json.loads(urllib.unquote(request.data))
+            colla = colla_service.update(colla, body)
+            return make_response(jsonify(colla.__dict__), 200)
+        except IOError:
+            abort(500)
     abort(404)
 
 
