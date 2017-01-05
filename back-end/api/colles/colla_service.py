@@ -7,7 +7,7 @@ from api.db.DB import DB
 
 def get_all_info_colla(colla_id):
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colla = colla_ctrl.get_full(colla_id)
     encoded_img = None
@@ -26,7 +26,7 @@ def get_all_info_colla(colla_id):
 
 def get_some_info_colla(colla_id):
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colla = colla_ctrl.get(colla_id)
     encoded_img = None
@@ -45,7 +45,7 @@ def get_some_info_colla(colla_id):
 
 def get_universitaries():
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_universitaries()
 
@@ -66,7 +66,7 @@ def get_universitaries():
 
 def get_convencionals():
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_convencionals()
 
@@ -87,7 +87,7 @@ def get_convencionals():
 
 def get_all():
     db_configuration = json.loads(open("api/db/db.json").read())
-    from db.CtrlFactory import get_colla_ctrl
+    from api.db.CtrlFactory import get_colla_ctrl
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_all()
 
