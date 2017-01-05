@@ -1,6 +1,9 @@
 INSERT INTO users(name, surnames, email, password)
 VALUES ('admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3');
 
+INSERT INTO tokens(id_user, token)
+VALUES (1, '21232f297a57a5a743894a0e4a801fc3');
+
 INSERT INTO colles (name, uni, description, phoneNumber, email, web, address, color, img_path)
 VALUES
 ('Al·lots de Llevant', false, 'Els Al·lots de Llevant som una colla castellera sorgida a Manacor l’any 1996 fruit de la il·lusió i curiositat d’un grup d’amics que, a la recerca d’una activitat de lleure que els satisfés, començaren a assajar castells enmig del boom que aquesta afició va tenir a mitjans dels anys noranta.', '+34687967644', 'allotsdellevant@gmail.com', 'http://al-lotsdellevant.cat', 'Carrer nou, 35, Manacor', '#52C85C', '~/images/colles/alotsllevant.png'),

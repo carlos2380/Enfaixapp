@@ -29,12 +29,12 @@ def log_in():
             if follows:
                 user.follows = json.dumps([follow.__dict__ for follow in follows], ensure_ascii=False, encoding="utf-8")
             else:
-                user.follows = None
+                user.follows = []
             belongs = belong_service.get_some_info_belonging_colles_by_user(user.id)
             if belongs:
                 user.belongs = json.dumps([belong.__dict__ for belong in belongs], ensure_ascii=False, encoding="utf-8")
             else:
-                user.belongs = None
+                user.belongs = []
             user = json.dumps(user.__dict__, ensure_ascii=False, encoding="utf-8")
             response = make_response(user, 200)
             response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
