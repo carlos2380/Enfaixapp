@@ -107,6 +107,28 @@ paths:
               $ref: '#/definitions/Colla'
         '400':
           description: Bad request
+          
+  /colles/{id}:
+    get:
+      description: Obté la `Colla` identificada pel paràmetre **id**
+      tags:
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/FullColla"
+        '404':
+          description: Resource not found
+    
   /events:
     get:
       description: Obté els últims `Esdeveniments` registrats al sistema. El paràmetre opcional **user_id** permet obtenir els `Esdeveniments` referents a les colles les quals segueix o pertany l'usuari
@@ -306,9 +328,43 @@ paths:
     
           
 definitions:
-  Colla:
+  FullColla:
     type: object
     description: Representa una colla castellera
+    properties:
+      id:
+        description: Identificador únic de la colla
+        type: integer
+        format: int64
+      name:
+        description: Nom de la colla
+        type: string
+      uni:
+        description: Expressa si és una colla universitària
+        type: boolean
+      description:
+        description: Text introductori de la colla
+        type: string
+      email:
+        description: Correu electrònic de contacte
+        type: string
+      web:
+        description: Direcció web de la colla
+        type: string
+      address:
+        description: Direcció postal de la colla
+        type: string
+      color:
+        description: Codi RGB del color característic de la colla
+        type: string
+      img:
+        description: Logotip de la colla castellera
+        type: string
+        format: byte
+        
+  Colla:
+    type: object
+    description: Resum d'una colla castellera
     properties:
       id:
         description: Identificador únic de la colla
@@ -327,7 +383,7 @@ definitions:
         description: Logotip de la colla castellera
         type: string
         format: byte
-  
+        
   Esdeveniment:
     type: object
     description: Representa un esdeveniment

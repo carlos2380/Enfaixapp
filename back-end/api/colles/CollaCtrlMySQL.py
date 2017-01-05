@@ -18,7 +18,7 @@ class CollaCtrlMySQL(CollaCtrl):
         return colla
 
     def get_all(self):
-        sql = 'SELECT * FROM colles'
+        sql = 'SELECT c.id, c.name, c.uni, c.color, c.img_path FROM colles c'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
@@ -31,7 +31,7 @@ class CollaCtrlMySQL(CollaCtrl):
         return colles
 
     def get_universitaries(self):
-        sql = 'SELECT * FROM colles WHERE uni=%s' % 'TRUE'
+        sql = 'SELECT c.id, c.name, c.uni, c.color, c.img_path FROM colles c WHERE uni=%s' % 'TRUE'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
@@ -44,7 +44,7 @@ class CollaCtrlMySQL(CollaCtrl):
         return universitaries
 
     def get_convencionals(self):
-        sql = 'SELECT * FROM colles WHERE uni=%s' % 'FALSE'
+        sql = 'SELECT c.id, c.name, c.uni, c.color, c.img_path FROM colles c WHERE uni=%s' % 'FALSE'
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
@@ -57,7 +57,7 @@ class CollaCtrlMySQL(CollaCtrl):
         return convencionals
 
     def get(self, colla_id):
-        sql = "SELECT * FROM colles WHERE id = %s" % colla_id
+        sql = "SELECT c.id, c.name, c.uni, c.color, c.img_path FROM colles c WHERE id = %s" % colla_id
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
@@ -65,5 +65,19 @@ class CollaCtrlMySQL(CollaCtrl):
         colla = None
         if result:
             colla = Colla(colla_id=result[0], name=result[1], uni=result[2], color=result[3], img=result[4])
+
+        return colla
+
+    def get_full(self, colla_id):
+        sql = "SELECT * FROM colles WHERE id = %s" % colla_id
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        result = cursor.fetchone()
+        colla = None
+        if result:
+            colla = Colla(colla_id=result[0], name=result[1], uni=result[2], description=result[3],
+                          phoneNumber=result[4], email=result[5], web=result[6], address=result[7], color=result[8],
+                          img=result[9])
 
         return colla

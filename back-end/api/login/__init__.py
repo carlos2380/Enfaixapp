@@ -7,7 +7,9 @@ from flask import request, make_response
 from api import app
 from api.db.DB import DB
 from api.login.auth_ctrl import create_user, check_password, create_token, get_token_by_user_id, delete_token
-from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl, get_following_ctrl, get_belonging_ctrl
+from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl
+from api.belongs import belong_service
+from api.follows import follow_service
 
 
 @app.route('/login', methods=['POST'])
@@ -23,11 +25,20 @@ def log_in():
             token = get_token_by_user_id(user_id=user.id)
             user.session_token = token
             user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(user.id)
-            user.follows = get_following_ctrl(
-                DB(db_configuration).get_database_connection()).get_id_followed_colles_by_user(user.id)
-            user.belongs = get_belonging_ctrl(
-                DB(db_configuration).get_database_connection()).get_id_belonging_colles_by_user(user.id)
-            return make_response(jsonify(user.__dict__), 200)
+            follows = follow_service.get_some_info_followed_colles_by_user(user.id)
+            if follows:
+                user.follows = json.dumps([follow.__dict__ for follow in follows], ensure_ascii=False, encoding="utf-8")
+            else:
+                user.follows = None
+            belongs = belong_service.get_some_info_belonging_colles_by_user(user.id)
+            if belongs:
+                user.belongs = json.dumps([belong.__dict__ for belong in belongs], ensure_ascii=False, encoding="utf-8")
+            else:
+                user.belongs = None
+            user = json.dumps(user.__dict__, ensure_ascii=False, encoding="utf-8")
+            response = make_response(user, 200)
+            response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
+            return response
     return abort(403)
 
 

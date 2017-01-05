@@ -20,9 +20,14 @@ class AdminCtrlMySQL(AdminCtrl):
         return
 
     def is_admin(self, user_id):
-        sql = "SELECT COUNT(*) FROM admin_colles WHERE id_user = %s" % user_id
+        sql = "SELECT id_colla FROM admin_colles WHERE id_user = %s" % user_id
         cursor = self.cnx.cursor()
         cursor.execute(sql)
 
-        count = cursor.fetchone()[0]
-        return count > 0
+        result = cursor.fetchall()
+        colles_admin = []
+
+        for tupla in result:
+            colles_admin.append(tupla[0])
+
+        return colles_admin

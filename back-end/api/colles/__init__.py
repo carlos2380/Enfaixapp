@@ -1,12 +1,10 @@
-from flask import abort, jsonify, json, make_response, request
+from flask import abort, json, make_response, request
 
 from api import app
 from api.db.DB import DB
+from api.colles import colla_service
 
 
-# ask the controller to retrieve the user identified by id
-# return the resource that represents a user if found
-# otherwise, return 404 error code
 @app.route('/colles', methods=['GET'])
 #@requires_auth
 def get_colles():
@@ -16,28 +14,26 @@ def get_colles():
     ctrl_colla = get_colla_ctrl(DB(db_configuration).get_database_connection())
 
     if tipus_colla == 'uni':
-        colles = ctrl_colla.get_universitaries()
+        colles = colla_service.get_universitaries()
     elif tipus_colla == 'conv':
-        colles = ctrl_colla.get_convencionals()
+        colles = colla_service.get_convencionals()
     else:
-        colles = ctrl_colla.get_all()
+        colles = colla_service.get_all()
 
     json_colla_list = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8")
-
-    return make_response(json_colla_list, 200)
+    response = make_response(json_colla_list, 200)
+    response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
+    return response
 
 
 @app.route('/colles/<int:colla_id>', methods=["GET"])
 def get_colla(colla_id):
-    db_configuration = json.loads(open("api/db/db.json").read())
-    from api.db.CtrlFactory import get_colla_ctrl
-    colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
-    colla = colla_ctrl.get(colla_id)
+    colla = colla_service.get_all_info_colla(colla_id)
     if colla:
         colla = json.dumps(colla.__dict__, ensure_ascii=False, encoding="utf-8")
-        Respone = make_response(colla, 200)
-        Respone.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
-        return Respone
+        response = make_response(colla, 200)
+        response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
+        return response
     abort(404)
 
 

@@ -11,6 +11,11 @@ CREATE TABLE colles (
   id       INTEGER AUTO_INCREMENT,
   name     VARCHAR(100) NOT NULL,
   uni      BOOLEAN     NOT NULL,
+  description TEXT,
+  phoneNumber VARCHAR(13),
+  email VARCHAR(100),
+  web VARCHAR(100),
+  address VARCHAR(512),
   color    NVARCHAR(7),
   img_path VARCHAR(255),
   PRIMARY KEY (id)
