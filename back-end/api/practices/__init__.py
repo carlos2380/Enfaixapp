@@ -37,7 +37,6 @@ def get_attendants(id_practice):
     json_attendants_list = json.dumps([attendant for attendant in attendants], ensure_ascii=False, encoding="utf-8")
     return make_response(json_attendants_list, 200)
 
-
 @app.route('/practices/<int:id_practice>', methods=['DELETE'])
 # @requires_auth
 def delete_practice(id_practice):
@@ -98,3 +97,29 @@ def create_assistance(id_practice):
     attendant = Attendant(id_user = id_user, id_practice =id_practice)
     attendant = practice_ctrl.insert_attendant(attendant)
     return make_response(jsonify(attendant.__dict__), 201)
+
+@app.route('/practices/<int:id_practice>', methods=['PUT'])
+def update_practice(id_practice):
+    db_configuration = json.loads(open("api/db/db.json").read())
+    practices_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
+    practice = practices_ctrl.get(id_practice)
+    if practice:
+        try:
+            body = json.loads(urllib.unquote(request.data))
+            description = body['description']
+            date = body['date']
+            address = body['address']
+            id_colla = body['id_colla']
+            people = body['people']
+
+            practice.description = description
+            practice.date = date
+            practice.address = address
+            practice.people = people
+            practice.id_colla = id_colla
+
+            practices_ctrl.update(practice)
+            return make_response(jsonify(practice.__dict__), 200)
+        except KeyError:
+            abort(500)
+    abort(404)

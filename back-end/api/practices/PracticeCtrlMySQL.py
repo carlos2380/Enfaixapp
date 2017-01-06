@@ -89,6 +89,14 @@ class PracticeCtrlMySQL(PracticeCtrl):
 
         return attendant
 
+    def update(self, practice):
+        sql = "UPDATE practice SET description = %s, date = %s, address = %s, id_colla = %s, people = %s,  WHERE id = %s"
+        cursor = self.cnx.cursor()
+        cursor.execute(sql, (practice.description, practice.date, practice.address, practice.colla_id, practice.people, practice.id))
+        self.cnx.commit()
+
+        return practice
+
 
 
 
