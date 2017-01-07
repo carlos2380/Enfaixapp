@@ -37,8 +37,8 @@ class EventCtrlMySQL(EventCtrl):
             result = cursor.fetchone()
             event = None
             if result is not None:
-                event = Event(title=result[0], description=result[1], img=result[2], date=result[3],
-                              address=result[4], user_id=result[5], colla_id=result[6])
+                event = Event(title=result[1], description=result[2], img=result[3], date=result[4],
+                          address=result[5], user_id=result[6], colla_id=result[7])
                 events.append(event)
 
         return events
@@ -56,8 +56,8 @@ class EventCtrlMySQL(EventCtrl):
             result = cursor.fetchone()
             event = None
             if result is not None:
-                event = Event(title=result[0], description=result[1], img=result[2], date=result[3],
-                              address=result[4], user_id=result[5], colla_id=result[6])
+                event = Event(title=result[1], description=result[2], img=result[3], date=result[4],
+                          address=result[5], user_id=result[6], colla_id=result[7])
                 events.append(event)
 
         return events

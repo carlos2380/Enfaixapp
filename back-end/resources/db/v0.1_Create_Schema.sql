@@ -58,6 +58,25 @@ CREATE TABLE events (
   CONSTRAINT fk_events_colles FOREIGN KEY (id_colla) REFERENCES colles (id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+
+CREATE TABLE practice (
+  id INTEGER AUTO_INCREMENT,
+  date DATETIME NOT NULL,
+  description text,
+  address VARCHAR(256),
+  id_colla INTEGER,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_practice_colla FOREIGN KEY (id_colla) REFERENCES colles (id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE attendants (
+  id_user INTEGER,
+  id_practice INTEGER,
+  PRIMARY KEY (id_user, id_practice),
+  CONSTRAINT fk_attendants_practices FOREIGN KEY (id_practice) REFERENCES practice (id),
+  CONSTRAINT fk_attendants_user FOREIGN KEY (id_user) REFERENCES users (id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 CREATE TABLE admin_colles(
   id_user INTEGER NOT NULL,
   id_colla INTEGER NOT NULL,

@@ -6,6 +6,7 @@ from api.follows.FollowCtrlMySQL import FollowCtrlMySQL
 from api.tokenn.TCtrlMySQL import TokenCtrlMySQL
 from api.events.EventCtrlMySQL import EventCtrlMySQL
 from api.results.ResultCtrlMySQL import ResultCtrlMySQL
+from api.practices.PracticeCtrlMySQL import PracticeCtrlMySQL
 
 def get_user_ctrl(data_source_connection):
     return UserCtrlMySQL(data_source_connection)
@@ -45,3 +46,8 @@ def get_admin_ctrl(data_source_connection):
 
 def get_result_ctrl(data_source_connection):
     return ResultCtrlMySQL(data_source_connection)
+
+
+def get_practices_ctrl(data_source_connetction):
+    return PracticeCtrlMySQL(data_source_connetction)
+

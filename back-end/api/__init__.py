@@ -47,3 +47,4 @@ import api.events
 import api.ranking
 import api.admin
 import api.results
+import api.practices
