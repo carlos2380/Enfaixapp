@@ -29,6 +29,10 @@ class CollaCtrl:
         pass
 
     @abc.abstractmethod
+    def get_by_name(self, colla_name):
+        pass
+
+    @abc.abstractmethod
     def get_full(self, colla_id):
         pass
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 from api.colles.CollaCtrl import CollaCtrl
 from api.colles.Colla import Colla
 
@@ -85,6 +86,20 @@ class CollaCtrlMySQL(CollaCtrl):
     def update(self, colla):
         sql = "UPDATE colles SET name = %s, uni = %s, description = %s, phoneNumber = %s, email = %s, web = %s, address = %s, color = %s, img_path = %s WHERE id = %s"
         cursor = self.cnx.cursor()
-        cursor.execute(sql, (colla.name, colla.uni, colla.description, colla.phoneNumber, colla.email, colla.web, colla.address, colla.color, colla.img, colla.id))
+        cursor.execute(sql, (colla.name, colla.uni, colla.description, colla.phoneNumber,
+                             colla.email, colla.web, colla.address, colla.color, colla.img, colla.id))
         self.cnx.commit()
         return
+
+    def get_by_name(self, colla_name):
+        sql = 'SELECT * FROM colles WHERE name = "%s"' % colla_name.encode('utf-8')
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        result = cursor.fetchone()
+        colla = None
+        if result:
+            colla = Colla(colla_id=result[0], name=result[1], uni=result[2], phoneNumber=result[3], email=result[4],
+                          web=result[5], address=result[6], color=result[7], img=result[8])
+        return colla
+

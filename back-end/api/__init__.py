@@ -46,3 +46,4 @@ import api.wall
 import api.events
 import api.ranking
 import api.admin
+import api.results
