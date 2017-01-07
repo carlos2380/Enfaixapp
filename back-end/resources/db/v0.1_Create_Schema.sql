@@ -65,3 +65,22 @@ CREATE TABLE admin_colles(
   CONSTRAINT fk_admin_colles_user FOREIGN KEY (id_user) REFERENCES users(id),
   CONSTRAINT fk_admin_colles_colla FOREIGN KEY (id_colla) REFERENCES colles(id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE performances(
+  id INTEGER AUTO_INCREMENT,
+  title VARCHAR(512) NOT NULL,
+  date DATETIME NOT NULL,
+  PRIMARY KEY (id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE results(
+  id_performance INTEGER NOT NULL,
+  id_colla INTEGER NOT NULL,
+  round INTEGER NOT NULL,
+  try INTEGER,
+  castell VARCHAR(256),
+  result ENUM('Intent', 'Intent Desmuntat', 'Carregat', 'Descarregat'),
+  PRIMARY KEY (id_performance, id_colla, round),
+  CONSTRAINT fk_admin_colla FOREIGN KEY (id_colla) REFERENCES colles(id),
+  CONSTRAINT fk_admin_performances FOREIGN KEY (id_performance) REFERENCES performances(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
