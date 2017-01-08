@@ -74,13 +74,6 @@ def delete_attendants():
             practices_ctrl.delete_attendants(id_practice, id_user)
     return make_response(jsonify({}), 200)
 
-
-@app.route('/practices/<int:id_practice>', methods=['PUT'])
-# @requires_auth
-def modify_practice(id_practice):
-    pass
-
-
 @app.route('/practices', methods=['POST'])
 # @requires_auth
 def create_practice():
@@ -112,7 +105,7 @@ def create_assistance(id_practice):
 def update_practice(id_practice):
     db_configuration = json.loads(open("api/db/db.json").read())
     practices_ctrl = api.db.CtrlFactory.get_practices_ctrl(DB(db_configuration).get_database_connection())
-    practice = practices_ctrl.get(id_practice)
+    practice = practices_ctrl.get_practice_by_id(id_practice)
     if practice:
         try:
             body = json.loads(urllib.unquote(request.data))
