@@ -32,6 +32,8 @@ tags:
   - name: Ranking
   - name: Usuaris
   - name: Notícies
+  - name: Resultats
+  - name: Assajos
 
 paths:
   /admin:
@@ -57,10 +59,12 @@ paths:
       responses:
         '202':
           description: Success
+        '400':
+          description: Els paràmentres **user_id** i **colla_id** són obligatòris
         '404':
-          description: Resource not found
+          description: Colla or Usuari not found
         '409':
-          description: The resource is duplicated
+          description: L'usuari ja és administrador
     delete:
       description: Revoca l'autorització d'administració de la colla a l'usuari que es reben com a paràmetres obligatoris de la crida
       tags:
@@ -83,8 +87,10 @@ paths:
       responses:
         '202':
           description: Success
+        '400':
+          description: Els paràmentres **user_id** i **colla_id** són obligatòris
         '404':
-          description: Resource not found
+          description: Colla or Usuari not found
           
   /colles:
     get:
@@ -106,7 +112,7 @@ paths:
             items:
               $ref: '#/definitions/Colla'
         '400':
-          description: Bad request
+          description: El paràmete **type** ha de ser o bé **conv** o bé **uni**
           
   /colles/{id}:
     get:
@@ -127,8 +133,34 @@ paths:
           schema:
             $ref: "#/definitions/FullColla"
         '404':
-          description: Resource not found
-    
+          description: Colla not found
+          
+    put:
+      description: Modifica la informació de la `Colla` identificada per el paràmetre **id**
+      tags:
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+        -
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/FullColla"
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: "#/definitions/FullColla" 
+        '404':
+          description: Colla not found
+          
   /events:
     get:
       description: Obté els últims `Esdeveniments` registrats al sistema. El paràmetre opcional **user_id** permet obtenir els `Esdeveniments` referents a les colles les quals segueix o pertany l'usuari
@@ -150,6 +182,7 @@ paths:
               $ref: '#/definitions/Esdeveniment'
         '404':
           description: User not found
+          
     post:
       description: Crea un nou esdeveniment de la colla que indiqui el contingut de la crida
       tags:
@@ -188,7 +221,8 @@ paths:
           schema:
             $ref: "#/definitions/Esdeveniment"
         '404':
-          description: User not found
+          description: Event not found
+          
     put:
       description: Modifica l'`Esdeveniment` identificat per **id**
       tags:
@@ -214,6 +248,7 @@ paths:
             $ref: "#/definitions/Esdeveniment"
         '404':
           description: Event not found
+
     delete:
       description: Esborra l'`Esdeveniment` identificat per **id**
       tags:
@@ -293,7 +328,7 @@ paths:
         -
           name: id
           in: path
-          description: Identificador únic de l'esdeveniment
+          description: Identificador únic de l'usuari
           required: true
           type: integer
           format: int64
@@ -303,8 +338,159 @@ paths:
           schema:
             $ref: '#/definitions/Usuari'
         '404':
-          description: Resource not found
+          description: Usuari not found
+          
+    put:
+      description: Modifica la informació bàsica de l'usuari
+      tags:
+        - Usuaris
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+        - 
+          name: body
+          in: body
+          schema:
+            $ref: '#/definitions/UpdateUsuari'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '404':
+          description: Usuari not found
   
+  /users/{id}/belongs:
+    post:
+      description: L'`Usuari` identificatper **id** passa a pertànyer a la `Colla` identificada pel paràmetre obligatòri **colla_id**
+      tags:
+        - Usuaris
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '400':
+          description: El paràmetre **colla_id** és obligatori
+        '404':
+          description: Usuari o Colla not found
+        '409':
+          description: L'usuari ja pertany a aquesta colla
+    
+    delete:
+      description: L'`Usuari` identificat per **id** deixa de pertànyer a la `Colla` identificada pel paràmetre obligatòri **colla_id**
+      tags:
+        - Usuaris
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '400':
+          description: El paràmetre **colla_id** és obligatori
+        '404':
+          description: Usuari o Colla not found
+  
+  /users/{id}/follows:
+    post:
+      description: L'`Usuari` identificatper **id** passa a seguir a la `Colla` identificada pel paràmetre obligatòri **colla_id**
+      tags:
+        - Usuaris
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '400':
+          description: El paràmetre **colla_id** és obligatori
+        '404':
+          description: Usuari o Colla not found
+        '409':
+          description: L'usuari ja pertany a aquesta colla
+    
+    delete:
+      description: L'`Usuari` identificat per **id** deixa de seguir a la `Colla` identificada pel paràmetre obligatòri **colla_id**
+      tags:
+        - Usuaris
+        - Colles
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+        -
+          name: colla_id
+          in: query
+          description: Identificador únic de la colla
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Usuari'
+        '400':
+          description: El paràmetre **colla_id** és obligatori
+        '404':
+          description: Usuari o Colla not found
+          
   /wall:
     get:
       description: Obté notícies sobre el món casteller. El paràmetre opcional **user_id** permet filtrar les notícies segons les colles castelleres les quals segueix o pertany l'usuari.
@@ -322,11 +508,83 @@ paths:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/New'
+            type: array
+            items:
+              $ref: '#/definitions/New'
         '404':
           description: Resource not found
-    
+
+  /results:
+    get:
+      description: Obté els últims resultats de les díades castelleres. Els paràmetres opcionals **count** i **offset** permeten escollir la quantitat i des de quin resultat volem obtenir, respectivamet
+      tags:
+        - Resultats
+      parameters:
+        - 
+          name: count
+          in: query
+          description: Quantitat de entrades
+          required: false
+          default: 5
+          minimum: 0
+          type: integer
+          format: int32
+        -
+          name: offset
+          in: query
+          description: Desplaçament des del que es retornen els resultats
+          required: false
+          default: 0
+          minimum: 0
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Diada'
+
+  /practices:
+    get:
+      description: Obté els `Assajos` de la `Colla` identificada pel paràmetre **colla_id**
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: colla_id
+          in: query
+          required: true
+          description: Identificador únic de la `Colla`
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Assaig'
+        '404':
+          description: Colla not found
           
+    post:
+      description: Crea un nou assaig per a la colla especificada en el cos de la petició
+      tags:
+        - Assajos
+      parameters:
+        - 
+          name: body
+          in: body
+          schema:
+            $ref: '#/definitions/NewAssaig'
+      responses:
+        '201': 
+          description: Resource created
+        '404':
+          description: Colla not found
+      
 definitions:
   FullColla:
     type: object
@@ -503,8 +761,29 @@ definitions:
         description: Token identificatiu de la sessió de l'usuari
         type: string
       admin:
-        description: Expressa si l'usuari és administrador
-        type: boolean
+        description: Expressa de quines colles l'usuari és administrador
+        type: array
+        items:
+          $ref: '#/definitions/Colla'
+  
+  UpdateUsuari:
+    type: object
+    description: Representa la informació bàsica actualitzable de l'usuari
+    required:
+      - name
+      - surname
+      - password
+    properties:
+      name:
+        description: Nom del'usuari
+        type: string
+      surname:
+        description: Cognom de l'usuari
+        type: string
+      password:
+        description: Contrasenya encriptada de l'usuari
+        type: string
+        format: password
     
   NewUsuari:
     type: object
@@ -534,7 +813,7 @@ definitions:
         items:
           $ref: '#/definitions/Colla'
       follows:
-        description: Llistat de lescolles les quals segueix l'usuari
+        description: Llistat de les colles les quals segueix l'usuari
         type: array
         items:
           $ref: "#/definitions/Colla"
@@ -571,4 +850,117 @@ definitions:
         description: Data de publicació de la notícia
         type: string
         format: full-date
+  
+  Diada:
+    type: object
+    description: Representa una diada castellera
+    properties:
+      id:
+        description: Identificador únic de la jornada
+        type: integer
+        format: int64
+      title:
+        description: Títol de la jornada
+        type: string
+      date:
+        description: Data i hora de la publicació
+        type: string
+        format: full-date
+      results:
+        description: Llistat dels resultats
+        type: array
+        items:
+          $ref: '#/definitions/Resultat'
+          
+  Resultat:
+    type: object
+    description: Representa un resultat d'una diada castellera
+    properties:
+      colla:
+        description: Nom de la colla castellera que ha efectuat les rondes
+        type: string
+      rounds:
+        description: Llistat de rondes de la colla en la
+        type: array
+        items:
+          $ref: '#/definitions/Ronda'
+          
+  Ronda:
+    type: object
+    description: Representa una ronda d'una colla en una jornada castellera
+    properties:
+      num:
+        description: Nombre de ronda
+        type: integer
+        format: int32
+      tries:
+        description: Nombre d'intents
+        type: integer
+        format: int32
+      castell:
+        description: Nom de la construcció efectuada
+        type: string
+      result:
+        description: Resultat del castell
+        type: string
+        enum:
+          - Intent
+          - Intent desmuntat
+          - Carregat
+          - Descarregat
       
+  Assaig:
+    type: object
+    description: Representa un assaig
+    properties:
+      id:
+        description: Identificador únic de l'assaig
+        type: integer
+        format: int64
+      date:
+        description: Data i hora de l'assaig
+        type: string
+        format: date-time
+      address:
+        description: Adreça on es portarà a terme l'assaig
+        type: string
+      description:
+        description: Descripció de l'assaig
+        type: string
+      id_colla:
+        description: Identificador únic de la colla de la qual és l'assaig
+        type: integer
+        format: int64
+      attendants:
+        description: Noms de les persones assistents
+        type: array
+        items:
+          type: string
+      people:
+        description: Total de persones que pertanyen a la colla de la qual és l'assaig
+        type: integer
+        format: int32
+  
+  NewAssaig:
+    type: object
+    description: Representa un nou assaig
+    required:
+      - date
+      - address
+      - description
+      - id_colla
+    properties:
+      date:
+        description: Data i hora de l'assaig
+        type: string
+        format: date-time
+      address:
+        description: Adreça on es portarà a terme l'assaig
+        type: string
+      description:
+        description: Descripció de l'assaig
+        type: string
+      id_colla:
+        description: Identificador únic de la colla de la qual és l'assaig
+        type: integer
+        format: int64

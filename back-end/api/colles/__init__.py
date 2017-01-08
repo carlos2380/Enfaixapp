@@ -1,29 +1,25 @@
-import os
 import urllib
 
 from flask import abort, json, make_response, request, jsonify
 
 from api import app
-from api.db.DB import DB
 from api.colles import colla_service
 
 
 @app.route('/colles', methods=['GET'])
 #@requires_auth
 def get_colles():
-    db_configuration = json.loads(open("api/db/db.json").read())
     tipus_colla = request.args.get('type')
-    from api.db.CtrlFactory import get_colla_ctrl
-    ctrl_colla = get_colla_ctrl(DB(db_configuration).get_database_connection())
-
-    if tipus_colla == 'uni':
+    if not tipus_colla:
+        colles = colla_service.get_all()
+    elif tipus_colla == 'uni':
         colles = colla_service.get_universitaries()
     elif tipus_colla == 'conv':
         colles = colla_service.get_convencionals()
     else:
-        colles = colla_service.get_all()
+        abort(400)
 
-    json_colla_list = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8")
+    json_colla_list = json.dumps([colla.__dict__ for colla in colles], ensure_ascii=False, encoding="utf-8", indent=4)
     response = make_response(json_colla_list, 200)
     response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
     return response
