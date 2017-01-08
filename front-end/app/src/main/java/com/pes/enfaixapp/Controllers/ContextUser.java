@@ -1,30 +1,16 @@
 package com.pes.enfaixapp.Controllers;
 
+import java.util.ArrayList;
+
 /**
  * Created by carlos on 10/12/2016.
  */
 public class ContextUser {
 
     private static String id;
-    private String id_collaUni;
-    private String id_collaConv;
+    private static ArrayList<String> id_collaPerteneix;
+    private static ArrayList<String> id_collaAdmin;
 
-
-    public String getId_collaUni() {
-        return id_collaUni;
-    }
-
-    public void setId_collaUni(String id_collaUni) {
-        this.id_collaUni = id_collaUni;
-    }
-
-    public String getId_collaConv() {
-        return id_collaConv;
-    }
-
-    public void setId_collaConv(String id_collaConv) {
-        this.id_collaConv = id_collaConv;
-    }
 
 
     private static ContextUser ourInstance = new ContextUser();
@@ -44,4 +30,19 @@ public class ContextUser {
         this.id = id;
     }
 
+    public static ArrayList<String> getId_collaAdmin() {
+        return id_collaAdmin;
+    }
+
+    public void setId_collaAdmin(ArrayList<String> id_collaAdmin) {
+        this.id_collaAdmin = id_collaAdmin;
+    }
+
+    public static ArrayList<String> getId_collaPerteneix() {
+        return id_collaPerteneix;
+    }
+
+    public void setId_collaPerteneix(ArrayList<String> id_collaPerteneix) {
+        this.id_collaPerteneix = id_collaPerteneix;
+    }
 }

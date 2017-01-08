@@ -97,14 +97,20 @@ public class JSONConverter {
 
 
     public static List<Colla> toCollaList(JSONObject output) {
-        List<Colla> collaList = new ArrayList<>();
+        ArrayList<Colla> collaList = new ArrayList<Colla>();
         try {
             JSONArray jsonColles = output.getJSONArray("array");
             for (int i = 0; i < jsonColles.length(); ++i) {
                 JSONObject jsonColla = jsonColles.getJSONObject(i);
                 Colla colla = new Colla();
                 colla.setId(jsonColla.getInt("id"));
-                colla.setName(jsonColla.getString("name"));
+                colla.setName(Html.fromHtml(jsonColla.getString("name")).toString());
+                colla.setColor(jsonColla.getString("color"));
+                colla.setImagen(jsonColla.getString("img"));
+                colla.setDireccio(Html.fromHtml(jsonColla.getString("address")).toString());
+                colla.setDescripcio(Html.fromHtml(jsonColla.getString("description")).toString());
+                colla.setEmail(jsonColla.getString("email"));
+                colla.setTelefono(jsonColla.getString("phoneNumber"));
                 if (jsonColla.getInt("uni") == 1) {
                     colla.setUniversitaria(true);
                 } else {

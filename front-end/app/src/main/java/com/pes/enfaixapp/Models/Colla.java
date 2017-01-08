@@ -8,12 +8,46 @@ public class Colla {
 
     private int id;
     private String name;
-    private int color;
+    private String color;
     private String image;
     private boolean uni;
+    private String descripcio;
+    private String email;
+    private String telefono;
+    private String direccio;
     private boolean seleccionada;
 
+    public String getDescripcio() {
+        return descripcio;
+    }
 
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccio() {
+        return direccio;
+    }
+
+    public void setDireccio(String direccio) {
+        this.direccio = direccio;
+    }
 
     private boolean seleccionadaSeguida;
 
@@ -21,7 +55,7 @@ public class Colla {
         super();
     }
 
-    public Colla(int id, String title, int color) {
+    public Colla(int id, String title, String color) {
         this.id = id;
         this.name = title;
         this.color = color;
@@ -51,11 +85,11 @@ public class Colla {
         this.uni = uni;
     }
 
-    public int getColor() {
+    public String getColor() {
         return this.color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
