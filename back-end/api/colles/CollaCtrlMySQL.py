@@ -1,4 +1,6 @@
 # encoding: utf-8
+from __future__ import unicode_literals
+
 from api.colles.CollaCtrl import CollaCtrl
 from api.colles.Colla import Colla
 

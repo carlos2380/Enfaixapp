@@ -49,17 +49,17 @@ def get_universitaries():
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_universitaries()
 
-    for colla in colles:
-        encoded_img = None
-        if colla.img is not None:
-            try:
-                img_path = os.path.expanduser(colla.img)
-                with open(img_path, "rb") as fh:
-                    encoded_img = base64.b64encode(fh.read())
-            except IOError:
-                pass
-            finally:
-                colla.img = encoded_img
+    # for colla in colles:
+    #     encoded_img = None
+    #     if colla.img is not None:
+    #         try:
+    #             img_path = os.path.expanduser(colla.img)
+    #             with open(img_path, "rb") as fh:
+    #                 encoded_img = base64.b64encode(fh.read())
+    #         except IOError:
+    #             pass
+    #         finally:
+    #             colla.img = encoded_img
 
     return colles
 
@@ -70,17 +70,17 @@ def get_convencionals():
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_convencionals()
 
-    for colla in colles:
-        encoded_img = None
-        if colla.img is not None:
-            try:
-                img_path = os.path.expanduser(colla.img)
-                with open(img_path, "rb") as fh:
-                    encoded_img = base64.b64encode(fh.read())
-            except IOError:
-                pass
-            finally:
-                colla.img = encoded_img
+    # for colla in colles:
+    #     encoded_img = None
+    #     if colla.img is not None:
+    #         try:
+    #             img_path = os.path.expanduser(colla.img)
+    #             with open(img_path, "rb") as fh:
+    #                 encoded_img = base64.b64encode(fh.read())
+    #         except IOError:
+    #             pass
+    #         finally:
+    #             colla.img = encoded_img
 
     return colles
 
@@ -91,17 +91,17 @@ def get_all():
     colla_ctrl = get_colla_ctrl(DB(db_configuration).get_database_connection())
     colles = colla_ctrl.get_all()
 
-    for colla in colles:
-        encoded_img = None
-        if colla.img is not None:
-            try:
-                img_path = os.path.expanduser(colla.img)
-                with open(img_path, "rb") as fh:
-                    encoded_img = base64.b64encode(fh.read())
-            except IOError:
-                pass
-            finally:
-                colla.img = encoded_img
+    # for colla in colles:
+    #     encoded_img = None
+    #     if colla.img is not None:
+    #         try:
+    #             img_path = os.path.expanduser(colla.img)
+    #             with open(img_path, "rb") as fh:
+    #                 encoded_img = base64.b64encode(fh.read())
+    #         except IOError:
+    #             pass
+    #         finally:
+    #             colla.img = encoded_img
 
     return colles
 

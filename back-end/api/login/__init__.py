@@ -1,3 +1,4 @@
+# encoding: utf-8
 import json
 import urllib
 
@@ -10,6 +11,7 @@ from api.login.auth_ctrl import create_user, check_password, create_token, get_t
 from api.db.CtrlFactory import get_user_ctrl, get_admin_ctrl
 from api.belongs import belong_service
 from api.follows import follow_service
+from api.login.UserEncoder import UserEncoder
 
 
 @app.route('/login', methods=['POST'])
@@ -25,18 +27,9 @@ def log_in():
             token = get_token_by_user_id(user_id=user.id)
             user.session_token = token
             user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(user.id)
-            follows = follow_service.get_some_info_followed_colles_by_user(user.id)
-            if follows:
-                user.follows = json.dumps([follow.__dict__ for follow in follows], ensure_ascii=False, encoding="utf-8")
-            else:
-                user.follows = []
-            belongs = belong_service.get_some_info_belonging_colles_by_user(user.id)
-            if belongs:
-                user.belongs = json.dumps([belong.__dict__ for belong in belongs], ensure_ascii=False, encoding="utf-8")
-            else:
-                user.belongs = []
-            user = json.dumps(user.__dict__, ensure_ascii=False, encoding="utf-8")
-            response = make_response(user, 200)
+            user. follows = follow_service.get_some_info_followed_colles_by_user(user.id)
+            user.belongs = belong_service.get_some_info_belonging_colles_by_user(user.id)
+            response = make_response(json.dumps(user, encoding='utf-8', cls=UserEncoder, indent=4), 200)
             response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
             return response
     return abort(403)
@@ -60,10 +53,12 @@ def sign_in():
                                    belonging_list=colles_that_belongs_to, following_list=colles_followed)
             token = create_token(email, new_user.id)
             new_user.session_token = token
-            new_user.follows = colles_followed
-            new_user.belongs = colles_that_belongs_to
+            new_user.follows = follow_service.get_some_info_followed_colles_by_user(new_user.id)
+            new_user.belongs = belong_service.get_some_info_belonging_colles_by_user(new_user.id)
             new_user.admin = get_admin_ctrl(DB(db_configuration).get_database_connection()).is_admin(new_user.id)
-            return make_response(jsonify(new_user.__dict__), 201)
+            response = make_response(json.dumps(new_user, encoding='utf-8', cls=UserEncoder, indent=4), 201)
+            response.headers[0] = ('Content-Type', 'application/json; charset=utf-8')
+            return response
         abort(409)
     except KeyError:
         abort(500)
