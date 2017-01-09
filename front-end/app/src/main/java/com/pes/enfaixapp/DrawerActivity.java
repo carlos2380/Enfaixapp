@@ -1,5 +1,6 @@
 package com.pes.enfaixapp;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,12 +17,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -30,15 +41,16 @@ public class DrawerActivity extends AppCompatActivity
     Toolbar toolbar = null;
     NoticiaActivity fragmentNoticia = new NoticiaActivity();
     private DrawerActivity context;
+    Spinner collaDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         context = this;
-
         //------------------------------------
         //INSERTAR FRAGMENTO INICIAL
+
 
         NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -49,6 +61,9 @@ public class DrawerActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,6 +72,33 @@ public class DrawerActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navHeaderView= navigationView.getHeaderView(0);
+        collaDisplay = (Spinner) navHeaderView.findViewById(R.id.collaSpinner);
+
+        //View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_drawer);
+       // collaDisplay = (Spinner) findViewById(R.id.collaSpinner);
+
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item, ContextUser.getInstance().getCollesPertany());
+
+        //collaDisplay = new Spinner(getApplicationContext());
+        collaDisplay.setAdapter(spinnerAdapter);
+        collaDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v,
+                                       int pos, long id) {
+                //TODO: LO QUE SEA
+                spinnerAdapter.notifyDataSetChanged();
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
     }
 
     @Override
@@ -84,6 +126,7 @@ public class DrawerActivity extends AppCompatActivity
                                 }
                             }).show();
         }
+
     }
 
     @Override
@@ -153,14 +196,14 @@ public class DrawerActivity extends AppCompatActivity
             finish();
         }
 
-        /* else if (id == R.id.nav_configuration) {
+        else if (id == R.id.perfil) {
 
-            ConfigurationFragment fragment = new ConfigurationFragment();
+            PerfilActivity fragment = new PerfilActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        } else if (id == R.id.nav_help) {
+        }/* else if (id == R.id.nav_help) {
 
             HelpFragment fragment = new HelpFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -173,5 +216,7 @@ public class DrawerActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }
