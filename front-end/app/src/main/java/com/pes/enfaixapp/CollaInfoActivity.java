@@ -1,5 +1,6 @@
 package com.pes.enfaixapp;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +23,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.text.Line;
+import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +42,7 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView tvDescripcio;
     private TextView tvUrl;
     private ImageView btFoto;
+    private Button btFollowColla;
 
     private GoogleMap mGoogleMap;
     SupportMapFragment mapFragment;
@@ -50,6 +59,7 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
         tvDescripcio = (TextView) findViewById(R.id.descripcio_info_colla);
         tvDescripcio = (TextView) findViewById(R.id.url_info_colla);
         btFoto = (ImageView) findViewById(R.id.foto_info_colla);
+        btFollowColla = (Button) findViewById(R.id.follow_info_colla);
 
         tvNomre.setText(getIntent().getExtras().getString("name"));
 
@@ -85,6 +95,19 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
             ll.setVisibility(View.GONE);
         }
 
+        btFollowColla.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                CollaInfoActivity.MyAsync async = new CollaInfoActivity.MyAsync(getApplicationContext());
+                try {
+                    async.followColla(getApplicationContext());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaInfoColla);
         mapFragment.getMapAsync(this);
     }
@@ -109,5 +132,25 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
         }
         // Add a marker in Sydney and move the camera
 
+    }
+
+    class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
+        }
+
+        public void followColla(Context context) throws JSONException {
+            JSONObject jsonFollowColla = new JSONObject();
+            jsonFollowColla.accumulate("colla_id", getIntent().getExtras().getInt("id"));
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("POST", "http://10.4.41.165:5000/users/" + ContextUser.getInstance().getId() +"/follows", jsonFollowColla.toString());
+        }
+
+        @Override
+        public void processFinish(JSONObject output) {
+            
+        }
     }
 }

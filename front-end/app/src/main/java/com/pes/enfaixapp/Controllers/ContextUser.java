@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class ContextUser {
 
+
     private static String id;
 
     private String nom;
