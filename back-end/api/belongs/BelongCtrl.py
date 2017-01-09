@@ -32,3 +32,7 @@ class BelongCtrl:
     @abc.abstractmethod
     def delete(self, user_id, colla_id):
         pass
+
+    @abc.abstractmethod
+    def get_number_of_users_in_colla(self, colla_id):
+        pass

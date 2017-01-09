@@ -25,7 +25,7 @@ class PracticeCtrl:
         pass
 
     @abc.abstractmethod
-    def delete_attendants(self, id_practice):
+    def delete_attendant(self, id_practice, id_user):
         pass
 
     @abc.abstractmethod
@@ -33,7 +33,7 @@ class PracticeCtrl:
         pass
 
     @abc.abstractmethod
-    def insert_attendant(self, attendant):
+    def insert_attendant(self, user_id, practice_id):
         pass
 
     @abc.abstractmethod

@@ -66,3 +66,13 @@ class BelongCtrlMySQL(BelongCtrl):
         cursor.execute(sql, (user_id, colla_id))
         self.cnx.commit()
         return
+
+    def get_number_of_users_in_colla(self, colla_id):
+        sql = "SELECT COUNT(*) FROM belongsTo WHERE id_colla = %s" % colla_id
+        cursor = self.cnx.cursor()
+        cursor.execute(sql)
+
+        count = cursor.fetchone()[0]
+        if not count:
+            count = 0
+        return count
