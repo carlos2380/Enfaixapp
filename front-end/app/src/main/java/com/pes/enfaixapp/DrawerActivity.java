@@ -203,14 +203,14 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        }/* else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_colles) {
 
-            HelpFragment fragment = new HelpFragment();
+            CollasActivity fragment = new CollasActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
