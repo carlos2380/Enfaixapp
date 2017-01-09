@@ -566,11 +566,13 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Assaig'
+        '400':
+          description: El paràmetre **colla_id** és obligatori
         '404':
           description: Colla not found
           
     post:
-      description: Crea un nou assaig per a la colla especificada en el cos de la petició
+      description: Crea un nou `Assaig` per a la `Colla` especificada en el cos de la petició
       tags:
         - Assajos
       parameters:
@@ -582,9 +584,139 @@ paths:
       responses:
         '201': 
           description: Resource created
+          schema:
+            $ref: '#/definitions/Assaig'
+        '400':
+          description: Bad request
         '404':
           description: Colla not found
-      
+  
+  /practices/{id}:
+    get:
+      description: Obté l'`Assaig` identificat per **id**
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'assaig
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Assaig'
+        '404':
+          description: Assaig not found
+          
+    put:
+      description: Modifica l'`Assaig` identificat per **id**
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'assaig
+          required: true
+          type: integer
+          format: int64
+        -
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateAssaig'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Assaig'
+        '400':
+          description: Bad request
+        '404':
+          description: Assaig not found
+          
+    delete:
+      description: Esborra l'`Assaig` identificat per **id** i tots els seus assistents
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'assaig
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Assaig not found
+          
+  /practices/{id}/attendants:
+    post:
+      description: Afegeix l'assistent identificat pel paràmetre obligatori **user_id** a l'`Assaig` identificat per **id**
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'assaig
+          required: true
+          type: integer
+          format: int64
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '201':
+          description: Attendant created
+          schema:
+            $ref: '#/definitions/Assaig'
+        '400':
+          description: Bad request
+        '404':
+          description: Usuari o Assaig not found
+    
+    delete:
+      description: Elimina l'assistent identificat pel paràmetre obligatori **user_id** a l'`Assaig` identificat per **id**
+      tags:
+        - Assajos
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador únic de l'assaig
+          required: true
+          type: integer
+          format: int64
+        -
+          name: user_id
+          in: query
+          description: Identificador únic de l'usuari
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Attendant removed
+          schema:
+            $ref: '#/definitions/Assaig'
+        '400':
+          description: Bad request
+        '404':
+          description: Usuari o Assaig not found
+    
 definitions:
   FullColla:
     type: object
@@ -931,12 +1063,12 @@ definitions:
         description: Identificador únic de la colla de la qual és l'assaig
         type: integer
         format: int64
-      attendants:
-        description: Noms de les persones assistents
+      people:
+        description: Noms i cognomes de les persones assistents
         type: array
         items:
           type: string
-      people:
+      total:
         description: Total de persones que pertanyen a la colla de la qual és l'assaig
         type: integer
         format: int32
@@ -964,3 +1096,18 @@ definitions:
         description: Identificador únic de la colla de la qual és l'assaig
         type: integer
         format: int64
+    
+  UpdateAssaig:
+    type: object
+    description: Representa un nou assaig
+    properties:
+      date:
+        description: Data i hora de l'assaig
+        type: string
+        format: date-time
+      address:
+        description: Adreça on es portarà a terme l'assaig
+        type: string
+      description:
+        description: Descripció de l'assaig
+        type: string
