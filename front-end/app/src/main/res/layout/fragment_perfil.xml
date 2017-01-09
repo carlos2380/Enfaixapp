@@ -7,51 +7,66 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_usuario_dentro_de_globo_de_dialogo"/>
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
-          android:layout_marginTop="150dp"
-          android:layout_marginBottom="50dp">
+          android:layout_marginTop="50dp"
+          android:layout_marginBottom="50dp"
+          android:layout_marginStart="100dp">
             <TextView
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/nom"
                 android:text="Nom: "
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginRight="10dp"/>
           <TextView
               android:layout_width="80dp"
               android:layout_height="wrap_content"
               android:id="@+id/nomUsuari"/>
 
-          <TextView
-              android:layout_width="65dp"
-              android:layout_height="wrap_content"
-              android:id="@+id/cognoms"
-              android:text="Cognoms:"
-              android:layout_marginRight="20dp"/>
+    </LinearLayout>
 
-          <TextView
-              android:layout_width="150dp"
-              android:layout_height="wrap_content"
-              android:id="@+id/cognomsUsuari"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="100dp">
+        <TextView
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cognoms"
+            android:text="Cognoms:"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cognomsUsuari"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp">
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:id="@+id/email"
-            android:text="Correu:"
-            android:layout_marginLeft="20dp"/>
+            android:text="Correu:"/>
 
         <TextView
-            android:layout_width="275dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/emailUsuari" />
     </LinearLayout>

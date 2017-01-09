@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pes.enfaixapp.Controllers.ContextUser;
+
 import org.w3c.dom.Text;
 
 
@@ -31,6 +33,11 @@ public class PerfilActivity extends Fragment {
         TextView nomUsuari = (TextView) view.findViewById(R.id.nomUsuari);
         TextView cognomsUsuari = (TextView) view.findViewById(R.id.cognomsUsuari);
         TextView emailUsuari = (TextView) view.findViewById(R.id.emailUsuari);
+
+        nomUsuari.setText(ContextUser.getInstance().getNom());
+        cognomsUsuari.setText(ContextUser.getInstance().getCognoms());
+        emailUsuari.setText(ContextUser.getInstance().getEmail());
+
 
 
         return view;

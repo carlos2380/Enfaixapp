@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pes.enfaixapp.Controllers.AsyncResult;
@@ -42,12 +43,15 @@ public class DrawerActivity extends AppCompatActivity
     NoticiaActivity fragmentNoticia = new NoticiaActivity();
     private DrawerActivity context;
     Spinner collaDisplay;
+    TextView nomUsuariDrawer;
+    TextView correuUsuariDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         context = this;
+
         //------------------------------------
         //INSERTAR FRAGMENTO INICIAL
 
@@ -98,6 +102,9 @@ public class DrawerActivity extends AppCompatActivity
 
             }
         });
+
+        nomUsuariDrawer = (TextView) navHeaderView.findViewById(R.id.nomUserDrawer);
+        nomUsuariDrawer.setText(ContextUser.getInstance().getNom() + " " + ContextUser.getInstance().getCognoms());
 
     }
 
