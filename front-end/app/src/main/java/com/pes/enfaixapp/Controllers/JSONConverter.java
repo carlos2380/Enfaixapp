@@ -40,6 +40,24 @@ public class JSONConverter {
         return usuari;
     }
 
+    public static List<String> toCollesUsuari(JSONObject jsonObject) {
+        ArrayList<String> collaList = new ArrayList<>();
+        try {
+            JSONArray jsonColles = jsonObject.getJSONArray("belongs");
+            for (int i = 0; i < jsonColles.length(); ++i) {
+                JSONObject jsonColla = jsonColles.getJSONObject(i);
+                collaList.add(String.valueOf(jsonColla.getJSONObject("name")));
+                //collaList.add(jsonColla.getString("name"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        /*collaList.add("Castellers de Vilafranca");
+        collaList.add("Arreplegats de la Zona Universitària");*/
+        return collaList;
+    }
+
     public static List<Noticia> toNoticies(JSONObject jsonObject) throws Exception {
         List<Noticia> noticias = new ArrayList<Noticia>();
         if(jsonObject != null) {

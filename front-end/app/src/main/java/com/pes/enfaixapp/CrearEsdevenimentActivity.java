@@ -123,7 +123,8 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
             }
         });
 
-        crearEsdv.setOnClickListener(new View.OnClickListener() {
+        crearEsdv.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
                 CrearEsdevenimentActivity.MyAsync async = new CrearEsdevenimentActivity.MyAsync(getApplicationContext());
