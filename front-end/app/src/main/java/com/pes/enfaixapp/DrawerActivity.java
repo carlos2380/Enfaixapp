@@ -178,11 +178,9 @@ public class DrawerActivity extends AppCompatActivity
             //------------------------------------
             //INSERTAR FRAGMENTO INICIAL
             getSupportActionBar().setTitle("Classificació");
-
-            /*CrearEsdevenimentActivity fragment = new CrearEsdevenimentActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();*/
+            fragmentTransaction.replace(R.id.fragment_container, new RankingActivity());
+            fragmentTransaction.commit();
 
             //----------------------------
         } else if (id == R.id.nav_esdv) {

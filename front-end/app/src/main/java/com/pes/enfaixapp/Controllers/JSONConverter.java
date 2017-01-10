@@ -6,6 +6,7 @@ import android.text.Html;
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
+import com.pes.enfaixapp.Models.RankingInput;
 import com.pes.enfaixapp.Models.Usuari;
 
 import org.json.JSONArray;
@@ -160,6 +161,24 @@ public class JSONConverter {
             e.printStackTrace();
         }
         return collaList;
+    }
+
+    public static List<RankingInput> toRankingList(JSONObject output) {
+        ArrayList<RankingInput> rankingList = new ArrayList<RankingInput>();
+        try {
+            JSONArray jsonRanking = output.getJSONArray("array");
+            for (int i = 0; i < jsonRanking.length(); ++i) {
+                JSONObject jsonInputRanking = jsonRanking.getJSONObject(i);
+                RankingInput input = new RankingInput();
+                input.setName(jsonInputRanking.getString("name"));
+                input.setPunctuation(jsonInputRanking.getInt("punctuation"));
+                input.setPos(jsonInputRanking.getInt("pos"));
+                rankingList.add(input);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return rankingList;
     }
 
 }
