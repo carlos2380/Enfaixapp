@@ -113,6 +113,26 @@ public class JSONConverter {
         return esdeveniments;
     }
 
+    public static Colla toColla(JSONObject output) throws JSONException {
+        Colla colla = new Colla();
+        JSONObject jsonColla = output;
+
+        colla.setId(jsonColla.getInt("id"));
+        colla.setName(Html.fromHtml(jsonColla.getString("name")).toString());
+        colla.setColor(jsonColla.getString("color"));
+        colla.setImagen(jsonColla.getString("img"));
+        colla.setDireccio(Html.fromHtml(jsonColla.getString("address")).toString());
+        colla.setDescripcio(Html.fromHtml(jsonColla.getString("description")).toString());
+        colla.setEmail(jsonColla.getString("email"));
+        colla.setTelefono(jsonColla.getString("phoneNumber"));
+        colla.setWeb(jsonColla.getString("web"));
+        if (jsonColla.getInt("uni") == 1) {
+            colla.setUniversitaria(true);
+        } else {
+            colla.setUniversitaria(false);
+        }
+        return colla;
+    }
 
     public static List<Colla> toCollaList(JSONObject output) {
         ArrayList<Colla> collaList = new ArrayList<Colla>();

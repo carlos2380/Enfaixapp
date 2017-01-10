@@ -11,11 +11,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pes.enfaixapp.CollaInfoActivity">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@drawable/logo_cjxt"
+        app:srcCompat="@drawable/logo"
         android:id="@+id/foto_info_colla"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
@@ -27,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:text="Colla de la plaza los borrachos"
+        android:text="Colla"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentTop="true"
@@ -44,7 +51,7 @@
         android:id="@+id/mapaInfoColla"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="220dp"
         android:layout_below="@+id/layEmpty"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true" />
@@ -71,19 +78,21 @@
             <TextView
                 android:id="@+id/descripcio_info_colla"
                 android:layout_width="match_parent"
-                android:layout_height="39dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center_vertical|left"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:maxLines="4"
                 android:text="Descripcion" />
         </LinearLayout>
 
         <LinearLayout
+            android:paddingTop="2dp"
             android:id="@+id/layDire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:onClick="verMapa">
+            >
             <ImageView
                 android:id="@+id/logo_direccion"
                 android:layout_width="40dp"
@@ -95,7 +104,7 @@
                 android:id="@+id/direccio_info_colla"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical|left"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Dirección" />
@@ -117,7 +126,7 @@
             <TextView
                 android:id="@+id/phone_info_colla"
                 android:layout_width="match_parent"
-                android:layout_height="39dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:layout_gravity="bottom"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -130,17 +139,39 @@
             android:layout_height="wrap_content"
             android:id="@+id/layurl"
             android:orientation="horizontal"
+            android:onClick="verWeb"
             android:weightSum="1">
             <ImageView
                 android:id="@+id/logo_url"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="logo del tipo"
-                android:src="@android:drawable/sym_action_email" />
+                android:src="@android:drawable/ic_menu_mapmode" />
             <TextView
                 android:id="@+id/url_info_colla"
-                android:layout_width="125dp"
-                android:layout_height="39dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical|left"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="URL" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layemail"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <ImageView
+                android:id="@+id/logo_email"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="logo del tipo"
+                android:src="@android:drawable/sym_action_email" />
+            <TextView
+                android:id="@+id/email_info_colla"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center_vertical|left"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -180,4 +211,6 @@
 
         </LinearLayout>
     </LinearLayout>
+        </RelativeLayout>
+  </ScrollView>
 </RelativeLayout>

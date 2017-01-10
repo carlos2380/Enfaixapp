@@ -15,6 +15,16 @@ public class Colla {
     private String email;
     private String telefono;
     private String direccio;
+
+    public String getWeb() {
+        return web;
+    }
+
+    public void setWeb(String web) {
+        this.web = web;
+    }
+
+    private String web;
     private boolean seleccionada;
 
     public String getDescripcio() {
