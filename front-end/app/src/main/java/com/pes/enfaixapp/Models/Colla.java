@@ -16,6 +16,12 @@ public class Colla {
     private String telefono;
     private String direccio;
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    private int value;
+
     public String getWeb() {
         return web;
     }
@@ -135,9 +141,13 @@ public class Colla {
         return id == colla.id;
 
     }
-
+    public int getValue(){
+        return this.value;
+    }
     @Override
     public int hashCode() {
         return id;
     }
+
+
 }

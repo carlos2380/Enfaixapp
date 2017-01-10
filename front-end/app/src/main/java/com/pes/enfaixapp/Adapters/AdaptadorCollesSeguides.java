@@ -4,92 +4,106 @@ package com.pes.enfaixapp.Adapters;
  * Created by Marc on 25/10/2016.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Àlex on 24/10/2016.
  */
 
-public class AdaptadorCollesSeguides extends ArrayAdapter {
+public class AdaptadorCollesSeguides extends ArrayAdapter<Colla>implements
+        View.OnClickListener {
 
-    protected ArrayList<Colla> colles;
-    private Context context;
-    private Integer selected_position = -1;
+    private LayoutInflater layoutInflater;
 
-    public AdaptadorCollesSeguides(Context context, ArrayList<Colla> items) {
-        super(context,0,items);
-        this.colles = items;
-        this.context = context;
-    }
-
-    @Override
-    public int getCount() {
-        return colles.size();
-    }
-
-    public void clear() {
-        colles.clear();
-    }
-
-    public void addAll(ArrayList<Colla> category) {
-        for (int i = 0; i < category.size(); i++) {
-            colles.add(category.get(i));
-        }
-    }
-
-    @Override
-    public Object getItem(int arg0) {
-        return colles.get(arg0);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public AdaptadorCollesSeguides(Context context, List<Colla> objects) {
+        super(context, 0, objects);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        // holder pattern
+        Holder holder = null;
         if (convertView == null) {
-            // Create a new view into the list.
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_colla, parent, false);
+            holder = new Holder();
+
+            convertView = layoutInflater.inflate(R.layout.listview_colla, parent, false);
+            holder.setTextViewTitle((TextView) convertView.findViewById(R.id.listText));
+            holder.setCheckBox((CheckBox) convertView.findViewById(R.id.checkBox));
+            convertView.setTag(holder);
+        } else {
+            holder = (Holder) convertView.getTag();
         }
 
-        // Set data into the view.
-        ImageView imatgeColla = (ImageView) convertView.findViewById(R.id.listImage);
-        TextView nomColla = (TextView) convertView.findViewById(R.id.listText);
-        final CheckBox chkbox=(CheckBox)convertView.findViewById(R.id.checkBox);
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chkbox.setChecked(true);
-
-            }
-        });
-
-        Colla c = (Colla) getItem(position);
-        nomColla.setText(c.getName());
-
-
-
-        chkbox.setChecked(position==selected_position);
-        c.setSeleccionadaSeguida(position==selected_position);
+        final Colla row = getItem(position);
+        holder.getTextViewTitle().setText(row.getName());
+        holder.getCheckBox().setTag(position);
+        holder.getCheckBox().setChecked(row.isSeleccionadaSeguida());
+        holder.getCheckBox().setOnClickListener(this);
 
         return convertView;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        CheckBox checkBox = (CheckBox) v;
+        int position = (Integer) v.getTag();
+        getItem(position).setSeleccionadaSeguida(checkBox.isChecked());
+
+        String msg = "Posicion " +String.valueOf(position);
+        //Toast.makeText(this.getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    static class Holder
+    {
+        TextView textViewTitle;
+        TextView textViewSubtitle;
+        CheckBox checkBox;
+
+        public TextView getTextViewTitle()
+        {
+            return textViewTitle;
+        }
+
+        public void setTextViewTitle(TextView textViewTitle)
+        {
+            this.textViewTitle = textViewTitle;
+        }
+
+        public TextView getTextViewSubtitle()
+        {
+            return textViewSubtitle;
+        }
+
+        public void setTextViewSubtitle(TextView textViewSubtitle)
+        {
+            this.textViewSubtitle = textViewSubtitle;
+        }
+        public CheckBox getCheckBox()
+        {
+            return checkBox;
+        }
+        public void setCheckBox(CheckBox checkBox)
+        {
+            this.checkBox = checkBox;
+        }
+
+    }
 }

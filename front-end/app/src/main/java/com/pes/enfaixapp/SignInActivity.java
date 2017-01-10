@@ -162,7 +162,7 @@ public class SignInActivity extends Activity implements AsyncResult {
         });
 
         listViewTotes = (ListView) findViewById(R.id.allList);
-        adaptadorCollesTotes = new AdaptadorCollesSeguides(getApplicationContext(), collesTotes);
+
         listViewTotes.setAdapter(adaptadorCollesTotes);
 
         cb = (CheckBox) findViewById(R.id.checkBox);
@@ -310,9 +310,9 @@ public class SignInActivity extends Activity implements AsyncResult {
                             if (choosenCollaUni != null) {
                                 user.addCollaQuePertany(choosenCollaUni);
                             }*/
-                            for (int i=0; i < adaptadorCollesTotes.getCount(); ++i) {
-                                if ( ((Colla)adaptadorCollesTotes.getItem(i)).isSeleccionadaSeguida())
-                                    user.addCollesSeguides(((Colla) adaptadorCollesTotes.getItem(i)).getId());
+                            for (int i=0; i < listViewTotes.getAdapter().getCount(); ++i) {
+                                if ( ((Colla)listViewTotes.getAdapter().getItem(i)).isSeleccionadaSeguida())
+                                    user.addCollesSeguides(((Colla) listViewTotes.getAdapter().getItem(i)).getId());
                             }
 
 
@@ -387,7 +387,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     ArrayList<String> user_IdColles = new ArrayList<>();
                     Colla c = new Colla();
 
-                    for (int i = 0; i < 2; ++i) {
+                    for (int i = 0; i < jsonArray.length(); ++i) {
                         c.setName((String) jsonArray.getJSONObject(i).get("name"));
                         c.setId(Integer.parseInt((String) jsonArray.getJSONObject(i).get("id")));
                         user_collesPertany.add(c);
@@ -415,7 +415,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     ContextUser.getInstance().setNom(user_name);
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
-                    if (user_collesPertany.get(0) != null)
+                    if (user_collesPertany.size() > 0)
                         ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
 
                     editor.apply();
@@ -424,6 +424,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                 }
                 else if (response == HttpURLConnection.HTTP_OK) {
                     List<Colla> colles = JSONConverter.toCollaList(output);
+                    listViewTotes.setAdapter(new AdaptadorCollesSeguides(this, colles));
                     for (Colla colla : colles) {
                         collesTotes.add(colla);
                         if (colla.isUniversitaria()) {
