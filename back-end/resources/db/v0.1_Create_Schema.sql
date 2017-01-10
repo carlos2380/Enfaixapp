@@ -65,7 +65,6 @@ CREATE TABLE practice (
   description text,
   address VARCHAR(256),
   id_colla INTEGER,
-  people INTEGER,
   PRIMARY KEY(id),
   CONSTRAINT fk_practice_colla FOREIGN KEY (id_colla) REFERENCES colles (id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
