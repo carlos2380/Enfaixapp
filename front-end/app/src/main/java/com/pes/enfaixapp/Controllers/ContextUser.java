@@ -1,5 +1,7 @@
 package com.pes.enfaixapp.Controllers;
 
+import com.pes.enfaixapp.Models.Colla;
+
 import java.util.ArrayList;
 
 /**
@@ -15,10 +17,11 @@ public class ContextUser {
     private String email;
     private String id_collaUni;
     private String id_collaConv;
+    private String id_collaSwitch;
 
 
 
-    private ArrayList<String> collesPertany;
+    private ArrayList<Colla> collesPertany;
 
 
     public String getId_collaUni() {
@@ -55,10 +58,10 @@ public class ContextUser {
         this.id = id;
     }
 
-    public void setCollesPertany(ArrayList<String> collesPertany) {
+    public void setCollesPertany(ArrayList<Colla> collesPertany) {
         this.collesPertany = collesPertany;
     }
-    public ArrayList<String> getCollesPertany() {
+    public ArrayList<Colla> getCollesPertany() {
         return collesPertany;
     }
 
@@ -85,4 +88,18 @@ public class ContextUser {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getId_collaSwitch() {
+        return id_collaSwitch;
+    }
+
+    public void setId_collaSwitch(String id_collaSwitch) {
+        this.id_collaSwitch = id_collaSwitch;
+    }
+
+    public void getIdColla(String nomColla) {
+
+    }
+
+
 }

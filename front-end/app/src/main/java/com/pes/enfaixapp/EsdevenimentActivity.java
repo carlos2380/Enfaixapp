@@ -140,5 +140,9 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
 }

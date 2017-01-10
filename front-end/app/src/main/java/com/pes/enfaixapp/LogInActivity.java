@@ -13,6 +13,7 @@ import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
+import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Usuari;
 
 import org.json.JSONArray;
@@ -88,11 +89,16 @@ public class LogInActivity extends Activity implements AsyncResult {
                     String user_surname = (String) output.get("surname");
                     String user_email = (String) output.get("email");
 
-                    ArrayList<String> user_collesPertany = new ArrayList<>();
+                    ArrayList<Colla> user_collesPertany = new ArrayList<>();
                     JSONArray jsonArray = (JSONArray) output.get("belongs");
-                    for (int i = 0; i < 2; ++i) {
+                    ArrayList<String> user_IdColles = new ArrayList<>();
 
-                        user_collesPertany.add((String) jsonArray.getJSONObject(i).get("name"));
+                    for (int i = 0; i < 2; ++i) {
+                        Colla c = new Colla();
+                        c.setName((String) jsonArray.getJSONObject(i).get("name"));
+                        c.setId(Integer.parseInt(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                        user_collesPertany.add(c);
+
                     }
                     //String user_collesPertany = output.getJSONArray("belongs").getString(Integer.parseInt("name"));
                     SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
@@ -102,14 +108,25 @@ public class LogInActivity extends Activity implements AsyncResult {
                     editor.putString("user_name", user_name);
                     editor.putString("user_surname", user_surname);
                     editor.putString("user_email", user_email);
-                    editor.putString("user_belongsConvencional", user_collesPertany.get(0));
-                    editor.putString("user_belongsUni", user_collesPertany.get(1));
+                    if (user_collesPertany.size() > 0) {
+                        editor.putString("user_belongsConvencional", user_collesPertany.get(0).getName());
+                        editor.putString("user_idCollaConv", String.valueOf(user_collesPertany.get(0).getId()));
+                    }
+                    if (user_collesPertany.size() > 1) {
+                        editor.putString("user_belongsUni", user_collesPertany.get(1).getName());
+                        editor.putString("user_idCollaUni", String.valueOf(user_collesPertany.get(1).getId()));
+                    }
+
 
                     ContextUser.getInstance().setId(user_id);
                     ContextUser.getInstance().setCollesPertany(user_collesPertany);
                     ContextUser.getInstance().setNom(user_name);
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
+                    if (user_collesPertany.get(0) != null)
+                        ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
+
+
                     editor.apply();
                     intent.putExtra("User", u);
                     startActivity(intent);
