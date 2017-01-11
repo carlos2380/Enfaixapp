@@ -66,7 +66,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
         final NoticiaActivity fragment = new NoticiaActivity();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
         fragmentTransaction.commit();
 
@@ -286,9 +286,32 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
+        else if (id == R.id.permis_admin){
+            DrawerActivity.MyAsync async = new MyAsync(getApplicationContext());
+            async.doAdmin(getApplicationContext());
+
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
+        }
+
+        public void doAdmin(Context context) {
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("POST", "http://10.4.41.165:5000/admin?user_id=" + ContextUser.getInstance().getId() + "&colla_id=" + ContextUser.getInstance().getCollesPertany().get(0).getId() , null);
+        }
+        @Override
+        public void processFinish(JSONObject output) {
+
+        }
     }
 
 
