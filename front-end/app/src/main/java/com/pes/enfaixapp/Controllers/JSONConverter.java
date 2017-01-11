@@ -1,24 +1,17 @@
 package com.pes.enfaixapp.Controllers;
 
-import android.graphics.Color;
 import android.text.Html;
 
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
-import com.pes.enfaixapp.Models.Ranking;
+import com.pes.enfaixapp.Models.RankingItem;
 import com.pes.enfaixapp.Models.Usuari;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -163,13 +156,13 @@ public class JSONConverter {
         return collaList;
     }
 
-    public static List<Ranking> toRankingList(JSONObject output) {
-        ArrayList<Ranking> rankingList = new ArrayList<Ranking>();
+    public static List<RankingItem> toRankingList(JSONObject output) {
+        ArrayList<RankingItem> rankingList = new ArrayList<RankingItem>();
         try {
             JSONArray jsonRanking = output.getJSONArray("array");
             for (int i = 0; i < jsonRanking.length(); ++i) {
                 JSONObject jsonInputRanking = jsonRanking.getJSONObject(i);
-                Ranking input = new Ranking();
+                RankingItem input = new RankingItem();
                 input.setName(jsonInputRanking.getString("name"));
                 input.setPunctuation(jsonInputRanking.getInt("punctuation"));
                 input.setPos(jsonInputRanking.getInt("pos"));
