@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.BitmapUtilities;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
@@ -233,20 +234,39 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
 
         public void createEsdeveniment(Context context) throws JSONException {
             JSONObject jsonEvent = new JSONObject();
-            jsonEvent.accumulate("title", titolEsdv.getText().toString());
-            jsonEvent.accumulate("description", etdescript.getText().toString());
+            boolean correcte = true;
+            if (etdireccio.getText().toString().isEmpty()) {
+                Toast.makeText(context, "El camp de l'adreça és buit", Toast.LENGTH_LONG).show();
+                correcte = false;
 
-            jsonEvent.accumulate("img", image);
+            } else if (titolEsdv.getText().toString().isEmpty()){
+                Toast.makeText(context, "El camp del títol és buit", Toast.LENGTH_LONG).show();
+                correcte = false;
+            }
 
-            String date = dateView.getText().toString();
+            else if (etdescript.getText().toString().isEmpty()) {
+                Toast.makeText(context, "El camp de la descripció és buit", Toast.LENGTH_LONG).show();
+                correcte = false;
+            }
 
-            jsonEvent.accumulate("date", date);
-            jsonEvent.accumulate("address", etdireccio.getText().toString());
-            jsonEvent.accumulate("user_id", "1");
-            jsonEvent.accumulate("colla_id", "1");
-            HTTPHandler httphandler = new HTTPHandler();
-            httphandler.setAsyncResult(this);
-            httphandler.execute("POST", "http://10.4.41.165:5000/events", jsonEvent.toString());
+            if (correcte) {
+                jsonEvent.accumulate("title", titolEsdv.getText().toString());
+                jsonEvent.accumulate("description", etdescript.getText().toString());
+                if (image == null)
+                    jsonEvent.accumulate("img", JSONObject.NULL);
+                else
+                    jsonEvent.accumulate("img", image);
+
+                String date = dateView.getText().toString();
+
+                jsonEvent.accumulate("date", date);
+                jsonEvent.accumulate("address", etdireccio.getText().toString());
+                jsonEvent.accumulate("user_id", ContextUser.getInstance().getId());
+                jsonEvent.accumulate("colla_id", ContextUser.getInstance().getId_collaSwitch());
+                HTTPHandler httphandler = new HTTPHandler();
+                httphandler.setAsyncResult(this);
+                httphandler.execute("POST", "http://10.4.41.165:5000/events", jsonEvent.toString());
+            }
         }
 
         @Override

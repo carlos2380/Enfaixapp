@@ -13,40 +13,41 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
 import com.pes.enfaixapp.Models.Colla;
-import com.pes.enfaixapp.Models.RankingInput;
+import com.pes.enfaixapp.Models.Ranking;
 import com.pes.enfaixapp.R;
 import com.pes.enfaixapp.RankingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdaptadorRanking extends ArrayAdapter<RankingInput> {
+public class AdaptadorRanking extends ArrayAdapter<Ranking> {
     private LayoutInflater inflador; // Crea Layouts a partir del XML
 
-    public AdaptadorRanking(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
-    }
-
-    public AdaptadorRanking(Context context, int resource, List<RankingInput> items) {
-        super(context, resource, items);
+    public AdaptadorRanking(Context context, List<Ranking> items) {
+        super(context, 0, items);
+        inflador = LayoutInflater.from(context);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        Ranking ranking = getItem(position);
         // Declare Variables
         TextView txtNom;
         TextView txtPos;
         TextView txtPunts;
 
-        //http://developer.android.com/intl/es/reference/android/view/LayoutInflater.html
-        View itemView = inflador.inflate(R.layout.activity_ranking, parent, false);
+        if (convertView == null) {
+            convertView = inflador.inflate(R.layout.custom_listranking, parent, false);
+        }
 
         // Locate the TextViews in listview_item.xml
-        txtNom = (TextView) itemView.findViewById(R.id.nomRank);
-        txtPos = (TextView) itemView.findViewById(R.id.posicioRank);
-        txtPunts = (TextView) itemView.findViewById(R.id.puntsRank);
+        txtNom = (TextView) convertView.findViewById(R.id.nomRank);
+        txtPos = (TextView) convertView.findViewById(R.id.posicioRank);
+        txtPunts = (TextView) convertView.findViewById(R.id.puntsRank);
+        txtNom.setText(ranking.getName());
+        txtPos.setText(String.valueOf(ranking.getPos()));
+        txtPunts.setText(String.valueOf(ranking.getPunctuation()));
 
-        return itemView;
+        return convertView;
     }
 
 }

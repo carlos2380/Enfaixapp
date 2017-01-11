@@ -23,7 +23,7 @@ import com.pes.enfaixapp.Controllers.CustomIntent;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Colla;
-import com.pes.enfaixapp.Models.RankingInput;
+import com.pes.enfaixapp.Models.Ranking;
 
 import org.json.JSONObject;
 
@@ -56,8 +56,15 @@ public class RankingActivity extends Fragment {
         return view;
     }
 
-    public void insertarRanking (ArrayList<RankingInput> ranking) {
-        AdaptadorRanking customAdapter = new AdaptadorRanking(view.getContext(), R.layout.custom_listranking, ranking);
+
+    public void insertarRanking (ArrayList<Ranking> ranking) {
+
+        ArrayList<Ranking> ran = new ArrayList<Ranking>();
+        for (int i = 0; i < 30; ++i) {
+            Ranking r = new Ranking(i+i, "Castellers", i);
+            ran.add(r);
+        }
+        AdaptadorRanking customAdapter = new AdaptadorRanking(view.getContext(),  ran);
         list.setAdapter(customAdapter);
     }
 
@@ -76,8 +83,8 @@ public class RankingActivity extends Fragment {
         @Override
         public void processFinish(JSONObject output) {
             try {
-                ArrayList<RankingInput> ranking = new ArrayList<RankingInput>();
-                ranking = (ArrayList<RankingInput>) JSONConverter.toRankingList(output);
+                ArrayList<Ranking> ranking = new ArrayList<Ranking>();
+                ranking = (ArrayList<Ranking>) JSONConverter.toRankingList(output);
                 insertarRanking(ranking);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,5 +96,6 @@ public class RankingActivity extends Fragment {
             Toast.makeText(view.getContext(), err, Toast.LENGTH_LONG).show();
         }
     }
+
 
 }

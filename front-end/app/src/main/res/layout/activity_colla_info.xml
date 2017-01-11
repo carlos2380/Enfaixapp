@@ -23,6 +23,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/logo"
+        android:background="#FFF"
         android:id="@+id/foto_info_colla"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />

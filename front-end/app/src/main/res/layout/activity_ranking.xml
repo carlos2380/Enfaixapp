@@ -1,12 +1,51 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="50dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pes.enfaixapp.RankingActivity">
+    tools:context="com.pes.enfaixapp.RankingActivity"
+    android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/posicioRank"
+            android:text="POS"
+            android:layout_width="wrap_content"
+            android:textSize="20dp"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black" />
+
+
+        <TextView
+            android:id="@+id/nomRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignRight="@+id/posicioRank"
+            android:layout_weight="0.8"
+            android:text="CASTELLERS"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/puntsRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_weight="0.1"
+            android:layout_alignRight="@+id/nomRank"
+            android:text="PUNTS"
+            android:textColor="@android:color/black" />
+
+
+    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listRanking">
     </ListView>
-</RelativeLayout>
+</LinearLayout>

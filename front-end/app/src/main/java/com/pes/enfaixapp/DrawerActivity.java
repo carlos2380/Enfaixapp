@@ -28,11 +28,13 @@ import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
+import com.pes.enfaixapp.Models.Colla;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrawerActivity extends AppCompatActivity
@@ -82,26 +84,38 @@ public class DrawerActivity extends AppCompatActivity
 
         //View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_drawer);
        // collaDisplay = (Spinner) findViewById(R.id.collaSpinner);
+        ArrayList<String> nomsColles = new ArrayList<>();
+        for (int i =0; i < ContextUser.getInstance().getCollesPertany().size(); ++i) {
+            nomsColles.add(ContextUser.getInstance().getCollesPertany().get(i).getName());
+        }
+         if (nomsColles.size() > 0) {
+             final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, nomsColles);
 
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item, ContextUser.getInstance().getCollesPertany());
+             //collaDisplay = new Spinner(getApplicationContext());
+             collaDisplay.setAdapter(spinnerAdapter);
+             collaDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        //collaDisplay = new Spinner(getApplicationContext());
-        collaDisplay.setAdapter(spinnerAdapter);
-        collaDisplay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                 @Override
+                 public void onItemSelected(AdapterView<?> parent, View v,
+                                            int pos, long id) {
+                     ArrayList<Colla> colles = ContextUser.getInstance().getCollesPertany();
+                     ContextUser.getInstance().setId_collaSwitch(String.valueOf(colles.get(pos).getId()));
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v,
-                                       int pos, long id) {
-                //TODO: LO QUE SEA
-                spinnerAdapter.notifyDataSetChanged();
+                     spinnerAdapter.notifyDataSetChanged();
 
 
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
+                 }
 
-            }
-        });
+                 @Override
+                 public void onNothingSelected(AdapterView<?> arg0) {
+
+                 }
+             });
+         }
+
+        else {
+             collaDisplay.setVisibility(View.GONE);
+         }
 
         nomUsuariDrawer = (TextView) navHeaderView.findViewById(R.id.nomUserDrawer);
         nomUsuariDrawer.setText(ContextUser.getInstance().getNom() + " " + ContextUser.getInstance().getCognoms());

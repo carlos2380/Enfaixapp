@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.pes.enfaixapp.Controllers.ContextUser;
+import com.pes.enfaixapp.Models.Colla;
 
 import java.util.ArrayList;
 
@@ -35,15 +36,27 @@ public class LoadingActivity extends AppCompatActivity {
                 String user_name = preferences.getString("user_name", null);
                 String user_surname = preferences.getString("user_surname", null);
                 String user_email = preferences.getString("user_email", null);
-                ArrayList<String> collesUser = new ArrayList<>();
-                collesUser.add(preferences.getString("user_belongsConvencional",null));
-                collesUser.add(preferences.getString("user_belongsUni",null));
+                ArrayList<Colla> collesUser = new ArrayList<>();
+                if (preferences.getString("user_belongsConvencional",null) != null) {
+                    Colla c = new Colla();
+                    c.setName(preferences.getString("user_belongsConvencional", null));
+                    c.setId(Integer.parseInt(preferences.getString("user_idCollaConv",null)));
+                    collesUser.add(c);
+
+                }
+                if (preferences.getString("user_belongsUni",null) != null) {
+                    Colla c = new Colla();
+                    c.setName(preferences.getString("user_belongsUni", null));
+                    c.setId(Integer.parseInt(preferences.getString("user_idCollaUni",null)));
+                    collesUser.add(c);
+                }
 
                 ContextUser.getInstance().setId(user_id);
                 ContextUser.getInstance().setEmail(user_email);
                 ContextUser.getInstance().setCognoms(user_surname);
                 ContextUser.getInstance().setNom(user_name);
                 ContextUser.getInstance().setCollesPertany(collesUser);
+                ContextUser.getInstance().setId_collaSwitch(preferences.getString("user_idCollaConv", null));
 
                 startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
                 finish();
