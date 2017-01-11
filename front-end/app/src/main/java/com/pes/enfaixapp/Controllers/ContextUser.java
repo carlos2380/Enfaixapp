@@ -22,6 +22,7 @@ public class ContextUser {
 
 
     private ArrayList<Colla> collesPertany;
+    private ArrayList<Colla> collesSegueix;
 
 
     public String getId_collaUni() {

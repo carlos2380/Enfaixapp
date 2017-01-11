@@ -190,7 +190,7 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
                 jsonFollowColla.accumulate("colla_id", getIntent().getExtras().getInt("id"));
                 HTTPHandler httphandler = new HTTPHandler();
                 httphandler.setAsyncResult(this);
-                httphandler.execute("POST", "http://10.4.41.165:5000/users/" + ContextUser.getInstance().getId() +"/follows", jsonFollowColla.toString());
+                httphandler.execute("POST", "http://10.4.41.165:5000/users/" + ContextUser.getInstance().getId() +"/follows?colla_id="+ idColla , jsonFollowColla.toString());
             }
 
             @Override
