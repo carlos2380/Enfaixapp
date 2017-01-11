@@ -31,6 +31,10 @@
             android:icon="@drawable/usercheck"/>
 
         <item
+            android:id="@+id/permis_admin"
+            android:title="Donar-me permís admin"/>
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout_24dp"
             android:title="Tancar sessió"/>
