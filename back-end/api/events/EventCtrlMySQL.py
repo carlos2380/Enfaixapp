@@ -37,8 +37,8 @@ class EventCtrlMySQL(EventCtrl):
             result = cursor.fetchone()
             event = None
             if result is not None:
-                event = Event(title=result[1], description=result[2], img=result[3], date=result[4],
-                          address=result[5], user_id=result[6], colla_id=result[7])
+                event = Event(id=result[0], title=result[1], description=result[2], img=result[3], date=result[4],
+                              address=result[5], user_id=result[6], colla_id=result[7])
                 events.append(event)
 
         return events
@@ -56,8 +56,8 @@ class EventCtrlMySQL(EventCtrl):
             result = cursor.fetchone()
             event = None
             if result is not None:
-                event = Event(title=result[1], description=result[2], img=result[3], date=result[4],
-                          address=result[5], user_id=result[6], colla_id=result[7])
+                event = Event(id=result[0], title=result[1], description=result[2], img=result[3], date=result[4],
+                              address=result[5], user_id=result[6], colla_id=result[7])
                 events.append(event)
 
         return events
@@ -79,7 +79,8 @@ class EventCtrlMySQL(EventCtrl):
         sql = "INSERT INTO events (title, description, path, date, address, id_user, id_colla) " \
               "VALUES (%s,%s,%s,%s,%s,%s,%s)"
         cursor = self.cnx.cursor()
-        cursor.execute(sql, (event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id))
+        cursor.execute(sql, (
+            event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id))
         self.cnx.commit()
 
         last_id = cursor.lastrowid
@@ -88,9 +89,11 @@ class EventCtrlMySQL(EventCtrl):
         return event
 
     def update(self, event):
-        sql = "UPDATE events SET title = %s, description = %s, path = %s, date = %s, address = %s, id_user = %s, id_colla = %s WHERE id = %s"
+        sql = "UPDATE events SET title = %s, description = %s, path = %s, DATE = %s, address = %s, id_user = %s, id_colla = %s WHERE id = %s"
         cursor = self.cnx.cursor()
-        cursor.execute(sql, (event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id, event.id))
+        cursor.execute(sql, (
+            event.title, event.description, event.img, event.date, event.address, event.user_id, event.colla_id,
+            event.id))
         self.cnx.commit()
 
         return event
