@@ -389,6 +389,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     for (int i = 0; i < jsonArray.length(); ++i) {
                         c.setName((String) jsonArray.getJSONObject(i).get("name"));
                         c.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                        c.setColor((String) jsonArray.getJSONObject(i).get("color"));
                         user_collesPertany.add(c);
                     }
 
@@ -412,10 +413,14 @@ public class SignInActivity extends Activity implements AsyncResult {
                     if (user_collesPertany.size() > 0) {
                         editor.putString("user_belongsConvencional", user_collesPertany.get(0).getName());
                         editor.putString("user_idCollaConv", String.valueOf(user_collesPertany.get(0).getId()));
+                        editor.putString("color_Conv", user_collesPertany.get(0).getColor());
+
                     }
                     if (user_collesPertany.size() > 1) {
                         editor.putString("user_belongsUni", user_collesPertany.get(1).getName());
                         editor.putString("user_idCollaUni", String.valueOf(user_collesPertany.get(1).getId()));
+                        editor.putString("color_Uni", user_collesPertany.get(1).getColor());
+
                     }
 
                     ContextUser.getInstance().setId(user_id);

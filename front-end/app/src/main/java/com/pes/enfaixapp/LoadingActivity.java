@@ -50,6 +50,7 @@ public class LoadingActivity extends AppCompatActivity {
                     Colla c = new Colla();
                     c.setName(preferences.getString("user_belongsConvencional", null));
                     c.setId(Integer.parseInt(preferences.getString("user_idCollaConv",null)));
+                    c.setColor(preferences.getString("color_Conv",null));
                     collesUser.add(c);
 
                 }
@@ -57,6 +58,7 @@ public class LoadingActivity extends AppCompatActivity {
                     Colla c = new Colla();
                     c.setName(preferences.getString("user_belongsUni", null));
                     c.setId(Integer.parseInt(preferences.getString("user_idCollaUni",null)));
+                    c.setColor(preferences.getString("color_Uni",null));
                     collesUser.add(c);
                 }
 
@@ -66,6 +68,7 @@ public class LoadingActivity extends AppCompatActivity {
                 ContextUser.getInstance().setNom(user_name);
                 ContextUser.getInstance().setCollesPertany(collesUser);
                 ContextUser.getInstance().setId_collaSwitch(preferences.getString("user_idCollaConv", null));
+
                 LoadingActivity.MyAsync async = new LoadingActivity.MyAsync(getApplicationContext());
                 async.callSeguides(getApplicationContext());
 

@@ -97,6 +97,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                         Colla c = new Colla();
                         c.setName((String) jsonArray.getJSONObject(i).get("name"));
                         c.setId(Integer.parseInt(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                        c.setColor((String) jsonArray.getJSONObject(i).get("color"));
                         user_collesPertany.add(c);
 
                     }
@@ -120,14 +121,16 @@ public class LogInActivity extends Activity implements AsyncResult {
                     editor.putString("user_name", user_name);
                     editor.putString("user_surname", user_surname);
                     editor.putString("user_email", user_email);
-
                     if (user_collesPertany.size() > 0) {
                         editor.putString("user_belongsConvencional", user_collesPertany.get(0).getName());
                         editor.putString("user_idCollaConv", String.valueOf(user_collesPertany.get(0).getId()));
+                        editor.putString("color_Conv", user_collesPertany.get(0).getColor());
+
                     }
                     if (user_collesPertany.size() > 1) {
                         editor.putString("user_belongsUni", user_collesPertany.get(1).getName());
                         editor.putString("user_idCollaUni", String.valueOf(user_collesPertany.get(1).getId()));
+                        editor.putString("color_Uni", user_collesPertany.get(1).getColor());
                     }
 
 

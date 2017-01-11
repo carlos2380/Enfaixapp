@@ -1,8 +1,10 @@
 package com.pes.enfaixapp;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 
 import com.pes.enfaixapp.Adapters.FragmentTabNoticiaAdapter;
 import com.pes.enfaixapp.Adapters.NoticiasAdapter;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Models.Noticia;
 
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ import static android.R.attr.fragment;
 public class NoticiaActivity extends Fragment {
 
     private FragmentTabNoticiaAdapter mFragmentTabNoticiaAdapter;
-
+    private android.support.design.widget.AppBarLayout appbar;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -68,9 +71,11 @@ public class NoticiaActivity extends Fragment {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         mViewPager.setAdapter(mFragmentTabNoticiaAdapter);
+        appbar = (AppBarLayout) view.findViewById(R.id.appbar);
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
 
         tabLayout.post(new Runnable() {
             @Override
@@ -78,10 +83,26 @@ public class NoticiaActivity extends Fragment {
                 tabLayout.setupWithViewPager(mViewPager);
             }
         });
-
+        actualizaColor();
 
         return view;
 
+    }
+
+    public void actualizaColor() {
+        if (appbar != null) {
+            if (ContextUser.getInstance().getCollesPertany().size() > 0) {
+                if ((ContextUser.getInstance().getCollesPertany().get(0).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                    appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor()));
+                } else {
+                    if (ContextUser.getInstance().getCollesPertany().size() > 1) {
+                        if ((ContextUser.getInstance().getCollesPertany().get(1).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                            appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor()));
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -20,10 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Line;
 import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
@@ -47,6 +51,9 @@ public class DrawerActivity extends AppCompatActivity
     Spinner collaDisplay;
     TextView nomUsuariDrawer;
     TextView correuUsuariDrawer;
+    LinearLayout headerDrawer;
+    android.support.v7.widget.Toolbar tool;
+    int posSelect = R.id.nav_news;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,7 @@ public class DrawerActivity extends AppCompatActivity
         //INSERTAR FRAGMENTO INICIAL
 
 
-        NoticiaActivity fragment = new NoticiaActivity();
+        final NoticiaActivity fragment = new NoticiaActivity();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
         fragmentTransaction.commit();
@@ -82,6 +89,12 @@ public class DrawerActivity extends AppCompatActivity
         View navHeaderView= navigationView.getHeaderView(0);
         collaDisplay = (Spinner) navHeaderView.findViewById(R.id.collaSpinner);
 
+        headerDrawer = (LinearLayout) navHeaderView.findViewById(R.id.nav_header_drawer);
+        if (ContextUser.getInstance().getCollesPertany().size() > 0) headerDrawer.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor()));
+
+
+
+
         //View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_drawer);
        // collaDisplay = (Spinner) findViewById(R.id.collaSpinner);
         ArrayList<String> nomsColles = new ArrayList<>();
@@ -100,10 +113,26 @@ public class DrawerActivity extends AppCompatActivity
                                             int pos, long id) {
                      ArrayList<Colla> colles = ContextUser.getInstance().getCollesPertany();
                      ContextUser.getInstance().setId_collaSwitch(String.valueOf(colles.get(pos).getId()));
-
+                     headerDrawer.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(pos).getColor()));
+                     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(pos).getColor())));
                      spinnerAdapter.notifyDataSetChanged();
+                     if(posSelect ==  R.id.nav_news) {
+                         //INSERTAR FRAGMENTO
+                         getSupportActionBar().setTitle("Notícies");
 
+                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                         fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
+                         fragmentTransaction.commit();
+                     }else if (id == R.id.nav_classification) {
+                         //------------------------------------
+                         //INSERTAR FRAGMENTO INICIAL
+                         getSupportActionBar().setTitle("Classificació");
+                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                         fragmentTransaction.replace(R.id.fragment_container, new RankingActivity());
+                         fragmentTransaction.commit();
 
+                         //----------------------------
+                     }
                  }
 
                  @Override
@@ -178,6 +207,7 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_news) {
+            posSelect = R.id.nav_news;
             //------------------------------------
             //INSERTAR FRAGMENTO
             getSupportActionBar().setTitle("Notícies");
@@ -188,6 +218,7 @@ public class DrawerActivity extends AppCompatActivity
 
             //----------------------------
         } else if (id == R.id.nav_classification) {
+            posSelect = R.id.nav_classification;
             //------------------------------------
             //INSERTAR FRAGMENTO INICIAL
             getSupportActionBar().setTitle("Classificació");
@@ -197,7 +228,7 @@ public class DrawerActivity extends AppCompatActivity
 
             //----------------------------
         } else if (id == R.id.nav_esdv) {
-
+            posSelect = R.id.nav_esdv;
             getSupportActionBar().setTitle("Esdeveniments");
             EsdevenimentListActivity fragment = new EsdevenimentListActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -205,6 +236,7 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if(id == R.id.nav_logout) {
+            posSelect = R.id.nav_classification;
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.remove("session-token");
@@ -215,7 +247,7 @@ public class DrawerActivity extends AppCompatActivity
         }
 
         else if (id == R.id.perfil) {
-
+            posSelect = R.id.perfil;
             getSupportActionBar().setTitle("El meu perfil");
             PerfilActivity fragment = new PerfilActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -223,7 +255,7 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_colles) {
-
+            posSelect = R.id.nav_colles;
             getSupportActionBar().setTitle("Colles");
             CollasActivity fragment = new CollasActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -233,7 +265,7 @@ public class DrawerActivity extends AppCompatActivity
         }
 
         else if (id == R.id.nav_assajos) {
-
+            posSelect = R.id.nav_assajos;
             getSupportActionBar().setTitle("Assajos");
             Toast.makeText(this, "Not implemented yet!",
                     Toast.LENGTH_LONG).show();
@@ -245,6 +277,7 @@ public class DrawerActivity extends AppCompatActivity
         }
 
         else if (id == R.id.nav_results) {
+            posSelect = R.id.nav_results;
             getSupportActionBar().setTitle("Resultats");
             Toast.makeText(this, "Not implemented yet!",
                     Toast.LENGTH_LONG).show();
@@ -255,6 +288,7 @@ public class DrawerActivity extends AppCompatActivity
         }
 
         else if (id == R.id.nav_about) {
+            posSelect = R.id.nav_about;
             getSupportActionBar().setTitle("About");
             AboutActivity fragment = new AboutActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
