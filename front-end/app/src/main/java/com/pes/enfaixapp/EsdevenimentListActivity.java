@@ -2,9 +2,11 @@ package com.pes.enfaixapp;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 
 import com.pes.enfaixapp.Adapters.FragmentTabEsdevenimentAdapter;
 import com.pes.enfaixapp.Adapters.FragmentTabNoticiaAdapter;
+import com.pes.enfaixapp.Controllers.ContextUser;
 
 import java.io.File;
 
@@ -31,9 +34,24 @@ public class EsdevenimentListActivity extends Fragment {
     private static View view;
     private ViewPager mViewPager;
     private TabLayout tabLayout;
+
+    private android.support.design.widget.AppBarLayout appbar;
     private FragmentTabEsdevenimentAdapter mFragmentTabEsdevenimentAdapter;
     public EsdevenimentListActivity() {
         // Required empty public constructor
+        if (appbar != null) {
+            if (ContextUser.getInstance().getCollesPertany().size() > 0) {
+                if ((ContextUser.getInstance().getCollesPertany().get(0).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                    appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor()));
+                } else {
+                    if (ContextUser.getInstance().getCollesPertany().size() > 1) {
+                        if ((ContextUser.getInstance().getCollesPertany().get(1).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                            appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor()));
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -52,6 +70,7 @@ public class EsdevenimentListActivity extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.containerEsdv);
         mViewPager.setAdapter( mFragmentTabEsdevenimentAdapter);
 
+        appbar = (AppBarLayout) view.findViewById(R.id.appbarEsdev);
         tabLayout = (TabLayout) view.findViewById(R.id.tabsEsdv);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -61,6 +80,20 @@ public class EsdevenimentListActivity extends Fragment {
                 tabLayout.setupWithViewPager(mViewPager);
             }
         });
+
+        if (appbar != null) {
+            if (ContextUser.getInstance().getCollesPertany().size() > 0) {
+                if ((ContextUser.getInstance().getCollesPertany().get(0).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                    appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor()));
+                } else {
+                    if (ContextUser.getInstance().getCollesPertany().size() > 1) {
+                        if ((ContextUser.getInstance().getCollesPertany().get(1).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                            appbar.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor()));
+                        }
+                    }
+                }
+            }
+        }
         return view;
     }
 

@@ -123,15 +123,14 @@ public class DrawerActivity extends AppCompatActivity
                          FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                          fragmentTransaction.replace(R.id.fragment_container, new NoticiaActivity());
                          fragmentTransaction.commit();
-                     }else if (id == R.id.nav_classification) {
-                         //------------------------------------
-                         //INSERTAR FRAGMENTO INICIAL
-                         getSupportActionBar().setTitle("Classificació");
+                     } else if (posSelect == R.id.nav_esdv) {
+                         posSelect = R.id.nav_esdv;
+                         getSupportActionBar().setTitle("Esdeveniments");
+                         EsdevenimentListActivity fragment = new EsdevenimentListActivity();
                          FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                         fragmentTransaction.replace(R.id.fragment_container, new RankingActivity());
+                         fragmentTransaction.replace(R.id.fragment_container, fragment);
                          fragmentTransaction.commit();
 
-                         //----------------------------
                      }
                  }
 
@@ -236,7 +235,7 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         } else if(id == R.id.nav_logout) {
-            posSelect = R.id.nav_classification;
+            posSelect = R.id.nav_logout;
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.remove("session-token");

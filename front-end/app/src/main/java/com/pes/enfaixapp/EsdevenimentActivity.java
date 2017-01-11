@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -65,7 +67,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
     private String user_id;
     private String foto;
     private ImageButton modificarib;
-
+    private android.support.design.widget.AppBarLayout appbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,9 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         fotoiv.setImageBitmap(BitmapUtilities.stringToBitMap(foto));
         mapFragment.getMapAsync(this);
 
+
+
+
         modificarib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
@@ -112,7 +117,6 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
 
 
         });
-
 
     }
 
