@@ -60,8 +60,8 @@ public class RankingActivity extends Fragment {
     public void insertarRanking (ArrayList<Ranking> ranking) {
 
         ArrayList<Ranking> ran = new ArrayList<Ranking>();
-        for (int i = 0; i < 30; ++i) {
-            Ranking r = new Ranking(i+i, "Castellers", i);
+        for (int i = 0; i < ranking.size(); ++i) {
+            Ranking r = new Ranking(ranking.get(i).getPunctuation(), ranking.get(i).getName(), ranking.get(i).getPos());
             ran.add(r);
         }
         AdaptadorRanking customAdapter = new AdaptadorRanking(view.getContext(),  ran);
