@@ -33,6 +33,16 @@ public class ContextUser {
 
     private ArrayList<Colla> collesSegueix;
 
+    public ArrayList<Colla> getCollesAdmin() {
+        return collesAdmin;
+    }
+
+    public void setCollesAdmin(ArrayList<Colla> collesAdmin) {
+        this.collesAdmin = collesAdmin;
+    }
+
+    private ArrayList<Colla> collesAdmin;
+
 
     public String getId_collaUni() {
         return id_collaUni;

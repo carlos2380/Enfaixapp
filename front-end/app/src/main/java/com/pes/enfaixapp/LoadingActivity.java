@@ -90,8 +90,7 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    private void finalizarLogin(ArrayList<Colla> colles) {
-        ContextUser.getInstance().setCollesSegueix(colles);
+    private void finalizarLogin() {
         startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
         finish();
     }
@@ -132,7 +131,18 @@ public class LoadingActivity extends AppCompatActivity {
                     user_collesSeg.add(cf);
                 }
 
-                finalizarLogin(user_collesSeg);
+                ArrayList<Colla> user_collesAdmin = new ArrayList<>();
+                JSONArray jsonAdminColles = (JSONArray) output.get("admin");
+                Colla ca = new Colla();
+
+                for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                    ca.setId(Integer.parseInt(String.valueOf( jsonAdminColles.getJSONObject(i).get("id"))));
+                    user_collesAdmin.add(ca);
+                }
+                ContextUser.getInstance().setCollesSegueix(user_collesSeg);
+                ContextUser.getInstance().setCollesAdmin(user_collesAdmin);
+
+                finalizarLogin();
             } catch (Exception e) {
                 e.printStackTrace();
                 showError(e.getMessage().toString());

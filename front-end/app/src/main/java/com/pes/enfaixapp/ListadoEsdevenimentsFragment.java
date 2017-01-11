@@ -21,15 +21,18 @@ import android.widget.Toast;
 import com.pes.enfaixapp.Adapters.EsdevenimentAdapter;
 import com.pes.enfaixapp.Adapters.RecyclerItemClickListener;
 import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.CustomIntent;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
+import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Esdeveniment;
 import com.pes.enfaixapp.Models.Noticia;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by carlos on 15/11/2016.
@@ -81,6 +84,17 @@ public class ListadoEsdevenimentsFragment extends Fragment {
 
                 }
         });
+
+        flaotingButton.setVisibility(View.GONE);
+
+
+        ArrayList<Colla> collesAdmin = ContextUser.getInstance().getCollesAdmin();
+        for (int i= 0; i < collesAdmin.size(); ++i){
+            if (collesAdmin.get(i).getId() == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())){
+                flaotingButton.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayoutEsdv);
         loading = (ProgressBar) rootView.findViewById(R.id.loadingEsdeveniment);

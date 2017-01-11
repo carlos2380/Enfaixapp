@@ -403,6 +403,15 @@ public class SignInActivity extends Activity implements AsyncResult {
                         user_collesSeg.add(cf);
                     }
 
+                    ArrayList<Colla> user_collesAdmin = new ArrayList<>();
+                    JSONArray jsonAdminColles = (JSONArray) output.get("admin");
+                    Colla ca = new Colla();
+
+                    for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                        ca.setId(Integer.parseInt(String.valueOf( jsonAdminColles.getJSONObject(i).get("id"))));
+                        user_collesAdmin.add(ca);
+                    }
+
                     SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("session-token", token);
@@ -429,6 +438,8 @@ public class SignInActivity extends Activity implements AsyncResult {
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
                     ContextUser.getInstance().setCollesSegueix(user_collesSeg);
+                    ContextUser.getInstance().setCollesAdmin(user_collesAdmin);
+
                     if (user_collesPertany.size() > 0)
                         ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
 
