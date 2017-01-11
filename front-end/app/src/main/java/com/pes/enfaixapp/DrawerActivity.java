@@ -214,15 +214,7 @@ public class DrawerActivity extends AppCompatActivity
             finish();
         }
 
-        else if (id == R.id.perfil) {
-
-            getSupportActionBar().setTitle("El meu perfil");
-            PerfilActivity fragment = new PerfilActivity();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
-
-        } else if (id == R.id.nav_colles) {
+        else if (id == R.id.nav_colles) {
 
             getSupportActionBar().setTitle("Colles");
             CollasActivity fragment = new CollasActivity();
