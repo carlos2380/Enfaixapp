@@ -9,16 +9,20 @@
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:paddingTop="10dp"
+        android:background="@color/colorAccent"
         android:weightSum="1">
 
         <TextView
             android:id="@+id/posicioRank"
             android:text="POS"
+            android:paddingTop="10dp"
             android:layout_width="wrap_content"
+            android:textAlignment="center"
             android:textSize="20dp"
             android:layout_weight="0.1"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
 
         <TextView
@@ -28,8 +32,10 @@
             android:textSize="20dp"
             android:layout_alignRight="@+id/posicioRank"
             android:layout_weight="0.8"
-            android:text="CASTELLERS"
-            android:textColor="@android:color/black" />
+            android:text="COLLA"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/puntsRank"
@@ -39,13 +45,16 @@
             android:layout_weight="0.1"
             android:layout_alignRight="@+id/nomRank"
             android:text="PUNTS"
-            android:textColor="@android:color/black" />
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:paddingTop="0dp"
         android:id="@+id/listRanking">
     </ListView>
 </LinearLayout>
