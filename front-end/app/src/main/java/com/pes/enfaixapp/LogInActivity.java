@@ -123,7 +123,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                     ContextUser.getInstance().setNom(user_name);
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
-                    if (user_collesPertany.get(0) != null)
+                    if (user_collesPertany.size() > 0)
                         ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
 
 
