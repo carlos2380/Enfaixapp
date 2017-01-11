@@ -153,7 +153,6 @@ public class DrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.drawer, menu);
         return true;
     }
 
@@ -217,6 +216,7 @@ public class DrawerActivity extends AppCompatActivity
 
         else if (id == R.id.perfil) {
 
+            getSupportActionBar().setTitle("El meu perfil");
             PerfilActivity fragment = new PerfilActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -224,11 +224,42 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_colles) {
 
+            getSupportActionBar().setTitle("Colles");
             CollasActivity fragment = new CollasActivity();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
+        }
+
+        else if (id == R.id.nav_assajos) {
+
+            getSupportActionBar().setTitle("Assajos");
+            Toast.makeText(this, "Not implemented yet!",
+                    Toast.LENGTH_LONG).show();
+            AssajosActivity fragment = new AssajosActivity();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+
+        }
+
+        else if (id == R.id.nav_results) {
+            getSupportActionBar().setTitle("Resultats");
+            Toast.makeText(this, "Not implemented yet!",
+                    Toast.LENGTH_LONG).show();
+            ResultsActivity fragment = new ResultsActivity();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+
+        else if (id == R.id.nav_about) {
+            getSupportActionBar().setTitle("About");
+            AboutActivity fragment = new AboutActivity();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -56,14 +56,6 @@
                 android:id="@+id/linea">
             </View>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_menu_share"
-                android:layout_below="@+id/linea"
-                android:layout_alignParentEnd="true" />
-
             <TextView
                 android:text="00-00-0000"
                 android:layout_width="wrap_content"

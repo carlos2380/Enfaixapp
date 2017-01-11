@@ -23,30 +23,27 @@
         <item
             android:id="@+id/nav_colles"
             android:title="Colles"
-            android:icon="@drawable/ic_fecha_y_hora_del_evento_simbolo"/>
+            android:icon="@drawable/ic_enfaixapp_logo_black"/>
+
+        <item
+            android:id="@+id/nav_assajos"
+            android:title="Assajos"
+            android:icon="@drawable/usercheck"/>
+
 
         <item
             android:id="@+id/perfil"
             android:icon="@drawable/ic_perfil"
             android:title="El meu perfil"/>
-    </group>
 
-    <group android:title="Altres"
-        android:checkableBehavior="single">
-        <menu>
-            <item
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout_24dp"
             android:title="Tancar sessió"/>
-            <item
-                android:id="@+id/nav_configuration"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="Configuració" />
-            <item
-                android:id="@+id/nav_help"
-                android:icon="@drawable/ic_help_black_24dp"
-                android:title="Ajuda" />
-        </menu>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="About" />
     </group>
 
 </menu>

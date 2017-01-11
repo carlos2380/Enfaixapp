@@ -1,18 +1,24 @@
 package com.pes.enfaixapp.Models;
 
 /**
- * Created by Marc on 10/01/2017.
+ * Created by carlos on 11/01/2017.
  */
 
-public class RankingInput {
+public class RankingItem {
     private String name;
     private int punctuation;
     private int pos;
 
-    public RankingInput() {
+    public RankingItem() {
     }
 
-    public RankingInput(String name, int punctuation) {
+    public RankingItem(int punctuation, String name, int pos) {
+        this.name = name;
+        this.punctuation = punctuation;
+        this.pos = pos;
+    }
+
+    public RankingItem(String name, int punctuation) {
         this.name = name;
         this.punctuation = punctuation;
         this.pos = -1;
