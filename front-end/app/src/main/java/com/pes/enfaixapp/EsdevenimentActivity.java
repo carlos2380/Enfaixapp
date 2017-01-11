@@ -72,7 +72,6 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         setContentView(R.layout.activity_esdeveniment);
 
         fotoiv = (ImageView) findViewById(R.id.imatgeCrearEsdeveniment);
-        titolEsdv = (TextView) findViewById(R.id.titolEsdvMostrar);
         descripcioEsdv = (TextView) findViewById(R.id.descripcioEsdvMostrar);
         direccioEsdv = (TextView) findViewById(R.id.direccioEsdvMostrar);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaEsdv);
@@ -93,13 +92,13 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         title = getIntent().getExtras().getString("title");
         user_id = getIntent().getExtras().getString("user_id");
 
+        getSupportActionBar().setTitle(title);
 
         //SETEJAR LES DADES DE L'ESDEVENIMENT
 
         //Bitmap image = StringToBitMap();
 
         descripcioEsdv.setText(description);
-        titolEsdv.setText(title);
         direccioEsdv.setText(address);
         fotoiv.setImageBitmap(BitmapUtilities.stringToBitMap(foto));
         mapFragment.getMapAsync(this);
@@ -129,7 +128,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
                 LatLng latlong = new LatLng(direccions.get(0).getLatitude(), direccions.get(0).getLongitude());
                 if(marker != null) marker.remove();
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                marker = mGoogleMap.addMarker(new MarkerOptions().position(latlong).title(titolEsdv.getText().toString()));
+                marker = mGoogleMap.addMarker(new MarkerOptions().position(latlong).title(title));
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 14.0f));
             }
 
