@@ -244,17 +244,7 @@ public class DrawerActivity extends AppCompatActivity
             Intent intent = new Intent(DrawerActivity.this, LogInActivity.class);
             startActivity(intent);
             finish();
-        }
-
-        else if (id == R.id.perfil) {
-            posSelect = R.id.perfil;
-            getSupportActionBar().setTitle("El meu perfil");
-            PerfilActivity fragment = new PerfilActivity();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
-
-        } else if (id == R.id.nav_colles) {
+        }else if (id == R.id.nav_colles) {
             posSelect = R.id.nav_colles;
             getSupportActionBar().setTitle("Colles");
             CollasActivity fragment = new CollasActivity();
