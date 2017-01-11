@@ -6,9 +6,10 @@
     tools:context="com.pes.enfaixapp.RankingActivity"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/titelRowRanking"
         android:padding="5dp"
         android:paddingTop="10dp"
         android:background="@color/colorAccent"

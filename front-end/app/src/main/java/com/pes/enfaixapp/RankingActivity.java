@@ -2,17 +2,22 @@ package com.pes.enfaixapp;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pes.enfaixapp.Adapters.AdaptadorRanking;
 import com.pes.enfaixapp.Controllers.AsyncResult;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.RankingItem;
@@ -30,7 +35,7 @@ public class RankingActivity extends Fragment {
     private View view;
     private ListView list;
     private ProgressBar loading;
-
+    private LinearLayout ll;
     public RankingActivity() {
         // Required empty public constructor
     }
@@ -43,6 +48,18 @@ public class RankingActivity extends Fragment {
         view =  inflater.inflate(R.layout.activity_ranking, container, false);
         list = (ListView) view.findViewById(R.id.listRanking);
         loading = (ProgressBar) view.findViewById(R.id.loadingRanking);
+        ll = (LinearLayout) view.findViewById(R.id.titelRowRanking);
+        if (ContextUser.getInstance().getCollesPertany().size() > 0) {
+            if ((ContextUser.getInstance().getCollesPertany().get(0).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                ll.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor()));
+            } else {
+                if (ContextUser.getInstance().getCollesPertany().size() > 1) {
+                    if ((ContextUser.getInstance().getCollesPertany().get(1).getId()) == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())) {
+                        ll.setBackgroundColor(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor()));
+                    }
+                }
+            }
+        }
         RankingActivity.MyAsync async = new RankingActivity.MyAsync(view.getContext());
         async.callRanking(view.getContext());
         return view;

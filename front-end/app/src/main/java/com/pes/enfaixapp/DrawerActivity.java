@@ -131,6 +131,16 @@ public class DrawerActivity extends AppCompatActivity
                          fragmentTransaction.replace(R.id.fragment_container, fragment);
                          fragmentTransaction.commit();
 
+                     } else if (posSelect == R.id.nav_classification) {
+                         posSelect = R.id.nav_classification;
+                         //------------------------------------
+                         //INSERTAR FRAGMENTO INICIAL
+                         getSupportActionBar().setTitle("Classificació");
+                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                         fragmentTransaction.replace(R.id.fragment_container, new RankingActivity());
+                         fragmentTransaction.commit();
+
+                         //----------------------------
                      }
                  }
 
