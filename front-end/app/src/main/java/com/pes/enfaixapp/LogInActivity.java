@@ -100,6 +100,18 @@ public class LogInActivity extends Activity implements AsyncResult {
                         user_collesPertany.add(c);
 
                     }
+
+
+                    ArrayList<Colla> user_collesSeg = new ArrayList<>();
+                    JSONArray jsonArrayFoll = (JSONArray) output.get("follows");
+                    Colla cf = new Colla();
+
+                    for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                        cf.setName((String) jsonArrayFoll.getJSONObject(i).get("name"));
+                        cf.setId(Integer.parseInt(String.valueOf( jsonArrayFoll.getJSONObject(i).get("id"))));
+                        user_collesSeg.add(cf);
+                    }
+
                     //String user_collesPertany = output.getJSONArray("belongs").getString(Integer.parseInt("name"));
                     SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
@@ -108,6 +120,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                     editor.putString("user_name", user_name);
                     editor.putString("user_surname", user_surname);
                     editor.putString("user_email", user_email);
+
                     if (user_collesPertany.size() > 0) {
                         editor.putString("user_belongsConvencional", user_collesPertany.get(0).getName());
                         editor.putString("user_idCollaConv", String.valueOf(user_collesPertany.get(0).getId()));
@@ -123,6 +136,7 @@ public class LogInActivity extends Activity implements AsyncResult {
                     ContextUser.getInstance().setNom(user_name);
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
+                    ContextUser.getInstance().setCollesSegueix(user_collesSeg);
                     if (user_collesPertany.size() > 0)
                         ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
 

@@ -9,11 +9,20 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.ContextUser;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Colla;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -57,9 +66,9 @@ public class LoadingActivity extends AppCompatActivity {
                 ContextUser.getInstance().setNom(user_name);
                 ContextUser.getInstance().setCollesPertany(collesUser);
                 ContextUser.getInstance().setId_collaSwitch(preferences.getString("user_idCollaConv", null));
+                LoadingActivity.MyAsync async = new LoadingActivity.MyAsync(getApplicationContext());
+                async.callSeguides(getApplicationContext());
 
-                startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
-                finish();
             }
 
         }
@@ -78,9 +87,53 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
+    private void finalizarLogin(ArrayList<Colla> colles) {
+        ContextUser.getInstance().setCollesSegueix(colles);
+        startActivity(new Intent(LoadingActivity.this, DrawerActivity.class));
+        finish();
+    }
+
+    private void showError(String err) {
+        Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
+    }
+
     private boolean isConnectedToNetwork() {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
+        }
+
+        public void callSeguides(Context context) {
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("GET", "http://10.4.41.165:5000/users/" + ContextUser.getInstance().getId(), null);
+        }
+
+        @Override
+        public void processFinish(JSONObject output) {
+            try {
+
+
+                ArrayList<Colla> user_collesSeg = new ArrayList<>();
+                JSONArray jsonArrayFoll = (JSONArray) output.get("follows");
+                Colla cf = new Colla();
+
+                for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                    cf.setId(Integer.parseInt(String.valueOf( jsonArrayFoll.get(i))));
+                    user_collesSeg.add(cf);
+                }
+
+                finalizarLogin(user_collesSeg);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError(e.getMessage().toString());
+            }
+        }
     }
 }

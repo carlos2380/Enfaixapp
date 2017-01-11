@@ -384,15 +384,23 @@ public class SignInActivity extends Activity implements AsyncResult {
 
                     ArrayList<Colla> user_collesPertany = new ArrayList<>();
                     JSONArray jsonArray = (JSONArray) output.get("belongs");
-                    ArrayList<String> user_IdColles = new ArrayList<>();
                     Colla c = new Colla();
 
                     for (int i = 0; i < jsonArray.length(); ++i) {
                         c.setName((String) jsonArray.getJSONObject(i).get("name"));
-                        c.setId(Integer.parseInt((String) jsonArray.getJSONObject(i).get("id")));
+                        c.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
                         user_collesPertany.add(c);
                     }
 
+                    ArrayList<Colla> user_collesSeg = new ArrayList<>();
+                    JSONArray jsonArrayFoll = (JSONArray) output.get("follows");
+                    Colla cf = new Colla();
+
+                    for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                        cf.setName((String) jsonArrayFoll.getJSONObject(i).get("name"));
+                        cf.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                        user_collesSeg.add(cf);
+                    }
 
                     SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
@@ -415,6 +423,7 @@ public class SignInActivity extends Activity implements AsyncResult {
                     ContextUser.getInstance().setNom(user_name);
                     ContextUser.getInstance().setCognoms(user_surname);
                     ContextUser.getInstance().setEmail(user_email);
+                    ContextUser.getInstance().setCollesSegueix(user_collesSeg);
                     if (user_collesPertany.size() > 0)
                         ContextUser.getInstance().setId_collaSwitch(String.valueOf(user_collesPertany.get(0).getId()));
 

@@ -22,6 +22,15 @@ public class ContextUser {
 
 
     private ArrayList<Colla> collesPertany;
+
+    public ArrayList<Colla> getCollesSegueix() {
+        return collesSegueix;
+    }
+
+    public void setCollesSegueix(ArrayList<Colla> collesSegueix) {
+        this.collesSegueix = collesSegueix;
+    }
+
     private ArrayList<Colla> collesSegueix;
 
 

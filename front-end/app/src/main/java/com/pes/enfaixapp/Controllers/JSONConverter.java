@@ -108,7 +108,7 @@ public class JSONConverter {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                throw new Exception("Internal Error: Converter Json to News");
+                throw new Exception("Internal Error: Converter Json to Esdeveniment");
             }
         }
         return esdeveniments;
