@@ -86,8 +86,6 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         });
 
         flaotingButton.setVisibility(View.GONE);
-
-
         ArrayList<Colla> collesAdmin = ContextUser.getInstance().getCollesAdmin();
         for (int i= 0; i < collesAdmin.size(); ++i){
             if (collesAdmin.get(i).getId() == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())){
@@ -139,7 +137,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
 
                         Intent intent = new Intent(getActivity(), EsdevenimentActivity.class);
                         intent.putExtra("address", esdeveniments.get(position).getDireccio());
-                        intent.putExtra("colla_id", esdeveniments.get(position).getColla());
+                        intent.putExtra("colla_id", String.valueOf(esdeveniments.get(position).getColla()));
                         intent.putExtra("date", esdeveniments.get(position).getDate());
                         intent.putExtra("description", esdeveniments.get(position).getDescripcio());
                         intent.putExtra("id", esdeveniments.get(position).getId());

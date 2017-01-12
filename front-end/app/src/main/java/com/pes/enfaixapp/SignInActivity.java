@@ -407,8 +407,8 @@ public class SignInActivity extends Activity implements AsyncResult {
                     JSONArray jsonAdminColles = (JSONArray) output.get("admin");
                     Colla ca = new Colla();
 
-                    for (int i = 0; i < jsonArrayFoll.length(); ++i) {
-                        ca.setId(Integer.parseInt(String.valueOf( jsonAdminColles.getJSONObject(i).get("id"))));
+                    for (int i = 0; i < jsonAdminColles.length(); ++i) {
+                        ca.setId(jsonAdminColles.getInt(i));
                         user_collesAdmin.add(ca);
                     }
 

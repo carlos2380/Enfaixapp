@@ -31,12 +31,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.pes.enfaixapp.Controllers.BitmapUtilities;
 import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.CustomIntent;
+import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -117,6 +119,17 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
 
 
         });
+
+        modificarib.setVisibility(View.GONE);
+
+        ArrayList<Colla> collesAdmin = ContextUser.getInstance().getCollesAdmin();
+
+
+        for (int i= 0; i < collesAdmin.size(); ++i){
+            if (collesAdmin.get(i).getId() == Integer.valueOf(colla_id)){
+                modificarib.setVisibility(View.VISIBLE);
+            }
+        }
 
     }
 
