@@ -74,12 +74,12 @@
                 android:layout_height="200dp" />
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentRight="false"
             android:orientation="horizontal">
 
             <ImageButton
@@ -87,7 +87,7 @@
                 android:layout_height="40dp"
                 android:id="@+id/eliminarEsdv"
                 android:layout_margin="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="60dp"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_delete_black_24dp"/>
 
@@ -96,10 +96,13 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/modificarEsv"
-                android:layout_margin="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_editar"/>
-        </LinearLayout>
+                android:background="@drawable/ic_edit_black_24dp"
+                android:layout_marginRight="30dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="25dp" />
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

@@ -1,5 +1,7 @@
 package com.pes.enfaixapp;
 import android.app.ActionBar;
+import android.content.ClipData;
+import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -154,6 +156,18 @@ public class DrawerActivity extends AppCompatActivity
         else {
              collaDisplay.setVisibility(View.GONE);
          }
+
+        if (ContextUser.getInstance().getCollesPertany().size() == 0) {
+            Menu menu = navigationView.getMenu();
+            menu.getItem(5).setVisible(false);      // 5 és el item Assajos del menu del navigationView
+            /*
+            for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
+                MenuItem menuItem= menu.getItem(menuItemIndex);
+                if(menuItem.getItemId() == R.id.nav_assajos){
+                    menuItem.setVisible(false);
+                }
+            }*/
+        }
 
         nomUsuariDrawer = (TextView) navHeaderView.findViewById(R.id.nomUserDrawer);
         nomUsuariDrawer.setText(ContextUser.getInstance().getNom() + " " + ContextUser.getInstance().getCognoms());

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.BitmapUtilities;
+import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.HTTPHandler;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
@@ -79,6 +82,7 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
     private Calendar calendar;
     private TextView dateView;
     private int year, month, day;
+    private String colla_id;
 
     private GoogleMap mGoogleMap;
     SupportMapFragment mapFragment;
@@ -100,11 +104,11 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
 
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            modificarEsdv.setBackgroundDrawable( getResources().getDrawable(R.drawable.ic_editar) );
+            modificarEsdv.setBackgroundDrawable( getResources().getDrawable(R.drawable.ic_edit_black_24dp) );
         } else {
-            modificarEsdv.setBackground( getResources().getDrawable(R.drawable.ic_editar));
+            modificarEsdv.setBackground( getResources().getDrawable(R.drawable.ic_edit_black_24dp));
         }
-        modificarEsdv.setImageResource(R.drawable.ic_editar);
+        modificarEsdv.setImageResource(R.drawable.ic_edit_black_24dp);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaCrearEsdv);
 
@@ -118,6 +122,18 @@ public class ModificarEsdevenimentActivity extends AppCompatActivity implements 
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day);
+
+        titolEsdvModify.setText(getIntent().getExtras().getString("titol"));
+        etdireccioModify.setText(getIntent().getExtras().getString("direccio"));
+        etdescriptModify.setText(getIntent().getExtras().getString("descripcio"));
+        imageView.setImageBitmap(BitmapUtilities.stringToBitMap(getIntent().getExtras().getString("foto")));
+        colla_id = getIntent().getExtras().getString("colla_id");
+
+        if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(0).getId())))
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor())));
+        else if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(1).getId()))) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor())));
+        }
 
         afegirFotoViaDisp.setOnClickListener(new View.OnClickListener() {
             @Override

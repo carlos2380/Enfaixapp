@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -103,7 +104,19 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         user_id = getIntent().getExtras().getString("user_id");
 
         getSupportActionBar().setTitle(title);
+        if (ContextUser.getInstance().getCollesPertany().size() > 0) {
 
+
+            if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(0).getId())))
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor())));
+            else if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(1).getId()))) {
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor())));
+            }
+        }
+        else {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+
+        }
         //SETEJAR LES DADES DE L'ESDEVENIMENT
 
         //Bitmap image = StringToBitMap();
@@ -120,6 +133,11 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onClick(View v) {  //CRIDES HTTP PER FER UN POST SOBRE ESDEVENIMENTS
                 Intent intent = new Intent(getApplicationContext(), ModificarEsdevenimentActivity.class);
+                intent.putExtra("titol", title);
+                intent.putExtra("direccio", address);
+                intent.putExtra("descripcio", description);
+                intent.putExtra("foto", foto);
+                intent.putExtra("colla_id", colla_id);
                 startActivity(intent);
             }
 
@@ -133,7 +151,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
 
 
         for (int i= 0; i < collesAdmin.size(); ++i){
-            if (collesAdmin.get(i).getId() == Integer.valueOf(colla_id)){
+            if (collesAdmin.get(i).getId() == Integer.valueOf(ContextUser.getInstance().getId_collaSwitch())){
                 modificarib.setVisibility(View.VISIBLE);
                 eliminarEsdv.setVisibility(View.VISIBLE);
 
