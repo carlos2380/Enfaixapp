@@ -35,17 +35,14 @@ import java.util.Locale;
 public class EsdevenimentAdapter extends RecyclerView.Adapter<EsdevenimentAdapter.EsdevenimentViewHolder> {
     private List<Esdeveniment> items;
 
-    public static class EsdevenimentViewHolder extends RecyclerView.ViewHolder  implements OnMapReadyCallback{
+    public static class EsdevenimentViewHolder extends RecyclerView.ViewHolder{
         // Campos respectivos de un item
         public ImageView imagen;
         public TextView nombre;
         public TextView descripcio;
         public TextView localitzacio;
         public TextView data;
-        public GoogleMap mGoogleMap;
-        public Marker marker;
-        public MapView map;
-        private View viw;
+        public View viw;
 
         public EsdevenimentViewHolder(View v) {
 
@@ -53,38 +50,11 @@ public class EsdevenimentAdapter extends RecyclerView.Adapter<EsdevenimentAdapte
             viw = v;
             imagen = (ImageView) v.findViewById(R.id.fotoEsdvCard);
             nombre = (TextView) v.findViewById(R.id.tituloEsdvCard);
-            descripcio = (TextView) v.findViewById(R.id.contentidoEsdvCard);
+            descripcio = (TextView) v.findViewById(R.id.descEsdCard);
             localitzacio = (TextView) v.findViewById(R.id.localitzacioEsdvCard);
             data = (TextView) v.findViewById(R.id.dateEsdvCard);
-            map = (MapView) v.findViewById(R.id.mapEsdvCard);
 
-            if (map != null)
-            {
-                map.onCreate(null);
-                map.onResume();
-                map.getMapAsync(this);
-            }
-        }
 
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            mGoogleMap = googleMap;
-            Geocoder geocoder = new Geocoder(viw.getContext(), Locale.getDefault());
-            List<Address> address;
-            try {
-                address = geocoder.getFromLocationName(localitzacio.getText().toString().substring(6), 1);
-                if(address.size() > 0) {
-                    LatLng latlong = new LatLng(address.get(0).getLatitude(), address.get(0).getLongitude());
-                    if(marker != null) marker.remove();
-                    //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                    marker = mGoogleMap.addMarker(new MarkerOptions().position(latlong).title(nombre.getText().toString()));
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 10.0f));
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Add a marker in Sydney and move the camera
 
         }
     }
@@ -112,22 +82,7 @@ public class EsdevenimentAdapter extends RecyclerView.Adapter<EsdevenimentAdapte
         viewHolder.descripcio.setText(items.get(i).getDescripcio());
         viewHolder.localitzacio.setText("Lloc: " + items.get(i).getDireccio());
         viewHolder.data.setText(items.get(i).getDate());
-        GoogleMap thisMap = viewHolder.mGoogleMap;
-        if(thisMap != null) {
-            Geocoder geocoder = new Geocoder(v.getContext(), Locale.getDefault());
-            List<Address> address;
-            try {
-                address = geocoder.getFromLocationName(items.get(i).getDireccio().substring(6), 1);
-                if(address.size() > 0) {
-                    LatLng latlong = new LatLng(address.get(0).getLatitude(), address.get(0).getLongitude());
-                    thisMap.addMarker(new MarkerOptions().position(latlong).title(items.get(i).getTitol()));
-                    thisMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 10.0f));
-                }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     //MAPA GOOGLE

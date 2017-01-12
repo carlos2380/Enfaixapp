@@ -384,20 +384,29 @@ public class SignInActivity extends Activity implements AsyncResult {
 
                     ArrayList<Colla> user_collesPertany = new ArrayList<>();
                     JSONArray jsonArray = (JSONArray) output.get("belongs");
-                    Colla c = new Colla();
 
                     for (int i = 0; i < jsonArray.length(); ++i) {
-                        c.setName((String) jsonArray.getJSONObject(i).get("name"));
-                        c.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
-                        c.setColor((String) jsonArray.getJSONObject(i).get("color"));
-                        user_collesPertany.add(c);
+                        if(i == 0) {
+                            Colla c = new Colla();
+                            c.setName((String) jsonArray.getJSONObject(i).get("name"));
+                            c.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                            c.setColor((String) jsonArray.getJSONObject(i).get("color"));
+                            user_collesPertany.add(c);
+                        }else {
+                            Colla cc = new Colla();
+                            cc.setName((String) jsonArray.getJSONObject(i).get("name"));
+                            cc.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
+                            cc.setColor((String) jsonArray.getJSONObject(i).get("color"));
+                            user_collesPertany.add(cc);
+                        }
                     }
 
                     ArrayList<Colla> user_collesSeg = new ArrayList<>();
                     JSONArray jsonArrayFoll = (JSONArray) output.get("follows");
-                    Colla cf = new Colla();
+
 
                     for (int i = 0; i < jsonArrayFoll.length(); ++i) {
+                        Colla cf = new Colla();
                         cf.setName((String) jsonArrayFoll.getJSONObject(i).get("name"));
                         cf.setId(Integer.valueOf(String.valueOf(jsonArray.getJSONObject(i).get("id"))));
                         user_collesSeg.add(cf);
@@ -405,9 +414,9 @@ public class SignInActivity extends Activity implements AsyncResult {
 
                     ArrayList<Colla> user_collesAdmin = new ArrayList<>();
                     JSONArray jsonAdminColles = (JSONArray) output.get("admin");
-                    Colla ca = new Colla();
 
                     for (int i = 0; i < jsonAdminColles.length(); ++i) {
+                        Colla ca = new Colla();
                         ca.setId(jsonAdminColles.getInt(i));
                         user_collesAdmin.add(ca);
                     }

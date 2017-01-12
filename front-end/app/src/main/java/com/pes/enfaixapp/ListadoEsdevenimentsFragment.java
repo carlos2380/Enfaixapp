@@ -140,17 +140,19 @@ public class ListadoEsdevenimentsFragment extends Fragment {
                         intent.putExtra("colla_id", String.valueOf(esdeveniments.get(position).getColla()));
                         intent.putExtra("date", esdeveniments.get(position).getDate());
                         intent.putExtra("description", esdeveniments.get(position).getDescripcio());
-                        intent.putExtra("id", esdeveniments.get(position).getId());
+                        intent.putExtra("id", String.valueOf(esdeveniments.get(position).getId()));
                         CustomIntent.getInstance().setFoto(esdeveniments.get(position).getFoto());
                         intent.putExtra("title", esdeveniments.get(position).getTitol());
                         intent.putExtra("user_id", esdeveniments.get(position).getUsuari());
-                        ((AppCompatActivity)getActivity()).startActivityForResult(intent, 1);
+                        ((AppCompatActivity)getActivity()).startActivity(intent);
                     }
                 })
         );
 
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
+
 
     public Bitmap StringToBitMap(String encodedString){
         try {
