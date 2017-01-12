@@ -28,9 +28,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pes.enfaixapp.Controllers.AsyncResult;
 import com.pes.enfaixapp.Controllers.BitmapUtilities;
 import com.pes.enfaixapp.Controllers.ContextUser;
 import com.pes.enfaixapp.Controllers.CustomIntent;
+import com.pes.enfaixapp.Controllers.HTTPHandler;
+import com.pes.enfaixapp.Controllers.JSONConverter;
 import com.pes.enfaixapp.Models.Colla;
 import com.pes.enfaixapp.Models.Esdeveniment;
 
@@ -38,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +73,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
     private String user_id;
     private String foto;
     private ImageButton modificarib;
+    private ImageButton eliminarEsdv;
     private android.support.design.widget.AppBarLayout appbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -80,6 +85,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         direccioEsdv = (TextView) findViewById(R.id.direccioEsdvMostrar);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaEsdv);
         modificarib = (ImageButton) findViewById(R.id.modificarEsv);
+        eliminarEsdv = (ImageButton) findViewById(R.id.eliminarEsdv);
 
         //      TODO: AGAFAR LA FOTO DE LA GALERIA I POSAR BOTÓ QUE ENLLAÇI A MODIFICAR
 
@@ -121,6 +127,7 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         });
 
         modificarib.setVisibility(View.GONE);
+        eliminarEsdv.setVisibility(View.GONE);
 
         ArrayList<Colla> collesAdmin = ContextUser.getInstance().getCollesAdmin();
 
@@ -128,9 +135,37 @@ public class EsdevenimentActivity extends AppCompatActivity implements OnMapRead
         for (int i= 0; i < collesAdmin.size(); ++i){
             if (collesAdmin.get(i).getId() == Integer.valueOf(colla_id)){
                 modificarib.setVisibility(View.VISIBLE);
+                eliminarEsdv.setVisibility(View.VISIBLE);
+
             }
         }
 
+        eliminarEsdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EsdevenimentActivity.MyAsync async = new MyAsync(getApplicationContext());
+                async.deleteEsdv(getApplicationContext());
+            }
+        });
+
+    }
+
+    private class MyAsync implements AsyncResult {
+        Context context;
+        public MyAsync(Context context) {
+            this.context = context;
+        }
+
+        public void deleteEsdv(Context context) {
+            HTTPHandler httphandler = new HTTPHandler();
+            httphandler.setAsyncResult(this);
+            httphandler.execute("DELETE", "http://10.4.41.165:5000/events/" + idEsdv, null);
+        }
+
+        @Override
+        public void processFinish(JSONObject output) {
+           finish();
+        }
     }
 
     //MAPA GOOGLE
