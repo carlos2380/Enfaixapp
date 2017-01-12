@@ -309,12 +309,6 @@ public class DrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        else if (id == R.id.permis_admin){
-            DrawerActivity.MyAsync async = new MyAsync(getApplicationContext());
-            async.doAdmin(getApplicationContext());
-
-        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
