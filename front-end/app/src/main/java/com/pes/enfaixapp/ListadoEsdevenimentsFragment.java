@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
@@ -80,6 +81,7 @@ public class ListadoEsdevenimentsFragment extends Fragment {
         flaotingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), CrearEsdevenimentActivity.class);
+                    intent.putExtra("colla_id", ContextUser.getInstance().getId_collaSwitch());
                     ((AppCompatActivity)getActivity()).startActivityForResult(intent, 1);
 
                 }

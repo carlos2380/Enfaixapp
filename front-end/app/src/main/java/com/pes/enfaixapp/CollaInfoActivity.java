@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -81,6 +82,9 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
 
         CollaInfoActivity.MyAsyncColla async = new CollaInfoActivity.MyAsyncColla(getApplicationContext());
         async.callColla(getApplicationContext());
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor((getIntent().getExtras().getString("color")))));
+
 
 
         btFollowColla.setOnClickListener(new View.OnClickListener() {
@@ -162,10 +166,10 @@ public class CollaInfoActivity extends AppCompatActivity implements OnMapReadyCa
             actual.setDireccio("Catalunya");
         }
 
-        if(!c.getColor().equals("null")) {
+        /*if(!c.getColor().equals("null")) {
             RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_colla_info);
             rl.setBackgroundColor(Color.parseColor(c.getColor()));
-        }
+        }*/
 
         if(!c.getDescripcio().equals("null")) {
             tvDescripcio.setText(c.getDescripcio());

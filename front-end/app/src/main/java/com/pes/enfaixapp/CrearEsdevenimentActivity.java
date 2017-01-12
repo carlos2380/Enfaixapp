@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -86,6 +88,8 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
     private TextView dateView;
     private int year, month, day;
     private String image;
+    private String colla_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -109,6 +113,14 @@ public class CrearEsdevenimentActivity extends AppCompatActivity implements OnMa
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day);
+
+        colla_id = getIntent().getExtras().getString("colla_id");
+
+        if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(0).getId())))
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(0).getColor())));
+        else if (colla_id.equals(String.valueOf(ContextUser.getInstance().getCollesPertany().get(1).getId()))) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(ContextUser.getInstance().getCollesPertany().get(1).getColor())));
+        }
 
         afegirFotoViaDisp.setOnClickListener(new View.OnClickListener() {
             @Override
