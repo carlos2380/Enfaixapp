@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="HTTPBasicAuth" />
+          <option value="db.CtrlFactory.CtrlFactory" />
         </list>
       </option>
     </inspection_tool>
