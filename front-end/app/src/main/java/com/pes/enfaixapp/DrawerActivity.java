@@ -262,7 +262,7 @@ public class DrawerActivity extends AppCompatActivity
             posSelect = R.id.nav_logout;
             SharedPreferences preferences = getSharedPreferences("Shared", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.remove("session-token");
+            editor.clear();
             editor.apply();
             Intent intent = new Intent(DrawerActivity.this, LogInActivity.class);
             startActivity(intent);
