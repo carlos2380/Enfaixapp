@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_news"
+            android:title="Notícies" />
+        <item
+            android:id="@+id/nav_classification"
+            android:icon="@drawable/ic_trofeo"
+            android:title="Classificació" />
+        <item
+            android:id="@+id/nav_results"
+            android:icon="@drawable/ic_results"
+            android:title="Resultats" />
+
+        <item
+            android:id="@+id/nav_esdv"
+            android:title="Esdeveniments"
+            android:icon="@drawable/ic_fecha_y_hora_del_evento_simbolo"/>
+
+        <item
+            android:id="@+id/nav_colles"
+            android:title="Colles"
+            android:icon="@drawable/ic_enfaixapp_logo_black"/>
+
+        <item
+            android:id="@+id/nav_assajos"
+            android:title="Assajos"
+            android:icon="@drawable/usercheck"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout_24dp"
+            android:title="Tancar sessió"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="About" />
+    </group>
+
+</menu>

@@ -5,4 +5,18 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="password">Contrasenya</string>
+    <string name="username">Nom d\'usuari</string>
+    <string name="about_you">Sobre tu</string>
+    <string name="name">Nom</string>
+    <string name="surnames">Cognoms</string>
+    <string name="log_in">Log In</string>
+    <string name="registrat">Registra\'t</string>
+    <string name="email">Correu electrònic</string>
+    <string name="repeat">Repeteix la contrasenya*</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

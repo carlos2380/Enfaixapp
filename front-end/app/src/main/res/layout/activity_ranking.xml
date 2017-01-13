@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="50dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pes.enfaixapp.RankingActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titelRowRanking"
+        android:padding="5dp"
+        android:paddingTop="10dp"
+        android:background="@color/colorAccent"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/posicioRank"
+            android:text="POS"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white" />
+
+
+        <TextView
+            android:id="@+id/nomRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignRight="@+id/posicioRank"
+            android:layout_weight="0.8"
+            android:text="COLLA"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/puntsRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_weight="0.1"
+            android:layout_alignRight="@+id/nomRank"
+            android:text="PUNTS"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loadingRanking"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:paddingTop="0dp"
+        android:id="@+id/listRanking">
+    </ListView>
+</LinearLayout>

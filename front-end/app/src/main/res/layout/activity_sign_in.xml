@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <Button
+            android:id="@+id/aboutYouButton"
+            android:text="@string/about_you"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_looks_1_24dp"
+            android:textSize="18sp"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+            android:drawablePadding="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/userInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="@string/name"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:focusable="true"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="#222222"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/surnameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="@string/surnames"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/surnameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:focusable="true"
+                android:textColorHint="#222222"
+                android:textColorHighlight="@color/colorPrimary"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="@string/email"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textSize="15sp"
+                android:id="@+id/textCorreu"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:focusable="true"
+                android:textColorHint="#222222"
+                android:id="@+id/correuInput"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="@string/password"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textSize="15sp"
+                android:id="@+id/textContrasenya"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:focusable="true"
+                android:textColorHint="#222222"
+                android:id="@+id/contrasenyaInput"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="@string/repeat"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textSize="15sp"
+                android:id="@+id/textContrasenya2"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:focusable="true"
+                android:textColorHint="#222222"
+                android:id="@+id/contrasenyaInput2"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:padding="5dp"
+                android:inputType="textPassword"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:text="Escull la teva colla convencional"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:backgroundTint ="@android:color/transparent"
+            android:id="@+id/button2"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_looks_2_24dp" />
+
+        <LinearLayout
+            android:id="@+id/collesConvencionalsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp">
+            <ListView
+                android:id="@+id/conventionalList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:choiceMode="multipleChoice">
+            </ListView>
+        </LinearLayout>
+
+        <Button
+            android:text="Escull la teva colla universitària"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/button3"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_looks_3_24dp" />
+
+        <LinearLayout
+            android:id="@+id/collesUniversitariesLayout"
+            android:layout_marginStart="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/universitariesList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:choiceMode="multipleChoice">
+            </ListView>
+
+        </LinearLayout>
+
+        <Button
+            android:text="Segueix a més colles"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:id="@+id/button4"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_looks_4_24dp" />
+
+        <LinearLayout
+            android:id="@+id/allCollesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp">
+            <ListView
+                android:id="@+id/allList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:choiceMode="multipleChoice">
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reg"
+        android:text="Registrar-me"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:textColor="#FFF"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
